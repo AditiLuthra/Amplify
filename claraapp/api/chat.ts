@@ -27,7 +27,7 @@ export default async function handler(req: any, res: any) {
     return;
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.ANTHROPIC_API_KEY || process.env.VITE_ANTHROPIC_API_KEY;
   if (!apiKey) {
     res.status(500).json({
       error:
