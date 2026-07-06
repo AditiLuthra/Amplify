@@ -5,8 +5,12 @@ import { SupportMeButton } from './SupportMeButton.js';
 interface WorkSessionProps {
   task: Task;
   sessionDuration: number; // in minutes
-  onSessionEnd: (completed: boolean, notes?: string) => void;
+  onSessionEnd: (completed: boolean, notes?: string, nextStep?: string) => void;
   onExit: () => void;
+  onBreakdown?: () => void;
+  onBreakSuggestion?: () => void;
+  onBreathing?: () => void;
+  onMomentumReset?: () => void;
 }
 
 export const WorkSession: React.FC<WorkSessionProps> = ({
@@ -14,10 +18,15 @@ export const WorkSession: React.FC<WorkSessionProps> = ({
   sessionDuration,
   onSessionEnd,
   onExit,
+  onBreakdown,
+  onBreakSuggestion,
+  onBreathing,
+  onMomentumReset,
 }) => {
   const [timeLeft, setTimeLeft] = useState(sessionDuration * 60); // in seconds
   const [isRunning, setIsRunning] = useState(true);
   const [notes, setNotes] = useState('');
+  const [nextStep, setNextStep] = useState('');
 
   useEffect(() => {
     if (!isRunning || timeLeft <= 0) return;
@@ -40,11 +49,11 @@ export const WorkSession: React.FC<WorkSessionProps> = ({
   const progress = ((sessionDuration * 60 - timeLeft) / (sessionDuration * 60)) * 100;
 
   const handleComplete = () => {
-    onSessionEnd(true, notes);
+    onSessionEnd(true, notes, nextStep);
   };
 
   const handlePause = () => {
-    onSessionEnd(false, notes);
+    onSessionEnd(false, notes, nextStep);
   };
 
   return (
@@ -116,7 +125,18 @@ export const WorkSession: React.FC<WorkSessionProps> = ({
             onChange={(e) => setNotes(e.target.value)}
             placeholder="How's it going? Any thoughts to capture?"
             className="w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white"
-            rows={3}
+            rows={2}
+          />
+        </div>
+
+        {/* Next tiny step — captured so re-entry is frictionless */}
+        <div className="mb-8">
+          <label className="block text-sm font-medium mb-2">If you stop now, what's the next tiny step?</label>
+          <input
+            value={nextStep}
+            onChange={(e) => setNextStep(e.target.value)}
+            placeholder="e.g. Reply to Sam's email about the date"
+            className="w-full px-4 py-3 rounded-lg bg-white/10 backdrop-blur border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white"
           />
         </div>
 
@@ -169,10 +189,10 @@ export const WorkSession: React.FC<WorkSessionProps> = ({
       {/* Support Me Button */}
       <SupportMeButton
         currentTask={task}
-        onBreakdown={() => console.log('Breakdown')}
-        onBreakSuggestion={() => console.log('Break')}
-        onBreathing={() => console.log('Breathing')}
-        onMomentumReset={() => console.log('Momentum')}
+        onBreakdown={onBreakdown || (() => {})}
+        onBreakSuggestion={onBreakSuggestion || (() => {})}
+        onBreathing={onBreathing || (() => {})}
+        onMomentumReset={onMomentumReset || (() => {})}
       />
     </div>
   );

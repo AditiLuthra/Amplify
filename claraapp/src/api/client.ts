@@ -116,6 +116,11 @@ export class ClaraClient {
       parentTaskId: task.parentTaskId,
       notes: task.notes,
       completedAt: task.completedAt,
+      location: task.location,
+      scheduledAt: task.scheduledAt,
+      firstStep: task.firstStep,
+      nextStep: task.nextStep,
+      waitingOn: task.waitingOn,
       createdAt: now(),
       updatedAt: now(),
     };

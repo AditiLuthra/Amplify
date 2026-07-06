@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Task } from '../../types/index.js';
+import { Task, LOCATION_LABELS } from '../../types/index.js';
 import { TaskPrioritizer } from '../../core/prioritization.js';
+
+function formatPlannedTime(iso?: string): string | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return null;
+  const today = new Date().toDateString() === d.toDateString();
+  const time = d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  return today ? time : `${d.toLocaleDateString([], { month: 'short', day: 'numeric' })} ${time}`;
+}
 
 interface DailyStandupProps {
   tasks: Task[];
@@ -8,6 +17,7 @@ interface DailyStandupProps {
   onTaskSelect: (task: Task) => void;
   onTaskComplete: (taskId: string) => void;
   onStartSession: (task: Task) => void;
+  onAddTask?: () => void;
 }
 
 export const DailyStandup: React.FC<DailyStandupProps> = ({
@@ -16,6 +26,7 @@ export const DailyStandup: React.FC<DailyStandupProps> = ({
   onTaskSelect,
   onTaskComplete,
   onStartSession,
+  onAddTask,
 }) => {
   const [topTasks, setTopTasks] = useState<Task[]>([]);
   const prioritizer = new TaskPrioritizer();
@@ -83,7 +94,17 @@ export const DailyStandup: React.FC<DailyStandupProps> = ({
                       {task.description && (
                         <p className="text-sm text-gray-600 mt-2">{task.description}</p>
                       )}
-                      <div className="flex gap-2 mt-3">
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {formatPlannedTime(task.scheduledAt) && (
+                          <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded font-medium">
+                            ⏰ {formatPlannedTime(task.scheduledAt)}
+                          </span>
+                        )}
+                        {task.location && (
+                          <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded">
+                            {LOCATION_LABELS[task.location]}
+                          </span>
+                        )}
                         {task.estimatedMinutes && (
                           <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
                             ~{task.estimatedMinutes}min
@@ -98,6 +119,11 @@ export const DailyStandup: React.FC<DailyStandupProps> = ({
                           </span>
                         )}
                       </div>
+                      {task.firstStep && (
+                        <p className="text-xs text-gray-500 mt-2">
+                          👉 First step: {task.firstStep}
+                        </p>
+                      )}
                     </div>
                     <div className="flex gap-2 ml-4">
                       <button
@@ -138,7 +164,10 @@ export const DailyStandup: React.FC<DailyStandupProps> = ({
             <div className="text-6xl mb-4">🎯</div>
             <h2 className="text-2xl font-semibold mb-2">All done for today!</h2>
             <p className="text-white/80 mb-6">Add a task to get started</p>
-            <button className="btn bg-white text-clara-primary hover:bg-gray-100 font-semibold">
+            <button
+              onClick={onAddTask}
+              className="btn bg-white text-clara-primary hover:bg-gray-100 font-semibold"
+            >
               + Add First Task
             </button>
           </div>

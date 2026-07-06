@@ -201,6 +201,26 @@ export class NotificationManager {
   }
 
   /**
+   * If-then planned-task reminder — fires at the time the user planned to start.
+   * Phrased as an implementation intention ("when it's time, do Y, here"), which
+   * research shows dramatically improves follow-through.
+   */
+  static notifyPlannedTask(title: string, locationLabel?: string, firstStep?: string): Promise<void> {
+    let body = `You planned to start "${title}" now.`;
+    if (locationLabel) body += ` ${locationLabel}.`;
+    if (firstStep) body += ` First step: ${firstStep}`;
+    body += ' 💪';
+
+    return this.send({
+      title: '⏰ Time for your plan',
+      body,
+      tag: `planned-${title}`,
+      requireInteraction: true,
+      actions: [{ action: 'open', title: 'Start now' }],
+    });
+  }
+
+  /**
    * End of day summary
    */
   static notifyEndOfDay(tasksCompleted: number, tasksRemaining: number): Promise<void> {
@@ -269,5 +289,45 @@ export class ActivityTracker {
     this.longSessionTimeout = setTimeout(() => {
       NotificationManager.notifyTakeBreak(taskTitle);
     }, 45 * 60 * 1000);
+  }
+}
+
+/**
+ * Schedules if-then reminders for tasks that have a planned start time.
+ * Re-run whenever the task list changes; it clears and re-arms all timers.
+ * (Timers fire while the app/PWA is open — the practical model for a PWA.)
+ */
+export class TaskReminderScheduler {
+  private static timers: ReturnType<typeof setTimeout>[] = [];
+
+  static schedule(
+    tasks: Array<{
+      title: string;
+      status: string;
+      scheduledAt?: string;
+      firstStep?: string;
+      locationLabel?: string;
+    }>
+  ): void {
+    // Clear any previously-armed reminders
+    this.timers.forEach((t) => clearTimeout(t));
+    this.timers = [];
+
+    const nowMs = Date.now();
+    const maxDelay = 12 * 60 * 60 * 1000; // don't arm more than 12h out
+
+    for (const task of tasks) {
+      if (!task.scheduledAt) continue;
+      if (task.status === 'completed' || task.status === 'archived') continue;
+
+      const when = new Date(task.scheduledAt).getTime();
+      const delay = when - nowMs;
+      if (delay <= 0 || delay > maxDelay) continue;
+
+      const timer = setTimeout(() => {
+        NotificationManager.notifyPlannedTask(task.title, task.locationLabel, task.firstStep);
+      }, delay);
+      this.timers.push(timer);
+    }
   }
 }

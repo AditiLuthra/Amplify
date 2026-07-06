@@ -1,9 +1,11 @@
+export type TaskLocation = 'deep-work' | 'computer' | 'home' | 'outside';
+
 export interface Task {
   id: string;
   userId: string;
   title: string;
   description?: string;
-  status: 'backlog' | 'in-progress' | 'completed' | 'archived';
+  status: 'backlog' | 'in-progress' | 'completed' | 'archived' | 'waiting';
   priority: 'low' | 'medium' | 'high' | 'critical';
   dueDate?: string;
   estimatedMinutes?: number;
@@ -13,7 +15,24 @@ export interface Task {
   tags: string[];
   parentTaskId?: string;
   notes?: string;
+  // Where the task happens (context) — powers if-then "where" planning
+  location?: TaskLocation;
+  // If-then planning: when you intend to do it (ISO datetime)
+  scheduledAt?: string;
+  // The tiny 2-minute first action, to lower task-initiation friction
+  firstStep?: string;
+  // The next tiny step captured on pause, so re-entry is frictionless
+  nextStep?: string;
+  // For the "Waiting For" list: who/what this task is blocked on
+  waitingOn?: string;
 }
+
+export const LOCATION_LABELS: Record<TaskLocation, string> = {
+  'deep-work': '🎯 Deep work (computer)',
+  computer: '💻 Computer',
+  home: '🏠 Home',
+  outside: '🌳 Outside',
+};
 
 export interface Subtask {
   id: string;
