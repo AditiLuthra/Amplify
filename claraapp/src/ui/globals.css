@@ -16,6 +16,42 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   min-height: 100vh;
+  /* Prevent the grey tap flash and rubber-band scroll chaining on iOS */
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Keep controls out from under the iPhone notch / status bar.
+   Screens read this variable to pad their top so back buttons are reachable. */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Utility: push content below the status bar / notch */
+.safe-top {
+  padding-top: calc(1rem + var(--safe-top));
+}
+
+/* Every full-screen view clears the notch so top controls are reachable
+   (background still fills edge-to-edge; only the content is inset). */
+.min-h-screen {
+  padding-top: calc(var(--safe-top) + 1.5rem);
+}
+
+/* Utility: lift fixed bottom bars above the home indicator */
+.safe-bottom {
+  padding-bottom: var(--safe-bottom);
+}
+
+/* Big, thumb-friendly back button that clears the system gesture zone */
+.back-btn {
+  @apply inline-flex items-center gap-1 rounded-full bg-white/90 shadow-sm text-indigo-600 font-semibold px-4 py-2.5 active:scale-95 transition-transform;
+  min-height: 44px;
 }
 
 .gradient-primary {
@@ -28,6 +64,7 @@ body {
 
 .btn {
   @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+  min-height: 44px; /* comfortable tap target */
 }
 
 .btn-primary {
