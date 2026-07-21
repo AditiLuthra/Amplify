@@ -6,11 +6,14 @@ import {
   WorkSession,
   AddTaskModal,
   WaitingForList,
+  BreathingGuide,
+  TaskBreakdownModal,
 } from './ui/components/index.js';
 import { useTasks, useAgent, useNotifications } from './ui/hooks/index.js';
 import { claraClient } from './api/client.js';
 import { TaskReminderScheduler } from './core/notifications.js';
 import { downloadTaskCalendar } from './core/calendar.js';
+import { isPushSupported, isPushEnabled, enablePush, scheduleReminder } from './push.js';
 import './ui/globals.css';
 
 type AppState = 'loading' | 'standup' | 'waiting' | 'task-detail' | 'work-session' | 'error';
@@ -22,7 +25,31 @@ function App() {
   const [supportMessage, setSupportMessage] = useState<string | null>(null);
   const [showAddTask, setShowAddTask] = useState(false);
   const [suggestingStep, setSuggestingStep] = useState(false);
+  const [showBreathing, setShowBreathing] = useState(false);
+  const [breakdownSteps, setBreakdownSteps] = useState<string[] | null>(null);
+  const [breakdownLoading, setBreakdownLoading] = useState(false);
+  const [pushEnabled, setPushEnabled] = useState(false);
+  const [pushBusy, setPushBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setPushEnabled(isPushEnabled());
+  }, []);
+
+  const handleEnablePush = async () => {
+    setPushBusy(true);
+    try {
+      const ok = await enablePush();
+      setPushEnabled(ok);
+      if (!ok) {
+        setSupportMessage(
+          'To get reminders when the app is closed, allow notifications when prompted — and on iPhone, add Clara to your Home Screen first.'
+        );
+      }
+    } finally {
+      setPushBusy(false);
+    }
+  };
 
   const { tasks, fetchTasks, createTask, updateTask, completeTask } = useTasks();
   const { sendMessage } = useAgent();
@@ -110,14 +137,44 @@ function App() {
 
   const handleSupportBreakdown = async () => {
     if (!selectedTask) return;
+    setBreakdownLoading(true);
     try {
       const response = await sendMessage(
-        `Please break down this task into smaller steps: "${selectedTask.title}". Just give me 2-3 concrete steps.`
+        `Break this task into 3-5 small, concrete steps: "${selectedTask.title}". Reply with ONLY the steps, one per line, no numbering, no preamble.`
       );
-      setSupportMessage(response.response);
+      const steps = response.response
+        .split('\n')
+        .map((s) => s.replace(/^[\s\-*\d.)\]]+/, '').trim())
+        .filter((s) => s.length > 1)
+        .slice(0, 6);
+      if (steps.length > 0) {
+        setBreakdownSteps(steps);
+      } else {
+        setSupportMessage(response.response);
+      }
     } catch (err) {
       setSupportMessage('Sorry, I had trouble breaking that down. Try again?');
+    } finally {
+      setBreakdownLoading(false);
     }
+  };
+
+  const handleBreakdownAdd = async (selected: string[]) => {
+    if (!selectedTask || !user) return;
+    for (const step of selected) {
+      await createTask({
+        userId: user.id,
+        title: step,
+        status: 'backlog',
+        priority: selectedTask.priority,
+        tags: [],
+        location: selectedTask.location,
+        parentTaskId: selectedTask.id,
+      });
+    }
+    setBreakdownSteps(null);
+    await fetchTasks();
+    setSupportMessage(`Added ${selected.length} step${selected.length === 1 ? '' : 's'} to your list! 🎯`);
   };
 
   const handleSupportBreak = async () => {
@@ -132,9 +189,7 @@ function App() {
   };
 
   const handleSupportBreathing = () => {
-    setSupportMessage(
-      'Box Breathing Guide:\n\n1. Breathe IN for 4 seconds\n2. HOLD for 4 seconds\n3. Breathe OUT for 4 seconds\n4. HOLD for 4 seconds\n\nRepeat 5 times. You\'ve got this! 🧘'
-    );
+    setShowBreathing(true);
   };
 
   const handleSupportMomentum = async () => {
@@ -149,9 +204,9 @@ function App() {
     }
   };
 
-  const handleAddTask = async (partial: Partial<Task>) => {
+  const handleAddTask = async (partial: Partial<Task>, addToCalendar?: boolean) => {
     try {
-      await createTask({
+      const created = await createTask({
         userId: user!.id,
         title: partial.title || 'Untitled',
         description: partial.description,
@@ -164,6 +219,18 @@ function App() {
         estimatedMinutes: partial.estimatedMinutes,
         waitingOn: partial.waitingOn,
       });
+      if (addToCalendar && created?.scheduledAt) {
+        downloadTaskCalendar(created);
+      }
+      // Schedule a real push reminder if enabled and the task has a future time
+      if (pushEnabled && created?.scheduledAt && new Date(created.scheduledAt).getTime() > Date.now()) {
+        const locLabel = created.location ? ` · ${LOCATION_LABELS[created.location]}` : '';
+        scheduleReminder({
+          title: '⏰ Time for your plan',
+          body: `${created.title}${locLabel}${created.firstStep ? ` — first step: ${created.firstStep}` : ''}`,
+          sendAt: created.scheduledAt,
+        });
+      }
       await fetchTasks();
       setShowAddTask(false);
     } catch (err) {
@@ -203,7 +270,7 @@ function App() {
   const BottomNav = () => {
     const waitingCount = tasks.filter((t) => t.status === 'waiting').length;
     return (
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex items-center justify-around px-4 py-2 z-40 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex items-center justify-around px-4 py-2 safe-bottom z-40 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
         <button
           onClick={() => setAppState('standup')}
           className={`flex flex-col items-center text-xs px-4 py-1 ${appState === 'standup' ? 'text-clara-primary font-semibold' : 'text-gray-500'}`}
@@ -233,6 +300,26 @@ function App() {
       </div>
     );
   };
+
+  // Global overlays reachable from the Support button (task detail + work session)
+  const overlays = (
+    <>
+      {breakdownLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-[75]">
+          <div className="bg-white rounded-lg px-6 py-4 text-gray-700 font-medium">Breaking it down…</div>
+        </div>
+      )}
+      {breakdownSteps && selectedTask && (
+        <TaskBreakdownModal
+          taskTitle={selectedTask.title}
+          steps={breakdownSteps}
+          onClose={() => setBreakdownSteps(null)}
+          onAdd={handleBreakdownAdd}
+        />
+      )}
+      {showBreathing && <BreathingGuide onClose={() => setShowBreathing(false)} />}
+    </>
+  );
 
   // ---- Render states ----
   if (appState === 'loading') {
@@ -288,6 +375,7 @@ function App() {
           onBreathing={handleSupportBreathing}
           onMomentumReset={handleSupportMomentum}
         />
+        {overlays}
       </>
     );
   }
@@ -312,7 +400,7 @@ function App() {
               setSelectedTask(null);
               setAppState('standup');
             }}
-            className="mb-6 text-indigo-600 hover:text-indigo-700 font-medium"
+            className="back-btn mb-6"
           >
             ← Back
           </button>
@@ -400,6 +488,7 @@ function App() {
           onBreathing={handleSupportBreathing}
           onMomentumReset={handleSupportMomentum}
         />
+        {overlays}
       </div>
     );
   }
@@ -417,6 +506,18 @@ function App() {
   // Default: Standup view
   return (
     <div className="pb-24">
+      {isPushSupported() && !pushEnabled && (
+        <div className="bg-clara-primary text-white px-4 py-3 flex items-center justify-between gap-3">
+          <span className="text-sm">🔔 Turn on reminders so Clara can nudge you at your planned times.</span>
+          <button
+            onClick={handleEnablePush}
+            disabled={pushBusy}
+            className="bg-white text-clara-primary text-sm font-semibold px-3 py-1.5 rounded-lg whitespace-nowrap disabled:opacity-60"
+          >
+            {pushBusy ? 'Enabling…' : 'Enable'}
+          </button>
+        </div>
+      )}
       <DailyStandup
         tasks={tasks.filter((t) => t.status !== 'waiting')}
         userName={user?.name}
