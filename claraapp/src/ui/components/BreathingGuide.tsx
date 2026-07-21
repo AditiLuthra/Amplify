@@ -1,4 +1,4 @@
-$ cat /home/user/Amplify/src/ui/components/BreathingGuide.tsx
+
 
 import React, { useEffect, useState } from 'react';
 
