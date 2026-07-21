@@ -5,3 +5,5 @@ export { DistractionModal } from './DistractionModal.js';
 export { WorkSession } from './WorkSession.js';
 export { AddTaskModal } from './AddTaskModal.js';
 export { WaitingForList } from './WaitingForList.js';
+export { BreathingGuide } from './BreathingGuide.js';
+export { TaskBreakdownModal } from './TaskBreakdownModal.js'
