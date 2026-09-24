@@ -9,7 +9,7 @@ logic, no UI. **All four parts are complete**, run against live data.
 - 501 records fetched from ClinicalTrials.gov API v2 in a single page,
   cached to `data/raw/uterine_fibroids/` (raw, unmodified JSON).
 - Part B: `reports/field_coverage_report.md` — population rate for every
-  field in `TAGGING_SPEC_v0.3.md` §2, plus the eight requested value
+  field in `TAGGING_SPEC_v0.4.md` §2, plus the eight requested value
   distributions.
 - Part C: `reports/persona_field_categorization.md` — structured-vs-free-text
   categorization for the test persona. Needed no live data; done earlier.
@@ -24,7 +24,7 @@ this is *say so and stop*, not "fix it in code": TAG 4 isn't implemented in
 Milestone 1, so nothing downstream had to be worked around, but the logic as
 written won't be safe to implement until the spec is corrected.
 
-`TAGGING_SPEC_v0.3.md` §3, TAG 4 states, as its headline v0.3 correction:
+`TAGGING_SPEC_v0.4.md` §3, TAG 4 states, as its headline v0.3 correction:
 
 > **Correction (v0.3).** Earlier drafts keyed staleness off
 > `overallStatus == UNKNOWN`. **That value does not exist in API v2.**

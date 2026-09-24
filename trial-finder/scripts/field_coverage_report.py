@@ -2,7 +2,7 @@
 """
 Milestone 1, Part B: field coverage report.
 
-For every field listed in TAGGING_SPEC_v0.3.md section 2 ("Data source"),
+For every field listed in TAGGING_SPEC_v0.4.md section 2 ("Data source"),
 compute what percentage of cached records populate it, plus value
 distributions for the fields the task calls out by name.
 
@@ -19,7 +19,7 @@ from collections import Counter
 from pathlib import Path
 
 
-# Field paths transcribed from TAGGING_SPEC_v0.3.md sec. 2's module table.
+# Field paths transcribed from TAGGING_SPEC_v0.4.md sec. 2's module table.
 # "[]" marks a list; presence = the list is non-empty.
 # "[].field" marks a field read off each item in a list; presence = at least
 # one item in the list has that field populated.
@@ -196,7 +196,7 @@ def main():
     lines.append(f"- Records analyzed: **{n}**")
     lines.append(f"- Source: `{raw_dir}` ({manifest.get('page_count')} page(s), "
                   f"fetched via ClinicalTrials.gov API v2, cached raw JSON)")
-    lines.append(f"- Spec version: TAGGING_SPEC_v0.3.md section 2")
+    lines.append(f"- Spec version: TAGGING_SPEC_v0.4.md section 2")
     lines.append("")
     lines.append("## Field population rate")
     lines.append("")

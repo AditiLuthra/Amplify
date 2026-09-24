@@ -3,7 +3,7 @@
 **Version:** 0.3
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — pre-validation
-**Related:** `TAGGING_SPEC_v0.3.md` (implementation detail)
+**Related:** `TAGGING_SPEC_v0.4.md` (implementation detail)
 
 ---
 
@@ -176,7 +176,7 @@ lie into a sorting error.
 
 ## 6. Requirements
 
-High-level only. Implementation detail in `TAGGING_SPEC_v0.3.md`.
+High-level only. Implementation detail in `TAGGING_SPEC_v0.4.md`.
 
 **R1. Structured intake.** Let the user describe disease and current condition
 in enough detail to sort results — progressive questions in a side panel,

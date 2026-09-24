@@ -1,6 +1,6 @@
 # Trial Tagging Specification
 
-**Version:** 0.3
+**Version:** 0.4
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — Phase 1
 
@@ -228,33 +228,65 @@ ranks 5, which overstates burden for minor procedures. Accepted for v0.2.
 **Source:** `statusModule.overallStatus` + `statusVerifiedDate` +
 `lastUpdatePostDateStruct.date` + `completionDateStruct.date` + `hasResults`
 
-> **Correction (v0.3).** Earlier drafts keyed staleness off
-> `overallStatus == UNKNOWN`. **That value does not exist in API v2.** The
-> "Unknown status" a user sees on the ClinicalTrials.gov website is *derived* by
-> the site, not stored. We must derive it ourselves.
+> **Correction (v0.4).** The v0.3 correction below was itself wrong and is
+> struck through, not deleted, so the mistake stays visible per this repo's
+> working agreement ("the spec is wrong — say so and stop, then fix the spec
+> first"):
+>
+> > ~~**Correction (v0.3).** Earlier drafts keyed staleness off
+> > `overallStatus == UNKNOWN`. **That value does not exist in API v2.** The
+> > "Unknown status" a user sees on the ClinicalTrials.gov website is
+> > *derived* by the site, not stored. We must derive it ourselves.~~
+>
+> **`UNKNOWN` does exist in API v2, stored directly on `overallStatus`, and
+> it is common.** Verified 2026-09-24 against a live fetch of 501
+> "uterine fibroids" records (Milestone 1, Part B): `UNKNOWN` was the
+> **second most common** `overallStatus` value, on **97 of 501 records
+> (19.4%)** — more common than `RECRUITING`. Confirmed on a real record:
+>
+> ```json
+> {
+>   "nctId": "NCT03134157",
+>   "overallStatus": "UNKNOWN",
+>   "statusVerifiedDate": "2020-10",
+>   "lastKnownStatus": "RECRUITING"
+> }
+> ```
+>
+> So the v0.1/v0.2 approach (key off `overallStatus == UNKNOWN` directly) was
+> right all along. The derived-staleness heuristic below is not thrown out,
+> though: `UNKNOWN` is the registry's *own* determination and lags — a trial
+> can be just as stale before ClinicalTrials.gov gets around to relabeling it.
+> The two are complementary signals, not alternatives: `UNKNOWN` first
+> (highest confidence, it's what the registry itself concluded), the derived
+> heuristic second (catches the ones the registry hasn't relabeled yet).
 
 **Full `overallStatus` enum:** `RECRUITING`, `NOT_YET_RECRUITING`,
 `ACTIVE_NOT_RECRUITING`, `ENROLLING_BY_INVITATION`, `COMPLETED`, `SUSPENDED`,
-`TERMINATED`, `WITHDRAWN`, plus expanded-access values `AVAILABLE`,
+`TERMINATED`, `WITHDRAWN`, `UNKNOWN`, plus expanded-access values `AVAILABLE`,
 `NO_LONGER_AVAILABLE`, `TEMPORARILY_NOT_AVAILABLE`, `APPROVED_FOR_MARKETING`,
 `WITHHELD`.
 
-**Deriving stale.** `statusVerifiedDate` (YYYY-MM) is when the sponsor last
-confirmed the record. A trial is stale when:
+**Deriving stale (supplementary to `UNKNOWN`, see above).**
+`statusVerifiedDate` (YYYY-MM) is when the sponsor last confirmed the record.
+A trial not already `UNKNOWN` is stale when:
 
 ```
-statusVerifiedDate is more than 24 months old
+overallStatus != UNKNOWN
+AND statusVerifiedDate is more than 24 months old
 AND overallStatus is an active-sounding value
     (RECRUITING, NOT_YET_RECRUITING, ACTIVE_NOT_RECRUITING, ENROLLING_BY_INVITATION)
 AND (completionDateStruct.date has passed OR is absent)
 ```
 
-`lastKnownStatus` is populated for non-recruiting studies and can be shown as
-supporting detail.
+`lastKnownStatus` is populated on `UNKNOWN` records (see the worked example
+above) and can be shown as supporting detail — "last known status before this
+became unclear: {lastKnownStatus}".
 
 | Condition | Action |
 |---|---|
-| Derived stale (above) | "Status unverified — sponsor last confirmed {statusVerifiedDate}". Downrank heavily. |
+| `overallStatus == UNKNOWN` | Exclude from default results. Show under Excluded Trials: "ClinicalTrials.gov could not confirm this trial is still active (status unknown since {statusVerifiedDate})." Show `lastKnownStatus` as supporting detail when present. |
+| Derived stale (above; only applies when `overallStatus != UNKNOWN`) | "Status unverified — sponsor last confirmed {statusVerifiedDate}". Downrank heavily. |
 | Months since `lastUpdatePostDateStruct.date` > 24 | "Record may be out of date" |
 | `overallStatus` in `{TERMINATED, WITHDRAWN, SUSPENDED}` | Exclude from default results. Show under Excluded Trials with reason. |
 | `overallStatus == ENROLLING_BY_INVITATION` | **Show, clearly labeled** "Enrolling by invitation only — this study is not accepting open inquiries." Suppress Template A; offer Template B. |
@@ -548,7 +580,8 @@ Every tag assignment records spec version and computation date.
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
-| 0.3 | 2026-08-26 | **API verified against v2 field reference.** Corrected TAG 4: `overallStatus == UNKNOWN` does not exist in API v2 — staleness now derived from `statusVerifiedDate` + status + completion date. Added `ENROLLING_BY_INVITATION` handling. Added TAG 4b Expanded Access. Added `isUnapprovedDevice` as 8th oversight criterion. Added `COMBINATION_PRODUCT` to burden ladder. Added `referencesModule`, `centralContacts`, `stdAges`, `geoPoint` to data source table. Added API mechanics section (cursor pagination, fields-parameter casing, `query.patient`, `filter.geo`). |
+| 0.4 | 2026-09-24 | **Reverted the v0.3 TAG 4 correction — it was itself wrong.** Milestone 1's live fetch of 501 "uterine fibroids" records (`trial-finder/reports/milestone_1_status.md`) found `overallStatus == UNKNOWN` on 97/501 records (19.4%), confirmed on `NCT03134157`. `UNKNOWN` is real, stored, and common — added back to the enum. TAG 4 now checks `overallStatus == UNKNOWN` directly (highest confidence, it's the registry's own determination) with the v0.3 derived-staleness heuristic kept as a supplementary signal for records the registry hasn't relabeled yet, gated on `overallStatus != UNKNOWN`. `UNKNOWN` routes to Excluded Trials with `lastKnownStatus` shown as supporting detail. |
+| 0.3 | 2026-08-26 | **API verified against v2 field reference.** ~~Corrected TAG 4: `overallStatus == UNKNOWN` does not exist in API v2 — staleness now derived from `statusVerifiedDate` + status + completion date.~~ (Reverted in 0.4 — this was wrong.) Added `ENROLLING_BY_INVITATION` handling. Added TAG 4b Expanded Access. Added `isUnapprovedDevice` as 8th oversight criterion. Added `COMBINATION_PRODUCT` to burden ladder. Added `referencesModule`, `centralContacts`, `stdAges`, `geoPoint` to data source table. Added API mechanics section (cursor pagination, fields-parameter casing, `query.patient`, `filter.geo`). |
 | 0.2 | 2026-08-26 | P2 revised to permit rubric-based judgments; P6 added. TAG 3 split into category/explanation/rank layers with 6-level burden ladder and device disambiguation. TAG 5 rubric named and labeled. §4 completed-trials results summary added. §6 eligibility parsing pipeline added. |
 
 ---
@@ -562,5 +595,8 @@ Every tag assignment records spec version and computation date.
   leave room.
 - `briefTitle` is often jargon-heavy and may need patient-facing rewriting
 - ~~Field names in §2 unverified~~ — verified 2026-08-26 against API v2 field reference
+- ~~`overallStatus == UNKNOWN` does not exist in API v2 (TAG 4)~~ — this v0.3 claim was
+  wrong; reverted in v0.4 after Milestone 1's live fetch found it on 19.4% of
+  a 501-record sample. See §3 TAG 4 and the versioning table.
 - `query.patient` (patient-friendly search) untested against `query.cond` — may materially improve results for our users
 - `referencesModule[].pmid` linkage to published papers not yet used; relevant to the disease landscape view

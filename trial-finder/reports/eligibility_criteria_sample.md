@@ -1,6 +1,6 @@
 # Eligibility criteria sample — uterine fibroids
 
-10 record(s) randomly selected from 501 cached studies (seed=none, fresh draw). Verbatim `eligibilityCriteria` text, unparsed, for manual review per TAGGING_SPEC_v0.3.md section 6.
+10 record(s) randomly selected from 501 cached studies (seed=none, fresh draw). Verbatim `eligibilityCriteria` text, unparsed, for manual review per TAGGING_SPEC_v0.4.md section 6.
 
 ---
 

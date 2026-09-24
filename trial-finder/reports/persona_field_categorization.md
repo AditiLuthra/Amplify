@@ -5,7 +5,7 @@ moderate anemia, BMI 20.
 
 This is categorization only, per Milestone 1 scope: no matching logic, no
 exclusion tiering is implemented here. It maps each persona attribute to
-`TAGGING_SPEC_v0.3.md` section 2 (structured fields we use) and section 5
+`TAGGING_SPEC_v0.4.md` section 2 (structured fields we use) and section 5
 (exclusion tiers), to show which attributes the API's structured fields can
 answer directly and which require parsing `eligibilityCriteria` free text.
 
