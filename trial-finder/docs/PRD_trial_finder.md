@@ -1,6 +1,6 @@
 # PRD — Clinical Trial Finder
 
-**Version:** 0.4
+**Version:** 0.5
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — pre-validation
 **Related:** `TAGGING_SPEC_v0.5.md` (implementation detail)
@@ -102,14 +102,29 @@ later. This is a distinct job to be done: *staying informed*, not *enrolling*.
 
 **G7. Never hide a trial the user might qualify for.**
 
-**G8. Surface research-ready patients and families to investigators
-(new, under consideration — not scoped for implementation).** Some patients
-and families are willing and eager to connect with researchers directly, and
-currently have no path to do so — researchers miss out on collaborators who
-would have said yes. This is a **bidirectional** flow, unlike every other goal
-above, which is patient-initiated and one-directional (§4, R10). It needs its
-own consent and privacy model before any design work starts — see Non-goals
-§4.6, Assumption A10, and Open question §10.7.
+**G8. Surface non-trial pathways for ultra-rare, single-patient-variant
+conditions (new, under consideration — not scoped for implementation).**
+For some patients there is no trial to find at all. The concrete case:
+Partaap, a 6-year-old in Wolverhampton with an ultra-rare gene variant of
+juvenile ALS/MND, whose family is raising roughly £1M to commission a
+bespoke antisense oligonucleotide (ASO) therapy in the US, because nothing
+exists yet for his specific mutation ([Same Difference, 2026-09-21](https://samedifference1.com/2026/09/21/race-against-time-for-partaap-6-youngest-person-in-uk-with-mnd/);
+[Asia Samachar, 2026-09-21](https://asiasamachar.com/2026/09/21/uk-family-seeks-1m-for-experimental-treatment-for-six-year-old-partaap/)).
+ClinicalTrials.gov has nothing for a family like his to search, because the
+path isn't a registered trial — it's a bespoke research collaboration.
+Organizations exist specifically for this (e.g. the n-Lorem Foundation,
+which designs individualized ASOs for single patients); this product
+currently has no way to point a family toward that different kind of
+pathway, or toward the researchers who do it.
+
+This may be more tractable than a generic "researchers browse for patients"
+feature: the researchers who take on n-of-1 cases often *want* to hear about
+eligible ultra-rare patients, since finding them is the bottleneck for their
+own work — this is closer to a directory than an open marketplace. Still a
+**bidirectional** flow, unlike every other goal above (patient-initiated,
+one-directional, §4, R10), and still needs its own consent and privacy model
+before any design work starts — see Non-goals §4.6, Assumption A10, and Open
+question §10.7.
 
 ---
 
@@ -365,7 +380,7 @@ Listed in priority order — the first would invalidate the product if false.
 | A7 | A meaningful set of users want to follow developments without seeking a trial now | G6, R8, and the Job 2 metrics are unjustified |
 | A8 | Patients will email a research coordinator directly if given the words | R10 is unused; contact needs a mediated route instead |
 | A9 | Expanded access is relevant and wanted by this user | TAG 4b and the expanded-access surface are unjustified |
-| A10 | Patients/families exist who would proactively want researchers to find them — not just the reverse | G8 is unjustified; drop from roadmap |
+| A10 | Ultra-rare/single-patient-variant families exist in numbers worth building for, and a directory of n-of-1-capable researchers (G8) would have helped them faster than what they found on their own — Partaap's family (§3, G8) is one documented case, but reached a path (crowdfunding, direct outreach) without this product | G8 is unjustified; drop from roadmap |
 
 **Validation plan:** 12–15 interviews. Target mix: patients or caregivers who
 searched for a trial in the last 12 months, and 2–3 trial coordinators who
@@ -388,10 +403,13 @@ trial. Where did it break down?"* Not *"would you use this?"*
    search?
 6. Should expanded access (compassionate use) be a first-class surface rather
    than a tag? It may be more relevant to our primary user than trials are.
-7. What consent and privacy model would govern researcher-facing discovery
+7. What consent and privacy model would govern the ultra-rare-case directory
    (G8)? An opt-in registry a patient explicitly joins? Some anonymized
    signal? This needs its own review — not a UI decision — before any design
    work starts, per Non-goal §4.6.
+8. How many n-of-1-capable organizations are there (n-Lorem Foundation and
+   similar), and would they want to be discoverable this way? G8 assumes yes
+   but nobody on the research side has been asked.
 
 ---
 
@@ -400,6 +418,7 @@ trial. Where did it break down?"* Not *"would you use this?"*
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.5 | 2026-09-25 | **Grounded G8 in a real case.** Sharpened from a generic "researchers discover patients" framing to the specific gap it's actually named for: ultra-rare, single-patient-variant conditions where no trial exists to find at all — the concrete example is Partaap, a 6-year-old in Wolverhampton with an ultra-rare juvenile ALS/MND variant, whose family is raising ~£1M to commission a bespoke ASO therapy since none exists for his mutation. Reframed as closer to a directory of n-of-1-capable research organizations (e.g. n-Lorem Foundation) than an open marketplace. Updated Assumption A10 and added Open question §10.8 on whether such organizations would even want this. |
 | 0.4 | 2026-09-25 | Added R1b (local-only patient profile — client-side storage, never transmitted; keeps Phase 1 scope). Expanded R10 Template B with a second, hesitancy-based trigger (early-phase or high-burden recruiting trials) alongside the original status-based trigger. Added G8 (researcher-facing patient discovery) as a new, explicitly not-yet-scoped goal, with a matching Non-goal §4.6 boundary, Assumption A10, and Open question §10.7 — this is a bidirectional flow, unlike every other goal, and needs its own consent/privacy review before design work starts. |
 | 0.3 | 2026-08-26 | G3 (direct contact) added; goals renumbered. R10 contact templates added with constraints on sending, eligibility claims, health data, and bulk use. Job 1 primary metric changed to contact template copy rate. Template B copy rate added to Job 2. Coordinator flooding risk added. Assumption A8 added. |
 | 0.2 | 2026-08-26 | Problem reframed around health literacy; five concrete failure modes named. User redefined by dissatisfaction and research-willingness rather than desperation; prior interview evidence added. Goals G2 (export) and G5 (stay informed) added. Requirements R1, R3, R4, R7, R8, R9 added. Metrics split by job; return rate added for Job 2. Assumption A7 added. |
