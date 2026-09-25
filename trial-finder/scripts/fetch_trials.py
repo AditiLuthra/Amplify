@@ -3,7 +3,7 @@
 Milestone 1, Part A: fetch all ClinicalTrials.gov API v2 records for a condition.
 
 Saves raw, unmodified JSON responses (one file per page) to data/raw/<slug>/.
-Follows cursor pagination via nextPageToken (TAGGING_SPEC_v0.4.md sec. 2,
+Follows cursor pagination via nextPageToken (TAGGING_SPEC_v0.5.md sec. 2,
 "API mechanics"). Maintains a manifest so re-runs resume instead of
 re-fetching pages already on disk, and no-op once a fetch is marked complete.
 

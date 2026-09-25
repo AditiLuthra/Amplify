@@ -2,7 +2,7 @@
 
 - Records analyzed: **501**
 - Source: `/home/user/Amplify/trial-finder/data/raw/uterine_fibroids` (1 page(s), fetched via ClinicalTrials.gov API v2, cached raw JSON)
-- Spec version: TAGGING_SPEC_v0.4.md section 2
+- Spec version: TAGGING_SPEC_v0.5.md section 2
 
 ## Field population rate
 

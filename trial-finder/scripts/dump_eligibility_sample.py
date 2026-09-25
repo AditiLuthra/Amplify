@@ -75,7 +75,7 @@ def main():
     lines.append(f"{sample_size} record(s) randomly selected from {len(studies)} cached studies "
                   f"(seed={args.seed if args.seed is not None else 'none, fresh draw'}). "
                   "Verbatim `eligibilityCriteria` text, unparsed, for manual review per "
-                  "TAGGING_SPEC_v0.4.md section 6.")
+                  "TAGGING_SPEC_v0.5.md section 6.")
     lines.append("")
     lines.append("---")
     lines.append("")

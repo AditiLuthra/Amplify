@@ -7,12 +7,12 @@ clinical training.
 
 - `docs/PRD_trial_finder.md` — why we're building this, who for, what's in and
   out of scope. Read when a decision needs justifying.
-- `docs/TAGGING_SPEC_v0.4.md` — exact rules for every tag, exclusion, and
+- `docs/TAGGING_SPEC_v0.5.md` — exact rules for every tag, exclusion, and
   display string. **This is the source of truth for implementation.**
 
 ## Working agreement
 
-**The spec governs.** If a rule in `TAGGING_SPEC_v0.4.md` is ambiguous or wrong,
+**The spec governs.** If a rule in `TAGGING_SPEC_v0.5.md` is ambiguous or wrong,
 say so and stop — do not invent behavior to fill the gap. We fix the spec first,
 then implement. A spec that drifts from the code is worse than no spec.
 

@@ -1,9 +1,9 @@
 # PRD — Clinical Trial Finder
 
-**Version:** 0.3
+**Version:** 0.4
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — pre-validation
-**Related:** `TAGGING_SPEC_v0.4.md` (implementation detail)
+**Related:** `TAGGING_SPEC_v0.5.md` (implementation detail)
 
 ---
 
@@ -102,6 +102,15 @@ later. This is a distinct job to be done: *staying informed*, not *enrolling*.
 
 **G7. Never hide a trial the user might qualify for.**
 
+**G8. Surface research-ready patients and families to investigators
+(new, under consideration — not scoped for implementation).** Some patients
+and families are willing and eager to connect with researchers directly, and
+currently have no path to do so — researchers miss out on collaborators who
+would have said yes. This is a **bidirectional** flow, unlike every other goal
+above, which is patient-initiated and one-directional (§4, R10). It needs its
+own consent and privacy model before any design work starts — see Non-goals
+§4.6, Assumption A10, and Open question §10.7.
+
 ---
 
 ## 4. Non-goals
@@ -117,6 +126,13 @@ Explicit scope boundaries, not oversights.
    A tool paid per enrollment, serving users looking beyond standard care, is
    structurally incentivized to encourage enrollment. Scope decision and
    integrity decision. Revisit only with a disclosed model.
+6. **We do not build researcher-facing discovery (G8) in Phase 1 or Phase 2
+   without a separate consent and privacy review.** G8 is a different kind of
+   feature from everything else in this document — it means a researcher
+   seeing something about a patient, not a patient reading something about a
+   trial — and is not the same concern as #5 (this is not paid placement; it
+   could be entirely free and still need its own review). No design or build
+   work starts on it before that review happens.
 
 ---
 
@@ -176,11 +192,22 @@ lie into a sorting error.
 
 ## 6. Requirements
 
-High-level only. Implementation detail in `TAGGING_SPEC_v0.4.md`.
+High-level only. Implementation detail in `TAGGING_SPEC_v0.5.md`.
 
 **R1. Structured intake.** Let the user describe disease and current condition
 in enough detail to sort results — progressive questions in a side panel,
 ordered by how much each narrows the set. Directly addresses Problem §1.1.
+
+**R1b. Local patient profile (optional).** Let a user who wants to save
+themselves re-answering save their intake answers as a profile. **Local-only**
+— stored in the browser (e.g. `localStorage`/IndexedDB), **never transmitted
+to a server.** This keeps it Phase 1 (TAGGING_SPEC §7 currently reads
+"nothing stored" — amend to "nothing leaves the device"), since no privacy
+architecture decision is needed for data that never leaves the browser. Feeds
+straight back into R1's intake and the Tier A/B/C exclusion evaluation so
+repeat visits and new searches don't start from zero. Tell the user plainly
+that clearing browser data or switching devices loses it — no silent
+assumption of durability it doesn't have.
 
 **R2. Plain-language tag display.** Phase, placebo exposure, intervention
 category with explanation, cost status, freshness. Phase and placebo render
@@ -216,11 +243,20 @@ prefilled with the trial's identifiers and contact address from
 enrolling, what the main eligibility requirements are, where and how often
 participants are seen, and whether there are costs to participants.
 
-*Template B — Keep me posted.* For trials not currently recruiting, or completed
-ones. Asks to be notified if enrollment reopens, whether there are related
-studies to watch, and when results become available. This converts a
-non-recruiting trial from a dead end into an ongoing thread, and is the bridge
-between Job 1 and Job 2.
+*Template B — Keep me posted.* Asks to be notified if enrollment reopens,
+whether there are related studies to watch, and when results become
+available. This converts a dead end into an ongoing thread, and is the bridge
+between Job 1 and Job 2. Two triggers, not one:
+
+- **Status trigger (original).** Trial is not currently recruiting, or
+  completed. Template A doesn't apply — there's nothing to ask about fitting
+  into a study that isn't open.
+- **Hesitancy trigger (new).** Trial *is* recruiting but is early-phase
+  (`EARLY_PHASE1`/`PHASE1`, TAG 1) or high-burden (Layer C rank ≥ 4, TAG 3) —
+  offered **alongside** Template A, not instead of it. Addresses a different
+  problem than the status trigger: a user who is put off by how undeveloped
+  or demanding a trial is, not by its being closed. They may still want to ask
+  about fit *and* ask to be kept posted for when they feel more ready.
 
 **Constraints on R10:**
 
@@ -329,6 +365,7 @@ Listed in priority order — the first would invalidate the product if false.
 | A7 | A meaningful set of users want to follow developments without seeking a trial now | G6, R8, and the Job 2 metrics are unjustified |
 | A8 | Patients will email a research coordinator directly if given the words | R10 is unused; contact needs a mediated route instead |
 | A9 | Expanded access is relevant and wanted by this user | TAG 4b and the expanded-access surface are unjustified |
+| A10 | Patients/families exist who would proactively want researchers to find them — not just the reverse | G8 is unjustified; drop from roadmap |
 
 **Validation plan:** 12–15 interviews. Target mix: patients or caregivers who
 searched for a trial in the last 12 months, and 2–3 trial coordinators who
@@ -351,6 +388,10 @@ trial. Where did it break down?"* Not *"would you use this?"*
    search?
 6. Should expanded access (compassionate use) be a first-class surface rather
    than a tag? It may be more relevant to our primary user than trials are.
+7. What consent and privacy model would govern researcher-facing discovery
+   (G8)? An opt-in registry a patient explicitly joins? Some anonymized
+   signal? This needs its own review — not a UI decision — before any design
+   work starts, per Non-goal §4.6.
 
 ---
 
@@ -359,5 +400,6 @@ trial. Where did it break down?"* Not *"would you use this?"*
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.4 | 2026-09-25 | Added R1b (local-only patient profile — client-side storage, never transmitted; keeps Phase 1 scope). Expanded R10 Template B with a second, hesitancy-based trigger (early-phase or high-burden recruiting trials) alongside the original status-based trigger. Added G8 (researcher-facing patient discovery) as a new, explicitly not-yet-scoped goal, with a matching Non-goal §4.6 boundary, Assumption A10, and Open question §10.7 — this is a bidirectional flow, unlike every other goal, and needs its own consent/privacy review before design work starts. |
 | 0.3 | 2026-08-26 | G3 (direct contact) added; goals renumbered. R10 contact templates added with constraints on sending, eligibility claims, health data, and bulk use. Job 1 primary metric changed to contact template copy rate. Template B copy rate added to Job 2. Coordinator flooding risk added. Assumption A8 added. |
 | 0.2 | 2026-08-26 | Problem reframed around health literacy; five concrete failure modes named. User redefined by dissatisfaction and research-willingness rather than desperation; prior interview evidence added. Goals G2 (export) and G5 (stay informed) added. Requirements R1, R3, R4, R7, R8, R9 added. Metrics split by job; return rate added for Job 2. Assumption A7 added. |

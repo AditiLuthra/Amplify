@@ -1,6 +1,6 @@
 # Trial Tagging Specification
 
-**Version:** 0.4
+**Version:** 0.5
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — Phase 1
 
@@ -565,11 +565,20 @@ Derive, don't guess:
 Present progressively in a side panel, never as an upfront form. Show what each
 answer buys: *"3 more questions could rule out 40 trials."*
 
-**Phase 1:** questions only, evaluated client-side, nothing stored.
-**Phase 2:** optional record upload. Requires privacy architecture decided
-first — state consumer health privacy law (e.g. Washington My Health My Data,
-which carries a private right of action), **not** HIPAA, is the binding
-constraint on a direct-to-consumer tool.
+**Phase 1:** questions only, evaluated client-side, ~~nothing stored~~.
+
+> **Correction (v0.5).** "Nothing stored" was too strong. The actual boundary
+> is *nothing leaves the device*: a local-only patient profile (PRD R1b) may
+> persist intake answers in browser storage (`localStorage`/IndexedDB) so a
+> user doesn't re-answer on a later visit. This is still Phase 1 — no privacy
+> architecture decision is needed for data that's never transmitted anywhere.
+> What Phase 1 must not do is send that profile to a server.
+
+**Phase 2:** server-side record storage/upload. Requires privacy architecture
+decided first — state consumer health privacy law (e.g. Washington My Health
+My Data, which carries a private right of action), **not** HIPAA, is the
+binding constraint on a direct-to-consumer tool. The line between Phase 1 and
+Phase 2 is transmission, not persistence.
 
 ---
 
@@ -580,6 +589,7 @@ Every tag assignment records spec version and computation date.
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.5 | 2026-09-25 | **Reverted the v0.1 "nothing stored" claim in §7 — too strong.** A local-only patient profile (PRD R1b) may persist intake answers in browser storage; the actual Phase 1/2 boundary is transmission (nothing leaves the device), not persistence. Struck through, not deleted, matching this doc's convention for retracted claims. |
 | 0.4 | 2026-09-24 | **Reverted the v0.3 TAG 4 correction — it was itself wrong.** Milestone 1's live fetch of 501 "uterine fibroids" records (`trial-finder/reports/milestone_1_status.md`) found `overallStatus == UNKNOWN` on 97/501 records (19.4%), confirmed on `NCT03134157`. `UNKNOWN` is real, stored, and common — added back to the enum. TAG 4 now checks `overallStatus == UNKNOWN` directly (highest confidence, it's the registry's own determination) with the v0.3 derived-staleness heuristic kept as a supplementary signal for records the registry hasn't relabeled yet, gated on `overallStatus != UNKNOWN`. `UNKNOWN` routes to Excluded Trials with `lastKnownStatus` shown as supporting detail. |
 | 0.3 | 2026-08-26 | **API verified against v2 field reference.** ~~Corrected TAG 4: `overallStatus == UNKNOWN` does not exist in API v2 — staleness now derived from `statusVerifiedDate` + status + completion date.~~ (Reverted in 0.4 — this was wrong.) Added `ENROLLING_BY_INVITATION` handling. Added TAG 4b Expanded Access. Added `isUnapprovedDevice` as 8th oversight criterion. Added `COMBINATION_PRODUCT` to burden ladder. Added `referencesModule`, `centralContacts`, `stdAges`, `geoPoint` to data source table. Added API mechanics section (cursor pagination, fields-parameter casing, `query.patient`, `filter.geo`). |
 | 0.2 | 2026-08-26 | P2 revised to permit rubric-based judgments; P6 added. TAG 3 split into category/explanation/rank layers with 6-level burden ladder and device disambiguation. TAG 5 rubric named and labeled. §4 completed-trials results summary added. §6 eligibility parsing pipeline added. |
@@ -598,5 +608,8 @@ Every tag assignment records spec version and computation date.
 - ~~`overallStatus == UNKNOWN` does not exist in API v2 (TAG 4)~~ — this v0.3 claim was
   wrong; reverted in v0.4 after Milestone 1's live fetch found it on 19.4% of
   a 501-record sample. See §3 TAG 4 and the versioning table.
+- ~~"nothing stored" in Phase 1 intake (§7)~~ — too strong; reverted in v0.5.
+  Local-only browser storage is fine in Phase 1 (PRD R1b); only server
+  transmission is gated behind the Phase 2 privacy decision.
 - `query.patient` (patient-friendly search) untested against `query.cond` — may materially improve results for our users
 - `referencesModule[].pmid` linkage to published papers not yet used; relevant to the disease landscape view
