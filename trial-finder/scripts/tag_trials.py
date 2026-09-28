@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 """
-Milestone 2: TAG 1 (phase) + TAG 4 (freshness and status).
+Milestones 2-3: TAG 1 (phase), TAG 2 (placebo exposure), TAG 3 (intervention
+type and burden), TAG 4 (freshness and status).
 
-Pure lookups per TAGGING_SPEC_v0.5.md sec. 3 - no inference, no text
-extraction (that's later milestones). Reads cached raw pages from
-data/raw/<slug>/ (written by fetch_trials.py) and writes one tag record per
-trial to data/tagged/<slug>.json.
+Per TAGGING_SPEC_v0.5.md sec. 3. Reads cached raw pages from data/raw/<slug>/
+(written by fetch_trials.py) and writes one tag record per trial to
+data/tagged/<slug>.json. Never hits the network.
+
+A record that hits a case the spec doesn't cover is flagged (`gap`/
+`burden_gap`: true) rather than guessed at, per CLAUDE.md's working
+agreement. See reports/milestone_2_status.md and milestone_3_status.md for
+what was found and why.
 
 Usage:
     python3 scripts/tag_trials.py "uterine fibroids"
@@ -209,6 +214,177 @@ def tag4_status(status_module: dict, has_results, as_of: datetime.date) -> dict:
     return result
 
 
+# --- TAG 2: Placebo exposure --------------------------------------------
+
+PLACEBO_SHAM = {"PLACEBO_COMPARATOR", "SHAM_COMPARATOR"}
+
+
+def tag2_placebo(design_module: dict, arm_groups: list) -> dict:
+    design_info = design_module.get("designInfo") or {}
+    intervention_model = design_info.get("interventionModel")
+    allocation = design_info.get("allocation")
+    types = [a.get("type") for a in arm_groups]
+
+    if intervention_model == "SINGLE_GROUP" or len(arm_groups) == 1:
+        return {"label": "Everyone receives the treatment", "gap": False}
+
+    if any(t in PLACEBO_SHAM for t in types):
+        if allocation == "RANDOMIZED":
+            n_placebo = sum(1 for t in types if t in PLACEBO_SHAM)
+            n_total = len(types)
+            chance = n_placebo / n_total
+            return {
+                "label": f"You may receive a placebo (about {chance:.0%})",
+                "placebo_chance": chance,
+                "gap": False,
+            }
+        return {
+            "label": "This study includes a placebo group. Assignment is not "
+                     "random — ask the site how groups are chosen.",
+            "gap": False,
+        }
+
+    if any(t == "ACTIVE_COMPARATOR" for t in types):
+        return {
+            "label": "All participants receive an active treatment (you may "
+                     "receive the standard treatment rather than the new one)",
+            "gap": False,
+        }
+
+    if not arm_groups:
+        return {"label": "Not stated", "gap": False}
+
+    # Falls through all four named branches - most commonly multiple
+    # EXPERIMENTAL arms with no comparator arm, or arm groups present but
+    # missing `type` entirely. Not covered by TAGGING_SPEC_v0.5.md sec. 3
+    # TAG 2 - flagged, not guessed at (CLAUDE.md working agreement).
+    return {"gap": True, "arm_types_raw": types, "reason": "arm-type combination not covered by TAG 2"}
+
+
+# --- TAG 3: Intervention type and burden ----------------------------------
+
+# Layer C ladder (TAGGING_SPEC_v0.5.md sec. 3 TAG 3). PROCEDURE always ranks
+# 5 per the spec's own "Known gap" note (accepted simplification for v0.2,
+# not something to fix here). OTHER is not in the ladder at all - it spans
+# everything from major surgery to a placebo capsule to a questionnaire in
+# this corpus (see reports/milestone_3_status.md), so it is always a gap.
+TYPE_TO_RANK = {
+    "BEHAVIORAL": 1,
+    "DIETARY_SUPPLEMENT": 1,
+    "DIAGNOSTIC_TEST": 1,
+    "DRUG": 3,
+    "BIOLOGICAL": 3,
+    "COMBINATION_PRODUCT": 3,
+    "PROCEDURE": 5,
+    "RADIATION": 5,
+    "GENETIC": 5,
+}
+
+DEVICE_RANK4_SIGNALS = [
+    "implant", "implanted", "implantable", "catheter", "stent", "pump",
+    "electrode", "lead", "prosthesis", "surgically placed",
+]
+# KNOWN SPEC DEFECT - see reports/milestone_3_status.md. "external" and
+# "ultrasound" collide with MR-guided HIFU / focused-ultrasound ABLATION
+# systems, a real and common DEVICE type in this corpus (20/114 records)
+# that is not low-burden - it's a sedation-requiring tissue-destruction
+# procedure. Kept here verbatim from the spec (not silently dropped) but
+# tag3_intervention() below withholds burden_rank rather than trust a rank-1
+# match against these two keywords when an ablation-family word is also
+# present, per the working agreement (spec fix needed, not a code guess).
+DEVICE_RANK1_SIGNALS = [
+    "wearable", "wristband", "patch", "monitor", "sensor", "app",
+    "smartphone", "external", "ultrasound", "non-invasive",
+]
+ABLATION_FAMILY_WORDS = ["hifu", "focused ultrasound", "ablation", "hifu system"]
+
+
+def _device_rank(name: str, description: str) -> tuple:
+    """Returns (rank_or_None, is_gap). Device disambiguation per spec, with
+    the ultrasound/ablation collision withheld rather than guessed at."""
+    text = f"{name or ''} {description or ''}".lower()
+    r4 = any(k in text for k in DEVICE_RANK4_SIGNALS)
+    if r4:
+        return 4, False
+
+    r1 = any(k in text for k in DEVICE_RANK1_SIGNALS)
+    if r1:
+        if any(k in text for k in ABLATION_FAMILY_WORDS):
+            return None, True  # known spec defect - see module docstring above
+        return 1, False
+
+    return 2, False  # neither matched -> default rank 2, not rank 1 (P5)
+
+
+def tag3_intervention(study_type: str, interventions: list) -> dict:
+    if study_type == "OBSERVATIONAL":
+        return {
+            "layer_a_categories": ["No treatment given"],
+            "layer_b": [],
+            "burden_rank": 0,
+            "rank_components": [],
+            "burden_gap": False,
+            "gap_reasons": [],
+        }
+
+    layer_a = []
+    layer_b = []
+    rank_components = []
+    gap_reasons = []
+    any_gap = False
+
+    for iv in interventions:
+        itype = iv.get("type")
+        name = iv.get("name")
+        description = iv.get("description")
+
+        layer_a.append(itype)
+
+        # Layer B - explanation, priority order per spec: (1) verbatim
+        # description, (2) generated line from name+armGroups description
+        # marked as summarized [not implemented - see milestone note, this
+        # is deferred rather than done via ad hoc template text], (3) name
+        # alone.
+        if description:
+            layer_b.append({"text": description, "source": "verbatim", "intervention": name})
+        elif name:
+            layer_b.append({"text": name, "source": "name_only", "intervention": name})
+
+        # Layer C - burden rank.
+        if itype in TYPE_TO_RANK:
+            rank = TYPE_TO_RANK[itype]
+            rank_components.append({"type": itype, "rank": rank})
+        elif itype == "DEVICE":
+            rank, is_gap = _device_rank(name, description)
+            if is_gap:
+                any_gap = True
+                gap_reasons.append(f"DEVICE {name!r}: rank-1/ablation keyword collision, spec fix needed")
+            else:
+                rank_components.append({"type": itype, "rank": rank})
+        else:
+            any_gap = True
+            gap_reasons.append(f"{itype!r} not in the TAG 3 Layer C ladder")
+
+    # Withhold burden_rank entirely if any component is unresolved - taking
+    # max() of only the resolved ranks could understate the true burden
+    # (P5: never default a missing value to the optimistic case).
+    if any_gap:
+        burden_rank = None
+    elif rank_components:
+        burden_rank = max(c["rank"] for c in rank_components)
+    else:
+        burden_rank = None  # no interventions listed at all - "Not stated", not 0
+
+    return {
+        "layer_a_categories": layer_a,
+        "layer_b": layer_b,
+        "burden_rank": burden_rank,
+        "rank_components": rank_components,
+        "burden_gap": any_gap,
+        "gap_reasons": gap_reasons,
+    }
+
+
 # --- I/O -----------------------------------------------------------------
 
 def slugify(condition: str) -> str:
@@ -229,13 +405,19 @@ def tag_study(study: dict, as_of: datetime.date) -> dict:
     nct_id = protocol.get("identificationModule", {}).get("nctId")
     design_module = protocol.get("designModule", {}) or {}
     status_module = protocol.get("statusModule", {}) or {}
+    arms_module = protocol.get("armsInterventionsModule", {}) or {}
     has_results = study.get("hasResults")
+    study_type = design_module.get("studyType")
+    arm_groups = arms_module.get("armGroups") or []
+    interventions = arms_module.get("interventions") or []
 
     return {
         "nct_id": nct_id,
         "spec_version": SPEC_VERSION,
         "computed_at": as_of.isoformat(),
         "tag1_phase": tag1_phase(design_module),
+        "tag2_placebo": tag2_placebo(design_module, arm_groups),
+        "tag3_intervention": tag3_intervention(study_type, interventions),
         "tag4_status": tag4_status(status_module, has_results, as_of),
     }
 
@@ -267,18 +449,24 @@ def main():
 
     tagged = [tag_study(s, as_of) for s in studies]
 
-    gaps = [t for t in tagged if t["tag1_phase"].get("gap") or t["tag4_status"].get("gap")]
+    tag1_gaps = [t for t in tagged if t["tag1_phase"].get("gap")]
+    tag2_gaps = [t for t in tagged if t["tag2_placebo"].get("gap")]
+    tag3_gaps = [t for t in tagged if t["tag3_intervention"].get("burden_gap")]
+    tag4_gaps = [t for t in tagged if t["tag4_status"].get("gap")]
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(tagged, indent=2) + "\n")
 
     print(f"[done] tagged {len(tagged)} records -> {out_path}")
-    if gaps:
-        print(f"[gap] {len(gaps)} record(s) hit an unrecognized shape - see output for nct_id + reason. "
-              f"Not tagged; spec fix needed (CLAUDE.md working agreement).")
-        for t in gaps:
-            reason = t["tag1_phase"].get("reason") or "tag4 gap (missing overallStatus)"
-            print(f"       {t['nct_id']}: {reason}")
+    print(f"[gaps] TAG1: {len(tag1_gaps)}  TAG2: {len(tag2_gaps)}  TAG3 (burden): {len(tag3_gaps)}  TAG4: {len(tag4_gaps)}  "
+          f"(out of {len(tagged)}; each is a real record hitting a case not covered by the current spec - "
+          f"see reports/milestone_2_status.md and milestone_3_status.md, not silently guessed at)")
+    if tag1_gaps:
+        for t in tag1_gaps[:5]:
+            print(f"       TAG1 {t['nct_id']}: {t['tag1_phase'].get('reason')}")
+    if tag4_gaps:
+        for t in tag4_gaps[:5]:
+            print(f"       TAG4 {t['nct_id']}: missing overallStatus")
 
 
 if __name__ == "__main__":
