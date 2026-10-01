@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Milestones 2-3: TAG 1 (phase), TAG 2 (placebo exposure), TAG 3 (intervention
-type and burden), TAG 4 (freshness and status).
+Milestones 2-4: TAG 1 (phase), TAG 2 (placebo exposure), TAG 3 (intervention
+type and burden), TAG 4 (freshness and status), TAG 5 (oversight facts panel
+and rubric).
 
 Per TAGGING_SPEC_v0.5.md sec. 3. Reads cached raw pages from data/raw/<slug>/
 (written by fetch_trials.py) and writes one tag record per trial to
@@ -385,6 +386,102 @@ def tag3_intervention(study_type: str, interventions: list) -> dict:
     }
 
 
+# --- TAG 5: Oversight facts panel and rubric ------------------------------
+
+CONTROL_ARM_TYPES = {"ACTIVE_COMPARATOR", "PLACEBO_COMPARATOR", "SHAM_COMPARATOR", "NO_INTERVENTION"}
+PRIVATE_SPONSOR_CLASSES = {"OTHER", "INDIV"}
+
+# Two of the spec's eight published criteria (TAGGING_SPEC_v0.5.md sec. 3
+# TAG 5) are not computable from structured fields at this milestone:
+#   - "Participants pay to enroll" needs TAG 6 (free-text cost extraction).
+#     CLAUDE.md's own build order places TAG 6 at Milestone 7, after this
+#     one - TAG 5 as specified depends on a milestone that hasn't run yet.
+#   - "Unrelated conditions... spans 3+ unrelated body systems" has no
+#     body-system taxonomy defined anywhere in the spec. Classifying
+#     free-text conditions[] into body systems is inference, not a lookup,
+#     and inventing a taxonomy here would be exactly the kind of silent
+#     invention the working agreement prohibits.
+UNCOMPUTABLE_CRITERIA = [
+    "participant_pays (needs TAG 6, Milestone 7 - not yet run)",
+    "unrelated_conditions (no body-system taxonomy defined in spec)",
+]
+N_UNCOMPUTABLE = len(UNCOMPUTABLE_CRITERIA)
+
+
+def tag5_oversight(protocol: dict) -> dict:
+    oversight = protocol.get("oversightModule", {}) or {}
+    sponsor = (protocol.get("sponsorCollaboratorsModule", {}) or {}).get("leadSponsor", {}) or {}
+    locations = (protocol.get("contactsLocationsModule", {}) or {}).get("locations") or []
+    arm_groups = (protocol.get("armsInterventionsModule", {}) or {}).get("armGroups") or []
+
+    is_fda_drug = oversight.get("isFdaRegulatedDrug")
+    is_fda_device = oversight.get("isFdaRegulatedDevice")
+    has_dmc = oversight.get("oversightHasDmc")
+    sponsor_class = sponsor.get("class")
+    n_sites = len(locations)
+    arm_types = [a.get("type") for a in arm_groups]
+    has_control_group = any(t in CONTROL_ARM_TYPES for t in arm_types)
+    is_unapproved_device = oversight.get("isUnapprovedDevice")
+
+    fda_regulated = None
+    if is_fda_drug is not None or is_fda_device is not None:
+        fda_regulated = bool(is_fda_drug) or bool(is_fda_device)
+
+    facts_panel = {
+        "fda_regulated": fda_regulated,
+        "has_dmc": has_dmc,
+        "sponsor_class": sponsor_class,
+        "site_count": n_sites,
+        "has_control_group": has_control_group,
+    }
+
+    # The six criteria computable from structured fields alone. Each is
+    # True, False, or None (field missing on this record - a real,
+    # observed sparsity, not an implementation gap; see
+    # reports/milestone_4_status.md for how common this is per field).
+    criteria = {
+        "private_sponsor": (sponsor_class in PRIVATE_SPONSOR_CLASSES) if sponsor_class is not None else None,
+        "no_fda_regulation": (
+            (is_fda_drug is False and is_fda_device is False)
+            if (is_fda_drug is not None and is_fda_device is not None) else None
+        ),
+        "single_site": n_sites == 1,
+        "no_dmc": (has_dmc is False) if has_dmc is not None else None,
+        "no_control_group": not has_control_group,
+        "unapproved_device": bool(is_unapproved_device) if is_unapproved_device is not None else None,
+    }
+
+    met_count = sum(1 for v in criteria.values() if v is True)
+    unresolved_among_computed = sum(1 for v in criteria.values() if v is None)
+
+    # P1/P5-driven asymmetric logic: additional criteria (the 2 uncomputable
+    # ones, and any unresolved-on-this-record ones) can only ever INCREASE
+    # the true count, never decrease it. So a confirmed met_count >= 4 is
+    # already a safe, valid "flagged" result even with 2 criteria entirely
+    # unimplemented - waiting for TAG 6/a body-system taxonomy would only
+    # delay a true positive, which is the wrong direction to err for a
+    # safety-relevant flag. Conversely, met_count alone can't safely
+    # confirm "not flagged" unless even the most generous assumption about
+    # every unresolved/uncomputable criterion still can't reach 4.
+    max_possible = met_count + unresolved_among_computed + N_UNCOMPUTABLE
+    if met_count >= 4:
+        status = "flagged"
+    elif max_possible < 4:
+        status = "not_flagged"
+    else:
+        status = "undetermined"
+
+    return {
+        "facts_panel": facts_panel,
+        "criteria": criteria,
+        "criteria_met_count": met_count,
+        "criteria_unresolved_on_record": unresolved_among_computed,
+        "criteria_uncomputable_at_this_milestone": UNCOMPUTABLE_CRITERIA,
+        "max_possible_met": max_possible,
+        "status": status,
+    }
+
+
 # --- I/O -----------------------------------------------------------------
 
 def slugify(condition: str) -> str:
@@ -419,6 +516,7 @@ def tag_study(study: dict, as_of: datetime.date) -> dict:
         "tag2_placebo": tag2_placebo(design_module, arm_groups),
         "tag3_intervention": tag3_intervention(study_type, interventions),
         "tag4_status": tag4_status(status_module, has_results, as_of),
+        "tag5_oversight": tag5_oversight(protocol),
     }
 
 
@@ -453,6 +551,8 @@ def main():
     tag2_gaps = [t for t in tagged if t["tag2_placebo"].get("gap")]
     tag3_gaps = [t for t in tagged if t["tag3_intervention"].get("burden_gap")]
     tag4_gaps = [t for t in tagged if t["tag4_status"].get("gap")]
+    tag5_flagged = [t for t in tagged if t["tag5_oversight"]["status"] == "flagged"]
+    tag5_undetermined = [t for t in tagged if t["tag5_oversight"]["status"] == "undetermined"]
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(tagged, indent=2) + "\n")
@@ -467,6 +567,9 @@ def main():
     if tag4_gaps:
         for t in tag4_gaps[:5]:
             print(f"       TAG4 {t['nct_id']}: missing overallStatus")
+    print(f"[tag5] flagged (confirmed >=4 of 8): {len(tag5_flagged)}  "
+          f"undetermined (depends on TAG6/body-system taxonomy): {len(tag5_undetermined)}  "
+          f"not_flagged (confirmed): {len(tagged) - len(tag5_flagged) - len(tag5_undetermined)}")
 
 
 if __name__ == "__main__":
