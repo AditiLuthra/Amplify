@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Milestones 2-4: TAG 1 (phase), TAG 2 (placebo exposure), TAG 3 (intervention
+Milestones 2-5: TAG 1 (phase), TAG 2 (placebo exposure), TAG 3 (intervention
 type and burden), TAG 4 (freshness and status), TAG 5 (oversight facts panel
-and rubric).
+and rubric), Tier A exclusions (structured age/sex/healthy-volunteer
+mismatch - TAGGING_SPEC_v0.5.md sec. 5).
 
 Per TAGGING_SPEC_v0.5.md sec. 3. Reads cached raw pages from data/raw/<slug>/
 (written by fetch_trials.py) and writes one tag record per trial to
@@ -482,6 +483,75 @@ def tag5_oversight(protocol: dict) -> dict:
     }
 
 
+# --- Tier A exclusions (structured fields only) ---------------------------
+
+# Per TAGGING_SPEC_v0.5.md sec. 2, API v2 age fields are a number plus a
+# unit string ("18 Years", "6 Months"). "Year"/"Years" and "Months" are what
+# this corpus actually contains; Weeks/Days are supported for completeness
+# since the API format allows them, though unseen here.
+AGE_UNIT_TO_YEARS = {
+    "year": 1.0, "years": 1.0,
+    "month": 1 / 12, "months": 1 / 12,
+    "week": 1 / 52, "weeks": 1 / 52,
+    "day": 1 / 365, "days": 1 / 365,
+}
+
+
+def parse_age_to_years(age_str):
+    if not age_str:
+        return None
+    m = re.match(r"^([\d.]+)\s+(\w+)", age_str)
+    if not m:
+        return None
+    value, unit = m.groups()
+    factor = AGE_UNIT_TO_YEARS.get(unit.lower())
+    if factor is None:
+        return None
+    return float(value) * factor
+
+
+def tier_a_exclusion(eligibility_module: dict, patient: dict) -> dict:
+    """Structured-field-only exclusion per TAGGING_SPEC_v0.5.md sec. 5 Tier
+    A. `patient`: {"age_years": float|None, "sex": "MALE"|"FEMALE"|None,
+    "healthy_volunteer": bool|None}. Only a confirmed structured mismatch
+    may exclude - everything else (free text, Tiers B/C/D) is out of scope
+    per the build order; this never looks at eligibilityCriteria text."""
+    reasons = []
+
+    min_age_str = eligibility_module.get("minimumAge")
+    max_age_str = eligibility_module.get("maximumAge")
+    min_age = parse_age_to_years(min_age_str)
+    max_age = parse_age_to_years(max_age_str)
+    patient_age = patient.get("age_years")
+    if patient_age is not None:
+        if min_age is not None and patient_age < min_age:
+            reasons.append(f"Age outside range: trial requires at least {min_age_str}; you told us {patient_age}.")
+        if max_age is not None and patient_age > max_age:
+            reasons.append(f"Age outside range: trial requires at most {max_age_str}; you told us {patient_age}.")
+
+    trial_sex = eligibility_module.get("sex")
+    patient_sex = patient.get("sex")
+    if trial_sex and trial_sex != "ALL" and patient_sex and trial_sex != patient_sex:
+        reasons.append(f"Sex mismatch: trial is for {trial_sex.lower()} participants; you told us {patient_sex.lower()}.")
+
+    # healthyVolunteers == False is the only direction that's unambiguous:
+    # per ClinicalTrials.gov's own field semantics, False means the trial
+    # does NOT accept healthy volunteers (requires the condition). True
+    # means the trial accepts healthy volunteers, but that does not imply
+    # it EXCLUDES people who also have the condition (e.g. a trial can
+    # enroll a healthy-control arm alongside a patient arm) - so True
+    # never triggers an exclusion here, only False does, and only when the
+    # patient identifies as a healthy volunteer. Flagging this reasoning
+    # explicitly (not in the spec table) rather than leaving it implicit,
+    # per the working agreement - see reports/milestone_5_status.md.
+    hv = eligibility_module.get("healthyVolunteers")
+    patient_hv = patient.get("healthy_volunteer")
+    if hv is False and patient_hv is True:
+        reasons.append("Healthy-volunteer mismatch: this trial does not accept healthy volunteers.")
+
+    return {"excluded": len(reasons) > 0, "reasons": reasons}
+
+
 # --- I/O -----------------------------------------------------------------
 
 def slugify(condition: str) -> str:
@@ -497,12 +567,13 @@ def load_studies(raw_dir: Path) -> list[dict]:
     return studies
 
 
-def tag_study(study: dict, as_of: datetime.date) -> dict:
+def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
     protocol = study.get("protocolSection", {})
     nct_id = protocol.get("identificationModule", {}).get("nctId")
     design_module = protocol.get("designModule", {}) or {}
     status_module = protocol.get("statusModule", {}) or {}
     arms_module = protocol.get("armsInterventionsModule", {}) or {}
+    eligibility_module = protocol.get("eligibilityModule", {}) or {}
     has_results = study.get("hasResults")
     study_type = design_module.get("studyType")
     arm_groups = arms_module.get("armGroups") or []
@@ -517,6 +588,7 @@ def tag_study(study: dict, as_of: datetime.date) -> dict:
         "tag3_intervention": tag3_intervention(study_type, interventions),
         "tag4_status": tag4_status(status_module, has_results, as_of),
         "tag5_oversight": tag5_oversight(protocol),
+        "tier_a_exclusion": tier_a_exclusion(eligibility_module, patient),
     }
 
 
@@ -526,6 +598,15 @@ def main():
     parser.add_argument("--raw-dir", default=None)
     parser.add_argument("--out", default=None)
     parser.add_argument("--as-of", default=None, help="YYYY-MM-DD; default today (UTC)")
+    # Milestone 5: no intake UI exists yet (that's Milestone 6+), so the
+    # patient profile for Tier A exclusion defaults to Milestone 1's own
+    # test persona (reports/persona_field_categorization.md: 30F) - the two
+    # structured-evaluable attributes it already identified. Override via
+    # flags to test other profiles.
+    parser.add_argument("--patient-age", type=float, default=30.0)
+    parser.add_argument("--patient-sex", default="FEMALE", choices=["FEMALE", "MALE"])
+    parser.add_argument("--patient-healthy-volunteer", action="store_true",
+                         help="default off: the persona has an active condition, not healthy-volunteer status")
     args = parser.parse_args()
 
     repo_root = Path(__file__).resolve().parent.parent
@@ -536,6 +617,11 @@ def main():
         datetime.date.fromisoformat(args.as_of)
         if args.as_of else datetime.datetime.now(datetime.timezone.utc).date()
     )
+    patient = {
+        "age_years": args.patient_age,
+        "sex": args.patient_sex,
+        "healthy_volunteer": args.patient_healthy_volunteer,
+    }
 
     manifest_path = raw_dir / "_manifest.json"
     if not manifest_path.exists():
@@ -545,7 +631,7 @@ def main():
     if not studies:
         raise SystemExit(f"No studies found in {raw_dir}.")
 
-    tagged = [tag_study(s, as_of) for s in studies]
+    tagged = [tag_study(s, as_of, patient) for s in studies]
 
     tag1_gaps = [t for t in tagged if t["tag1_phase"].get("gap")]
     tag2_gaps = [t for t in tagged if t["tag2_placebo"].get("gap")]
@@ -553,6 +639,7 @@ def main():
     tag4_gaps = [t for t in tagged if t["tag4_status"].get("gap")]
     tag5_flagged = [t for t in tagged if t["tag5_oversight"]["status"] == "flagged"]
     tag5_undetermined = [t for t in tagged if t["tag5_oversight"]["status"] == "undetermined"]
+    tier_a_excluded = [t for t in tagged if t["tier_a_exclusion"]["excluded"]]
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(tagged, indent=2) + "\n")
@@ -570,6 +657,8 @@ def main():
     print(f"[tag5] flagged (confirmed >=4 of 8): {len(tag5_flagged)}  "
           f"undetermined (depends on TAG6/body-system taxonomy): {len(tag5_undetermined)}  "
           f"not_flagged (confirmed): {len(tagged) - len(tag5_flagged) - len(tag5_undetermined)}")
+    print(f"[tier_a] excluded for patient (age={patient['age_years']}, sex={patient['sex']}, "
+          f"healthy_volunteer={patient['healthy_volunteer']}): {len(tier_a_excluded)}/{len(tagged)}")
 
 
 if __name__ == "__main__":
