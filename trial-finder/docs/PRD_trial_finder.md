@@ -1,6 +1,6 @@
 # PRD — Clinical Trial Finder
 
-**Version:** 0.7
+**Version:** 0.8
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — pre-validation
 **Related:** `TAGGING_SPEC_v0.5.md` (implementation detail)
@@ -457,6 +457,26 @@ trial. Where did it break down?"* Not *"would you use this?"*
    Template B, or whether Template B already covers the real need at a
    privacy cost this product doesn't have to take on itself, is the
    question to answer before scoping either shape.
+10. **Community-sourced sponsor/trial flagging** (raised 2026-10-20,
+    parked — not scoped). Idea: let users mark a trial as sketchy/shady
+    (e.g. undisclosed pay-to-participate), surfaced as a warning once some
+    threshold of reports accumulates — motivated by TAG 6 finding zero
+    real cost-language hits on the uterine-fibroids corpus (Milestone 7),
+    meaning undisclosed cost may only ever surface through patient report,
+    never registry text. Real open problems before this could be designed,
+    not just built: (a) a raw report count is gameable (multiple accounts,
+    a competitor) in a way TAG 5's deterministic, structured-field rubric
+    isn't, and a wrongly-flagged legitimate trial is a real harm (asymmetric
+    error cost, §5.2); (b) anything shared across users is cross-device
+    shared state, which needs a server — Phase 2 scope, same boundary as
+    G9 (Non-goal §4.7); (c) *which trials a user reported* is itself
+    sensitive (reveals condition), the same category of concern the
+    Washington My Health My Data Act consideration already raises for G9
+    (§10.3). If this moves forward, the display should stay separate from
+    TAG 5's facts panel (e.g. "N people reported a concern," never merged
+    into the rubric's count) rather than blending an unverified signal into
+    a published, defensible standard (§5.3's reasoning for why facts-only
+    wasn't chosen applies in reverse here too).
 
 ---
 
@@ -465,6 +485,7 @@ trial. Where did it break down?"* Not *"would you use this?"*
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.8 | 2026-10-20 | Added Open question §10.10: community-sourced sponsor/trial flagging, raised after Milestone 7's TAG 6 found zero real cost-language hits on the corpus (undisclosed cost may only ever surface via patient report). Parked, not scoped — needs the same anti-gaming/liability, Phase-2-shared-state, and condition-sensitivity review as G8/G9 before any design work. |
 | 0.7 | 2026-10-20 | Reaffirmed Non-goal §4.2 ("we do not rank trials by likelihood of benefit") after it was requested directly during Milestone 6 UI work — declined for the reasons already in §5.3 and the spec's results-framing rule; built an evidence-level sort (phase progression + results-posted status) instead. See `UI_DECISIONS.md` D4. |
 | 0.6 | 2026-10-20 | Added G9 (status-change notifications — per-trial alerts or a periodic condition digest), raised during Milestone 6 UI work. Not scoped for implementation: gated behind the same Phase 2 privacy-architecture decision (Open question §10.3) as G8, via new Non-goal §4.7. Added Open question §10.9 on which shape (or whether R10 Template B's existing user-sent "keep me posted" email already covers the need without the data footprint). |
 | 0.5 | 2026-09-25 | **Grounded G8 in a real case.** Sharpened from a generic "researchers discover patients" framing to the specific gap it's actually named for: ultra-rare, single-patient-variant conditions where no trial exists to find at all — the concrete example is Partaap, a 6-year-old in Wolverhampton with an ultra-rare juvenile ALS/MND variant, whose family is raising ~£1M to commission a bespoke ASO therapy since none exists for his mutation. Reframed as closer to a directory of n-of-1-capable research organizations (e.g. n-Lorem Foundation) than an open marketplace. Updated Assumption A10 and added Open question §10.8 on whether such organizations would even want this. |
