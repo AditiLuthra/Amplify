@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clinical Trial Finder</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout concept: one calm page — a plain-language status strip, a single
+   scrollable list of trial cards, a quiet "excluded" drawer at the very
+   bottom. No tabs, no search box that doesn't work yet, no numbers shown
+   as if they were the point. */
+:root {
+  --bg: #f6f3ee;
+  --surface: #ffffff;
+  --ink: #26322f;
+  --muted: #647069;
+  --line: #e4ded3;
+  --accent: #2f6e63;
+  --accent-soft: #e4efec;
+  --caution-bg: #fbf1dd;
+  --caution-ink: #7a5a1a;
+  --flag-bg: #f6e4e0;
+  --flag-ink: #8a3f30;
+  --radius: 16px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b2321;
+    --surface: #222b28;
+    --ink: #eef1ef;
+    --muted: #9aa8a2;
+    --line: #333f3b;
+    --accent: #5fc2ac;
+    --accent-soft: #233531;
+    --caution-bg: #3a2f14;
+    --caution-ink: #e6c067;
+    --flag-bg: #3a2420;
+    --flag-ink: #e79d8b;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b2321; --surface: #222b28; --ink: #eef1ef; --muted: #9aa8a2; --line: #333f3b;
+  --accent: #5fc2ac; --accent-soft: #233531; --caution-bg: #3a2f14; --caution-ink: #e6c067;
+  --flag-bg: #3a2420; --flag-ink: #e79d8b; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 17px/1.55 "Atkinson Hyperlegible", system-ui, -apple-system, sans-serif;
+  padding-inline: 18px; padding-block: 22px 60px;
+}
+h1, h2 { font-family: "Literata", Georgia, serif; font-weight: 700; margin: 0; text-wrap: balance; }
+.wrap { max-width: 720px; margin: 0 auto; }
+
+.intro { margin-bottom: 18px; }
+.intro h1 { font-size: 1.55rem; line-height: 1.25; }
+.intro p { color: var(--muted); margin: 8px 0 0; font-size: 0.97rem; }
+
+.strip {
+  background: var(--accent); color: #fff; border-radius: var(--radius);
+  padding: 14px 18px; margin-bottom: 20px; font-size: 0.98rem; font-weight: 700;
+  display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline;
+}
+.strip .sep { opacity: 0.55; font-weight: 400; }
+
+.sortrow {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-bottom: 16px;
+}
+.sortrow .lbl { font-size: 0.86rem; color: var(--muted); font-weight: 700; }
+.sort-btn {
+  font: inherit; font-size: 0.86rem; font-weight: 700; color: var(--muted);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+  padding: 7px 14px; cursor: pointer;
+}
+.sort-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.group-note {
+  font-size: 0.85rem; color: var(--muted); margin: 22px 0 10px; padding: 0 2px;
+}
+.group-note:first-child { margin-top: 0; }
+
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 18px 20px; margin-bottom: 14px;
+}
+.card h2 { font-size: 1.12rem; line-height: 1.35; margin-bottom: 8px; }
+.card h2 a { color: var(--ink); text-decoration: none; }
+.card h2 a:hover { color: var(--accent); }
+.snippet { color: var(--muted); font-size: 0.93rem; margin: 0 0 14px; }
+
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+.pill {
+  display: inline-flex; align-items: center; border-radius: 999px; padding: 6px 13px;
+  font-size: 0.86rem; font-weight: 700; background: var(--accent-soft); color: var(--accent);
+}
+.pill.plain { background: var(--bg); color: var(--muted); border: 1px solid var(--line); font-weight: 400; }
+
+.note { border-radius: 12px; padding: 10px 14px; margin-top: 12px; font-size: 0.89rem; }
+.note.caution { background: var(--caution-bg); color: var(--caution-ink); }
+.note.flag { background: var(--flag-bg); color: var(--flag-ink); }
+.note b { font-weight: 700; }
+
+details.more { margin-top: 12px; }
+details.more > summary {
+  cursor: pointer; color: var(--accent); font-weight: 700; font-size: 0.88rem; list-style: none;
+}
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::before { content: "More about this trial "; }
+details.more[open] > summary::before { content: "Show less "; }
+.more-body { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--ink); }
+.more-body p { margin: 0 0 10px; }
+.more-body ul { margin: 6px 0 10px; padding-left: 20px; }
+.more-body li { margin-bottom: 4px; }
+.facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; font-size: 0.85rem; color: var(--muted); margin-top: 8px; }
+.facts-grid div b { color: var(--ink); }
+
+.section-label { font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 26px 0 10px; }
+
+details.excluded-drawer { background: transparent; }
+details.excluded-drawer > summary {
+  cursor: pointer; list-style: none; padding: 14px 18px; background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--radius); font-weight: 700; font-size: 0.95rem;
+}
+details.excluded-drawer > summary::-webkit-details-marker { display: none; }
+.excluded-card { border: 1px dashed var(--line); border-radius: 12px; padding: 14px 16px; margin-top: 10px; opacity: 0.85; }
+.excluded-card h3 { font-size: 0.98rem; margin: 0 0 6px; font-family: inherit; font-weight: 700; }
+.excluded-card .why { font-size: 0.88rem; color: var(--muted); margin-bottom: 10px; }
+.restore-btn {
+  font: inherit; font-size: 0.85rem; font-weight: 700; color: var(--accent); background: var(--accent-soft);
+  border: none; border-radius: 999px; padding: 7px 14px; cursor: pointer;
+}
+.restore-btn:hover { filter: brightness(0.96); }
+
+.disclaimer { margin-top: 30px; font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+.empty { text-align: center; color: var(--muted); padding: 30px 0; }
+
+.tips-link { font-size: 0.85rem; }
+.tips-link a { color: var(--accent); font-weight: 700; text-decoration: none; }
+.tips-link a:hover { text-decoration: underline; }
+
+details.tips { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 16px 20px; margin: 26px 0; scroll-margin-top: 16px; }
+details.tips > summary { cursor: pointer; font-weight: 700; font-size: 1rem; list-style: none; }
+details.tips > summary::-webkit-details-marker { display: none; }
+details.tips > summary::before { content: "▸ "; color: var(--accent); }
+details.tips[open] > summary::before { content: "▾ "; }
+.tips-body { margin-top: 14px; font-size: 0.92rem; }
+.tips-body h3 { font-family: inherit; font-size: 0.88rem; margin: 16px 0 6px; }
+.tips-body h3:first-child { margin-top: 0; }
+.tips-body ul { margin: 6px 0; padding-left: 20px; }
+.tips-body li { margin-bottom: 6px; }
+.tips-body .reviewed { color: var(--muted); font-size: 0.82rem; margin-top: 14px; }
+.tips-body .sources { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
+.tips-body .sources a { color: inherit; }
+
+@media (max-width: 480px) {
+  .facts-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="intro">
+    <h1>Clinical trials for uterine fibroids</h1>
+    <p>Everything below is written in plain language and comes straight from each trial's public record. We don't tell you whether you qualify — always check with the trial team before deciding anything.</p>
+  </div>
+
+  <div class="strip" id="strip"></div>
+
+  <div class="sortrow">
+    <span class="lbl">Sort by:</span>
+    <button type="button" class="sort-btn" id="sort-burden" aria-pressed="true">Lowest burden first</button>
+    <button type="button" class="sort-btn" id="sort-evidence" aria-pressed="false">Most evidence first</button>
+  </div>
+
+  <div id="results"></div>
+
+  <div class="section-label" id="excluded-label" hidden>Trials not shown above</div>
+  <details class="excluded-drawer" id="excluded-drawer" hidden>
+    <summary id="excluded-summary"></summary>
+    <div id="excluded-list"></div>
+  </details>
+
+  <details class="tips" id="tips-warnings">
+    <summary>Common signs of a predatory or pay-to-participate trial</summary>
+    <div class="tips-body">
+      <p>Our oversight checklist above is built from structured facts in each
+      trial's public record — sponsor type, FDA regulation, safety
+      monitoring, and so on. It can't tell you whether a treatment itself is
+      scientifically sound; a trial can look clean on every one of those
+      facts and still be testing something unproven. These are patterns to
+      watch for yourself, in addition to our checklist, not instead of it.</p>
+
+      <h3>Cost</h3>
+      <ul>
+        <li>You're asked to pay for the experimental treatment itself —
+        not incidental costs like parking, but the actual intervention
+        being studied. Legitimate research typically doesn't charge
+        participants for this.</li>
+        <li>The price is unusually high, or framed as a limited-time offer
+        pushing you to decide quickly.</li>
+      </ul>
+
+      <h3>What's offered as evidence</h3>
+      <ul>
+        <li>Patient testimonials are the main thing offered — not published
+        results or data you can check yourself.</li>
+        <li>The same treatment is marketed for many unrelated conditions.</li>
+        <li>Heavy advertising, rather than the kind of understated,
+        technical language most legitimate trial listings use.</li>
+      </ul>
+
+      <h3>Oversight and the people involved</h3>
+      <ul>
+        <li>Ask whether the treatment is under an active FDA Investigational
+        New Drug (IND) or Investigational Device Exemption (IDE) application
+        — and ask to see the approval letter. A listing on ClinicalTrials.gov
+        does not by itself mean the FDA has reviewed it.</li>
+        <li>Ask where the cells, drug, or device came from, what was done to
+        it, and exactly how it's supposed to help you — and get the answers
+        in writing.</li>
+        <li>Check who actually performs the procedure (a licensed physician,
+        versus unlicensed staff).</li>
+        <li>Using your own cells or tissue isn't automatically safe —
+        real risks (infection, the treatment simply not working, abnormal
+        growths) exist either way.</li>
+      </ul>
+
+      <p class="reviewed">Last reviewed: 2026-10-20. Reviewed roughly twice a
+      year — if this feels out of date, treat it as a starting point for your
+      own research, not the final word.</p>
+      <p class="sources">Sources: International Society for Stem Cell
+      Research (ISSCR) patient handbook on stem cell treatments;
+      FDA consumer guidance on unapproved stem cell products.</p>
+    </div>
+  </details>
+
+  <p class="disclaimer">
+    This page shows one condition (uterine fibroids) from a single, fixed example — searching other
+    conditions and saving a shortlist aren't built yet. This isn't medical advice, and it can't tell you
+    whether you're eligible for a trial; only the trial team can do that.
+  </p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var INTERVENTION_LABELS = {
+    BEHAVIORAL: "Behavioral therapy", DIETARY_SUPPLEMENT: "Dietary supplement",
+    DIAGNOSTIC_TEST: "Diagnostic test", DEVICE: "Device", DRUG: "Drug",
+    BIOLOGICAL: "Biological", COMBINATION_PRODUCT: "Combination product",
+    PROCEDURE: "Procedure", RADIATION: "Radiation", GENETIC: "Genetic", OTHER: "Other"
+  };
+
+  function el(tag, attrs, children) {
+    var e = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === "class") e.className = attrs[k];
+      else if (k === "html") e.innerHTML = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    }
+    (children || []).forEach(function (c) { if (c) e.appendChild(c); });
+    return e;
+  }
+  function text(s) { return document.createTextNode(s); }
+
+  function isHidden(t) {
+    return t.tag4_status.excluded || t.tier_a_exclusion.excluded;
+  }
+
+  function burdenSortKey(t) {
+    var r = t.tag3_intervention.burden_rank;
+    return (r === null || r === undefined) ? 99 : r;
+  }
+
+  // Evidence-level sort: how much accumulated evidence stands behind a
+  // trial (TAG 1's own phase ladder), never a claim about benefit - see
+  // TAGGING_SPEC_v0.5.md TAG 1 ("We do not label phases better or worse")
+  // and the mandatory TAG1/TAG2 adjacency rule, honored below by rendering
+  // placebo exposure on every card regardless of sort mode.
+  var PHASE_RANK = { EARLY_PHASE1: 0, PHASE1: 1, PHASE2: 2, PHASE3: 3, PHASE4: 4 };
+
+  function hasPhaseEvidence(t) {
+    return Object.prototype.hasOwnProperty.call(PHASE_RANK, t.tag1_phase.resolved_phase);
+  }
+  function evidenceSortKey(t) {
+    return -(PHASE_RANK[t.tag1_phase.resolved_phase] || 0); // descending: most evidence first
+  }
+
+  function interventionLine(t) {
+    var cats = (t.tag3_intervention.layer_a_categories || [])
+      .map(function (c) { return INTERVENTION_LABELS[c] || c; });
+    var uniqueCats = cats.filter(function (c, i) { return cats.indexOf(c) === i; });
+    var catText = uniqueCats.length ? uniqueCats.join(" + ") : "Not stated";
+    var firstExplain = (t.tag3_intervention.layer_b || [])[0];
+    return { category: catText, explanation: firstExplain ? firstExplain.text : null };
+  }
+
+  function placeboLabel(t) {
+    return t.tag2_placebo.gap ? "Not stated" : t.tag2_placebo.label;
+  }
+
+  function renderCard(t) {
+    var d = t.display;
+    var card = el("div", { class: "card" });
+
+    card.appendChild(el("h2", {}, [
+      el("a", { href: "https://clinicaltrials.gov/study/" + t.nct_id, target: "_blank", rel: "noopener" },
+        [text(d.brief_title || t.nct_id)])
+    ]));
+    if (d.summary_snippet) card.appendChild(el("p", { class: "snippet" }, [text(d.summary_snippet)]));
+
+    var facts = el("div", { class: "facts" });
+    facts.appendChild(el("span", { class: "pill" }, [text(t.tag1_phase.label)]));
+    facts.appendChild(el("span", { class: "pill" }, [text(placeboLabel(t))]));
+    var iv = interventionLine(t);
+    facts.appendChild(el("span", { class: "pill plain" }, [text(iv.category)]));
+    card.appendChild(facts);
+
+    var s = t.tag4_status;
+    if (s.enrolling_by_invitation) {
+      card.appendChild(el("div", { class: "note caution" }, [text(s.label)]));
+    } else if (s.completed_with_results) {
+      card.appendChild(el("div", { class: "note caution" },
+        [text("This trial has finished and posted results. See the full results on its registry page.")]));
+    }
+
+    var o = t.tag5_oversight;
+    if (o.status === "flagged") {
+      card.appendChild(el("div", { class: "note flag" }, [
+        el("b", {}, [text("Worth a closer look: ")]),
+        text("this trial meets " + o.criteria_met_count + " of 8 factors on our oversight checklist. " +
+          "Most of these are normal on their own for small academic studies — together, they're worth asking the trial team about before you decide. "),
+        el("span", { class: "tips-link" }, [el("a", { href: "#tips-warnings" }, [text("What should I look out for?")])])
+      ]));
+    } else if (o.status === "undetermined") {
+      card.appendChild(el("div", { class: "note caution" }, [
+        text("We don't have enough information yet to fully check this trial against our oversight checklist. "),
+        el("span", { class: "tips-link" }, [el("a", { href: "#tips-warnings" }, [text("What should I look out for?")])])
+      ]));
+    }
+
+    var more = el("details", { class: "more" });
+    var body = el("div", { class: "more-body" });
+    if (d.brief_summary) body.appendChild(el("p", {}, [text(d.brief_summary)]));
+    if (iv.explanation && iv.explanation !== d.summary_snippet) {
+      body.appendChild(el("p", {}, [el("b", {}, [text("What's involved: ")]), text(iv.explanation)]));
+    }
+    if (o.status !== "not_flagged") {
+      var metKeys = Object.keys(o.criteria).filter(function (k) { return o.criteria[k] === true; });
+      if (metKeys.length) {
+        var ul = el("ul", {});
+        var CRIT_TEXT = {
+          private_sponsor: "Run by a private clinic or individual, not a university, hospital, or government agency",
+          no_fda_regulation: "Not regulated by the FDA",
+          single_site: "Takes place at only one location",
+          no_dmc: "No independent committee watching over participant safety",
+          no_control_group: "Everyone gets the new treatment — nothing to compare it against",
+          unapproved_device: "Uses a device that hasn't been FDA-approved"
+        };
+        metKeys.forEach(function (k) { ul.appendChild(el("li", {}, [text(CRIT_TEXT[k] || k)])); });
+        body.appendChild(el("p", {}, [el("b", {}, [text("What we found:")])]));
+        body.appendChild(ul);
+      }
+      var fp = o.facts_panel;
+      var fg = el("div", { class: "facts-grid" });
+      fg.appendChild(el("div", {}, [el("b", {}, [text("FDA-regulated: ")]), text(fp.fda_regulated === null ? "Not stated" : (fp.fda_regulated ? "Yes" : "No"))]));
+      fg.appendChild(el("div", {}, [el("b", {}, [text("Safety committee: ")]), text(fp.has_dmc === null ? "Not stated" : (fp.has_dmc ? "Yes" : "No"))]));
+      fg.appendChild(el("div", {}, [el("b", {}, [text("Sponsor type: ")]), text(fp.sponsor_class || "Not stated")]));
+      fg.appendChild(el("div", {}, [el("b", {}, [text("Locations: ")]), text(String(fp.site_count))]));
+      body.appendChild(fg);
+    }
+    more.appendChild(el("summary", {}));
+    more.appendChild(body);
+    card.appendChild(more);
+
+    return card;
+  }
+
+  function exclusionReason(t) {
+    if (t.tier_a_exclusion.excluded) return t.tier_a_exclusion.reasons.join(" ");
+    if (t.tag4_status.excluded) return t.tag4_status.exclusion_reason;
+    return "";
+  }
+
+  function renderExcludedCard(t, onRestore) {
+    var card = el("div", { class: "excluded-card" });
+    card.appendChild(el("h3", {}, [text(t.display.brief_title || t.nct_id)]));
+    card.appendChild(el("p", { class: "why" }, [text(exclusionReason(t))]));
+    var btn = el("button", { class: "restore-btn", type: "button" }, [text("This doesn't apply to me — show it anyway")]);
+    btn.addEventListener("click", function () { onRestore(t, card); });
+    card.appendChild(btn);
+    return card;
+  }
+
+  var sortMode = "burden";
+  var currentVisible = [];
+
+  function renderResults(visible) {
+    var results = document.getElementById("results");
+    results.innerHTML = "";
+
+    if (visible.length === 0) {
+      results.appendChild(el("div", { class: "empty" }, [text("No trials to show right now.")]));
+      return;
+    }
+
+    if (sortMode === "burden") {
+      visible.slice().sort(function (a, b) { return burdenSortKey(a) - burdenSortKey(b); })
+        .forEach(function (t) { results.appendChild(renderCard(t)); });
+      return;
+    }
+
+    // Evidence mode: trials with an FDA phase, most evidence first; trials
+    // without one kept in their own group so "no phase" never visually
+    // reads as "ranked last" - per spec, NA "is normal... not a quality
+    // signal," a different note is intentional, not a lesser rank.
+    var phased = visible.filter(hasPhaseEvidence).sort(function (a, b) { return evidenceSortKey(a) - evidenceSortKey(b); });
+    var unphased = visible.filter(function (t) { return !hasPhaseEvidence(t); });
+
+    if (phased.length) {
+      results.appendChild(el("div", { class: "group-note" }, [text("Sorted by how much evidence stands behind each trial so far — not by whether it's likely to work for you.")]));
+      phased.forEach(function (t) { results.appendChild(renderCard(t)); });
+    }
+    if (unphased.length) {
+      results.appendChild(el("div", { class: "group-note" }, [text("These trials don't have an FDA phase — normal for behavioral, device, or observational studies, not a sign of less evidence.")]));
+      unphased.forEach(function (t) { results.appendChild(renderCard(t)); });
+    }
+  }
+
+  function initSortButtons() {
+    var burdenBtn = document.getElementById("sort-burden");
+    var evidenceBtn = document.getElementById("sort-evidence");
+    function setMode(mode) {
+      sortMode = mode;
+      burdenBtn.setAttribute("aria-pressed", String(mode === "burden"));
+      evidenceBtn.setAttribute("aria-pressed", String(mode === "evidence"));
+      renderResults(currentVisible);
+    }
+    burdenBtn.addEventListener("click", function () { setMode("burden"); });
+    evidenceBtn.addEventListener("click", function () { setMode("evidence"); });
+  }
+
+  function boot(data) {
+    var visible = data.filter(function (t) { return !isHidden(t); });
+    var hidden = data.filter(isHidden);
+    currentVisible = visible;
+
+    var recruiting = data.filter(function (t) {
+      return ["RECRUITING", "NOT_YET_RECRUITING", "ACTIVE_NOT_RECRUITING", "ENROLLING_BY_INVITATION"].indexOf(t.tag4_status.overall_status) !== -1;
+    }).length;
+    var withResults = data.filter(function (t) { return t.tag4_status.completed_with_results; }).length;
+    var flagged = data.filter(function (t) { return t.tag5_oversight.status === "flagged"; }).length;
+
+    var strip = document.getElementById("strip");
+    [
+      data.length + " trials found",
+      recruiting + " currently recruiting",
+      withResults + " completed with results",
+      flagged + " worth a closer look"
+    ].forEach(function (s, i) {
+      if (i > 0) strip.appendChild(el("span", { class: "sep" }, [text("·")]));
+      strip.appendChild(el("span", {}, [text(s)]));
+    });
+
+    initSortButtons();
+    renderResults(visible);
+
+    if (hidden.length > 0) {
+      document.getElementById("excluded-label").hidden = false;
+      var drawer = document.getElementById("excluded-drawer");
+      drawer.hidden = false;
+      document.getElementById("excluded-summary").textContent =
+        hidden.length + " trial" + (hidden.length === 1 ? "" : "s") + " we filtered out for an example 30-year-old profile (not a real account yet) — tap to see why";
+      var list = document.getElementById("excluded-list");
+      hidden.forEach(function (t) {
+        var card = renderExcludedCard(t, function (trial, cardEl) {
+          cardEl.remove();
+          currentVisible.push(trial);
+          renderResults(currentVisible);
+        });
+        list.appendChild(card);
+      });
+    }
+  }
+
+  // Repo layout serves this file from web/, one level above data/tagged/.
+  // A preview context (e.g. an Artifact) may publish the data alongside
+  // the page instead - try the repo-relative path first, then a flat one.
+  function loadData() {
+    return fetch("../data/tagged/uterine_fibroids.json").then(function (r) {
+      if (!r.ok) throw new Error("not found at repo path");
+      return r.json();
+    }).catch(function () {
+      return fetch("data/tagged/uterine_fibroids.json").then(function (r) { return r.json(); });
+    });
+  }
+
+  function initTipsLinks() {
+    var tips = document.getElementById("tips-warnings");
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a[href='#tips-warnings']");
+      if (a && tips) tips.open = true;
+    });
+  }
+
+  initTipsLinks();
+  loadData()
+    .then(boot)
+    .catch(function (err) {
+      document.getElementById("results").innerHTML =
+        "<div class=\"empty\">Couldn't load trial data: " + err + "</div>";
+    });
+})();
+</script>
+</body>
+</html>
