@@ -1,6 +1,6 @@
 # PRD — Clinical Trial Finder
 
-**Version:** 0.8
+**Version:** 0.9
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — pre-validation
 **Related:** `TAGGING_SPEC_v0.5.md` (implementation detail)
@@ -324,6 +324,18 @@ between Job 1 and Job 2. Two triggers, not one:
 - **Fallback.** Where no contact is listed, say so and point to the trial's
   registry page rather than fabricating a route.
 
+**R11. "Common signs of a predatory trial" tips content.** Serves G5,
+alongside R5. A shared, static explainer linked from every trial's oversight
+section (`UI_DECISIONS.md` D5) — not a standalone page — teaching patients to
+recognize predatory/pay-to-participate patterns the rubric can't yet confirm
+computationally (e.g. a scientifically-unvalidated therapy run with clean
+structured-field oversight). Content stays procedural and financial (cost,
+evidence type offered, who administers the treatment, oversight status) and
+never asserts that a specific therapy modality is or isn't effective — same
+boundary as Non-goal §4.2. Sourced from ISSCR's patient handbook and FDA
+consumer guidance. Reviewed twice a year; a visible "last reviewed" date
+keeps staleness honest rather than silently assumed-current.
+
 ---
 
 ## 7. Success metrics
@@ -485,6 +497,7 @@ trial. Where did it break down?"* Not *"would you use this?"*
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.9 | 2026-10-20 | Added R11: "common signs of a predatory trial" tips content, linked from the oversight panel (`UI_DECISIONS.md` D5) rather than a standalone page. Raised after confirming the FDA has no usable structured/searchable warning-letter data to join against trial sponsors (Open question 10.10's investigation) — this covers the same gap (a legitimate-looking trial testing an unvalidated therapy) with static, citable patient guidance instead. |
 | 0.8 | 2026-10-20 | Added Open question §10.10: community-sourced sponsor/trial flagging, raised after Milestone 7's TAG 6 found zero real cost-language hits on the corpus (undisclosed cost may only ever surface via patient report). Parked, not scoped — needs the same anti-gaming/liability, Phase-2-shared-state, and condition-sensitivity review as G8/G9 before any design work. |
 | 0.7 | 2026-10-20 | Reaffirmed Non-goal §4.2 ("we do not rank trials by likelihood of benefit") after it was requested directly during Milestone 6 UI work — declined for the reasons already in §5.3 and the spec's results-framing rule; built an evidence-level sort (phase progression + results-posted status) instead. See `UI_DECISIONS.md` D4. |
 | 0.6 | 2026-10-20 | Added G9 (status-change notifications — per-trial alerts or a periodic condition digest), raised during Milestone 6 UI work. Not scoped for implementation: gated behind the same Phase 2 privacy-architecture decision (Open question §10.3) as G8, via new Non-goal §4.7. Added Open question §10.9 on which shape (or whether R10 Template B's existing user-sent "keep me posted" email already covers the need without the data footprint). |

@@ -139,3 +139,47 @@ phased trials instead, with a one-line note saying why — a separate fact,
 not a lower rank.
 
 ---
+
+## D5 — "Common signs of a predatory trial" tips content (raised 2026-10-20)
+
+**Question:** Following D4, the oversight rubric (TAG 5) still only catches
+what's computable from structured fields and TAG 6, and can't catch a
+scientifically-unvalidated therapy run with clean oversight (an FDA-reviewed,
+multi-site, DMC-monitored trial testing something speculative). Raised
+directly: a static "tips/warnings" section teaching patients to recognize
+predatory patterns themselves, reviewed twice a year. Where should it live?
+
+**Options considered:**
+- A — Standalone tab/page (a separate destination, closer to a FAQ/help page)
+- B — Linked from the oversight panel (a small link next to each trial's
+  facts panel, pointing at one shared section)
+- C — Both: a teaser from the oversight panel plus a fuller standalone page
+
+**Decision: B.** Confirmed directly rather than assumed, given D1's "one
+surface" precedent would otherwise seem to argue against any new tab.
+
+**Why this doesn't repeat D1's problem.** D1 was about not splitting Job 1
+and Job 2 into two destinations a user has to choose between *before seeing
+anything*. This is different in kind: one shared, reusable explainer,
+surfaced contextually at the exact moment a user is already looking at
+oversight information, never a page someone has to find on their own. No
+new navigation, no URL, no choice to make up front — an inline `<details>`
+block (same pattern as "More about this trial") anchored once in the page,
+linked to from every card's oversight note.
+
+**Scope boundary, same reasoning as TAG 5 and D4.** Content stays procedural
+and financial (cost, evidence type, who's administering, oversight status) —
+never a claim that a specific therapy modality doesn't work. That line is
+what keeps this consistent with Non-goal §4.2/§4.3; "stem cell clinics
+charging patients and relying on testimonials instead of published data" is
+a pattern fact, not a verdict on stem cell therapy itself. Sourced from
+ISSCR's patient handbook and FDA consumer guidance (both already the
+implicit basis for TAG 5's own criteria per D4) — see citations in the page
+itself.
+
+**Maintenance:** a manually-edited static block, reviewed twice a year per
+the request — no new mechanism needed, consistent with D2's no-build-step
+stack. A "last reviewed" date is shown in the content itself so staleness is
+visible rather than silently assumed-current.
+
+---

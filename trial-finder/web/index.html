@@ -137,6 +137,25 @@ details.excluded-drawer > summary::-webkit-details-marker { display: none; }
 .disclaimer { margin-top: 30px; font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
 .empty { text-align: center; color: var(--muted); padding: 30px 0; }
 
+.tips-link { font-size: 0.85rem; }
+.tips-link a { color: var(--accent); font-weight: 700; text-decoration: none; }
+.tips-link a:hover { text-decoration: underline; }
+
+details.tips { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 16px 20px; margin: 26px 0; scroll-margin-top: 16px; }
+details.tips > summary { cursor: pointer; font-weight: 700; font-size: 1rem; list-style: none; }
+details.tips > summary::-webkit-details-marker { display: none; }
+details.tips > summary::before { content: "▸ "; color: var(--accent); }
+details.tips[open] > summary::before { content: "▾ "; }
+.tips-body { margin-top: 14px; font-size: 0.92rem; }
+.tips-body h3 { font-family: inherit; font-size: 0.88rem; margin: 16px 0 6px; }
+.tips-body h3:first-child { margin-top: 0; }
+.tips-body ul { margin: 6px 0; padding-left: 20px; }
+.tips-body li { margin-bottom: 6px; }
+.tips-body .reviewed { color: var(--muted); font-size: 0.82rem; margin-top: 14px; }
+.tips-body .sources { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
+.tips-body .sources a { color: inherit; }
+
 @media (max-width: 480px) {
   .facts-grid { grid-template-columns: 1fr; }
 }
@@ -164,6 +183,60 @@ details.excluded-drawer > summary::-webkit-details-marker { display: none; }
   <details class="excluded-drawer" id="excluded-drawer" hidden>
     <summary id="excluded-summary"></summary>
     <div id="excluded-list"></div>
+  </details>
+
+  <details class="tips" id="tips-warnings">
+    <summary>Common signs of a predatory or pay-to-participate trial</summary>
+    <div class="tips-body">
+      <p>Our oversight checklist above is built from structured facts in each
+      trial's public record — sponsor type, FDA regulation, safety
+      monitoring, and so on. It can't tell you whether a treatment itself is
+      scientifically sound; a trial can look clean on every one of those
+      facts and still be testing something unproven. These are patterns to
+      watch for yourself, in addition to our checklist, not instead of it.</p>
+
+      <h3>Cost</h3>
+      <ul>
+        <li>You're asked to pay for the experimental treatment itself —
+        not incidental costs like parking, but the actual intervention
+        being studied. Legitimate research typically doesn't charge
+        participants for this.</li>
+        <li>The price is unusually high, or framed as a limited-time offer
+        pushing you to decide quickly.</li>
+      </ul>
+
+      <h3>What's offered as evidence</h3>
+      <ul>
+        <li>Patient testimonials are the main thing offered — not published
+        results or data you can check yourself.</li>
+        <li>The same treatment is marketed for many unrelated conditions.</li>
+        <li>Heavy advertising, rather than the kind of understated,
+        technical language most legitimate trial listings use.</li>
+      </ul>
+
+      <h3>Oversight and the people involved</h3>
+      <ul>
+        <li>Ask whether the treatment is under an active FDA Investigational
+        New Drug (IND) or Investigational Device Exemption (IDE) application
+        — and ask to see the approval letter. A listing on ClinicalTrials.gov
+        does not by itself mean the FDA has reviewed it.</li>
+        <li>Ask where the cells, drug, or device came from, what was done to
+        it, and exactly how it's supposed to help you — and get the answers
+        in writing.</li>
+        <li>Check who actually performs the procedure (a licensed physician,
+        versus unlicensed staff).</li>
+        <li>Using your own cells or tissue isn't automatically safe —
+        real risks (infection, the treatment simply not working, abnormal
+        growths) exist either way.</li>
+      </ul>
+
+      <p class="reviewed">Last reviewed: 2026-10-20. Reviewed roughly twice a
+      year — if this feels out of date, treat it as a starting point for your
+      own research, not the final word.</p>
+      <p class="sources">Sources: International Society for Stem Cell
+      Research (ISSCR) patient handbook on stem cell treatments;
+      FDA consumer guidance on unapproved stem cell products.</p>
+    </div>
   </details>
 
   <p class="disclaimer">
@@ -262,11 +335,14 @@ details.excluded-drawer > summary::-webkit-details-marker { display: none; }
       card.appendChild(el("div", { class: "note flag" }, [
         el("b", {}, [text("Worth a closer look: ")]),
         text("this trial meets " + o.criteria_met_count + " of 8 factors on our oversight checklist. " +
-          "Most of these are normal on their own for small academic studies — together, they're worth asking the trial team about before you decide.")
+          "Most of these are normal on their own for small academic studies — together, they're worth asking the trial team about before you decide. "),
+        el("span", { class: "tips-link" }, [el("a", { href: "#tips-warnings" }, [text("What should I look out for?")])])
       ]));
     } else if (o.status === "undetermined") {
-      card.appendChild(el("div", { class: "note caution" },
-        [text("We don't have enough information yet to fully check this trial against our oversight checklist.")]));
+      card.appendChild(el("div", { class: "note caution" }, [
+        text("We don't have enough information yet to fully check this trial against our oversight checklist. "),
+        el("span", { class: "tips-link" }, [el("a", { href: "#tips-warnings" }, [text("What should I look out for?")])])
+      ]));
     }
 
     var more = el("details", { class: "more" });
@@ -425,6 +501,15 @@ details.excluded-drawer > summary::-webkit-details-marker { display: none; }
     });
   }
 
+  function initTipsLinks() {
+    var tips = document.getElementById("tips-warnings");
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a[href='#tips-warnings']");
+      if (a && tips) tips.open = true;
+    });
+  }
+
+  initTipsLinks();
   loadData()
     .then(boot)
     .catch(function (err) {
