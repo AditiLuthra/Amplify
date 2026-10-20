@@ -567,9 +567,26 @@ def load_studies(raw_dir: Path) -> list[dict]:
     return studies
 
 
+def summary_snippet(text, max_len=200):
+    """Verbatim truncation (never a paraphrase - spec P4) at the last word
+    boundary before max_len, so a UI can show a short line without
+    generating new text."""
+    if not text:
+        return None
+    text = text.strip()
+    if len(text) <= max_len:
+        return text
+    cut = text.rfind(" ", 0, max_len)
+    if cut <= 0:
+        cut = max_len
+    return text[:cut].rstrip(",;:") + "…"
+
+
 def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
     protocol = study.get("protocolSection", {})
-    nct_id = protocol.get("identificationModule", {}).get("nctId")
+    identification_module = protocol.get("identificationModule", {}) or {}
+    nct_id = identification_module.get("nctId")
+    description_module = protocol.get("descriptionModule", {}) or {}
     design_module = protocol.get("designModule", {}) or {}
     status_module = protocol.get("statusModule", {}) or {}
     arms_module = protocol.get("armsInterventionsModule", {}) or {}
@@ -578,11 +595,20 @@ def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
     study_type = design_module.get("studyType")
     arm_groups = arms_module.get("armGroups") or []
     interventions = arms_module.get("interventions") or []
+    brief_summary = description_module.get("briefSummary")
 
     return {
         "nct_id": nct_id,
         "spec_version": SPEC_VERSION,
         "computed_at": as_of.isoformat(),
+        # Pass-through display fields (not a computed tag - verbatim
+        # registry text, per P4/"preserve verbatim source text"). Added so
+        # a UI has something to show besides an NCT code; see Milestone 6.
+        "display": {
+            "brief_title": identification_module.get("briefTitle"),
+            "brief_summary": brief_summary,
+            "summary_snippet": summary_snippet(brief_summary),
+        },
         "tag1_phase": tag1_phase(design_module),
         "tag2_placebo": tag2_placebo(design_module, arm_groups),
         "tag3_intervention": tag3_intervention(study_type, interventions),

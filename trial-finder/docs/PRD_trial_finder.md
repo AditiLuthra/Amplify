@@ -1,6 +1,6 @@
 # PRD — Clinical Trial Finder
 
-**Version:** 0.5
+**Version:** 0.6
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — pre-validation
 **Related:** `TAGGING_SPEC_v0.5.md` (implementation detail)
@@ -126,6 +126,26 @@ one-directional, §4, R10), and still needs its own consent and privacy model
 before any design work starts — see Non-goals §4.6, Assumption A10, and Open
 question §10.7.
 
+**G9. Keep a user informed of changes to trials or a condition they care
+about, without requiring a return visit (new, under consideration — not
+scoped for implementation).** Raised directly during Milestone 6 UI work:
+once a user has looked at a trial, learning later that it changed phase,
+started recruiting, or posted results is valuable — and today requires
+them to come back and search again. Two distinct shapes were proposed,
+with different costs:
+
+- *Per-trial alerts* — notify when a specific bookmarked trial's status or
+  phase changes. Requires a durable, identifiable list of "trials this
+  person cares about" tied to a way to reach them.
+- *Periodic condition digest* — a monthly summary of what's changed for a
+  condition, not tied to specific saved trials. Lower-resolution, but
+  needs less identity-linkage: "notify this address about condition X" is
+  a smaller data footprint than "this specific person saved these specific
+  trials."
+
+Neither is scoped for implementation. See Non-goal §4.7 for why not yet,
+and Open question §10.9 for the shape question itself.
+
 ---
 
 ## 4. Non-goals
@@ -148,6 +168,19 @@ Explicit scope boundaries, not oversights.
    trial — and is not the same concern as #5 (this is not paid placement; it
    could be entirely free and still need its own review). No design or build
    work starts on it before that review happens.
+
+7. **We do not build status-change notifications (G9) before the Phase 2
+   privacy architecture is decided (Open question §10.3).** Either shape of
+   G9 requires persisting a user's interest (a bookmark, an email address, a
+   condition subscription) *and transmitting it off-device* to send a
+   notification later — which is precisely the Phase 1/Phase 2 boundary
+   R1b already draws ("nothing leaves the device"), not a UI decision. The
+   Washington My Health My Data Act consideration that gates Phase 2
+   generally (§10.3) applies in full here, arguably more sharply: a
+   notification service requires storing which specific health condition or
+   trial a specific contact address cares about, which is close to the
+   core of what that law regulates. No design or build work starts on G9
+   before that review happens, same as G8's gate above.
 
 ---
 
@@ -410,6 +443,18 @@ trial. Where did it break down?"* Not *"would you use this?"*
 8. How many n-of-1-capable organizations are there (n-Lorem Foundation and
    similar), and would they want to be discoverable this way? G8 assumes yes
    but nobody on the research side has been asked.
+9. G9 (status-change notifications): per-trial alerts, a periodic condition
+   digest, or both? Per-trial alerts are the more useful signal to an
+   engaged Job-1 user (R9 shortlisting already implies specific trials they
+   care about) but carry the larger data footprint — identifiable interest
+   in specific trials, not just a condition. A digest is more defensible
+   privacy-wise but a weaker signal, and overlaps with R8's disease
+   landscape view and R10 Template B's existing "keep me posted" email
+   (already Phase-1-compatible, since the user — not this product — holds
+   and sends that request). Whether G9 should exist *in addition* to
+   Template B, or whether Template B already covers the real need at a
+   privacy cost this product doesn't have to take on itself, is the
+   question to answer before scoping either shape.
 
 ---
 
@@ -418,6 +463,7 @@ trial. Where did it break down?"* Not *"would you use this?"*
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.6 | 2026-10-20 | Added G9 (status-change notifications — per-trial alerts or a periodic condition digest), raised during Milestone 6 UI work. Not scoped for implementation: gated behind the same Phase 2 privacy-architecture decision (Open question §10.3) as G8, via new Non-goal §4.7. Added Open question §10.9 on which shape (or whether R10 Template B's existing user-sent "keep me posted" email already covers the need without the data footprint). |
 | 0.5 | 2026-09-25 | **Grounded G8 in a real case.** Sharpened from a generic "researchers discover patients" framing to the specific gap it's actually named for: ultra-rare, single-patient-variant conditions where no trial exists to find at all — the concrete example is Partaap, a 6-year-old in Wolverhampton with an ultra-rare juvenile ALS/MND variant, whose family is raising ~£1M to commission a bespoke ASO therapy since none exists for his mutation. Reframed as closer to a directory of n-of-1-capable research organizations (e.g. n-Lorem Foundation) than an open marketplace. Updated Assumption A10 and added Open question §10.8 on whether such organizations would even want this. |
 | 0.4 | 2026-09-25 | Added R1b (local-only patient profile — client-side storage, never transmitted; keeps Phase 1 scope). Expanded R10 Template B with a second, hesitancy-based trigger (early-phase or high-burden recruiting trials) alongside the original status-based trigger. Added G8 (researcher-facing patient discovery) as a new, explicitly not-yet-scoped goal, with a matching Non-goal §4.6 boundary, Assumption A10, and Open question §10.7 — this is a bidirectional flow, unlike every other goal, and needs its own consent/privacy review before design work starts. |
 | 0.3 | 2026-08-26 | G3 (direct contact) added; goals renumbered. R10 contact templates added with constraints on sending, eligibility claims, health data, and bulk use. Job 1 primary metric changed to contact template copy rate. Template B copy rate added to Job 2. Coordinator flooding risk added. Assumption A8 added. |
