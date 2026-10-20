@@ -1,6 +1,6 @@
 # PRD — Clinical Trial Finder
 
-**Version:** 0.6
+**Version:** 0.7
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — pre-validation
 **Related:** `TAGGING_SPEC_v0.5.md` (implementation detail)
@@ -155,6 +155,8 @@ Explicit scope boundaries, not oversights.
 1. **We do not tell users whether they qualify.** Eligibility determination
    belongs to the trial site.
 2. **We do not rank trials by likelihood of benefit.** We cannot know this.
+   *(Reaffirmed 2026-10-20 — see `UI_DECISIONS.md` D4: requested directly
+   during Milestone 6, declined, evidence-level sort built in its place.)*
 3. **We do not provide medical advice.**
 4. **We do not attempt deep eligibility matching in Phase 1.**
 5. **We do not take sponsor-paid placement or per-referral revenue in Phase 1.**
@@ -463,6 +465,7 @@ trial. Where did it break down?"* Not *"would you use this?"*
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.7 | 2026-10-20 | Reaffirmed Non-goal §4.2 ("we do not rank trials by likelihood of benefit") after it was requested directly during Milestone 6 UI work — declined for the reasons already in §5.3 and the spec's results-framing rule; built an evidence-level sort (phase progression + results-posted status) instead. See `UI_DECISIONS.md` D4. |
 | 0.6 | 2026-10-20 | Added G9 (status-change notifications — per-trial alerts or a periodic condition digest), raised during Milestone 6 UI work. Not scoped for implementation: gated behind the same Phase 2 privacy-architecture decision (Open question §10.3) as G8, via new Non-goal §4.7. Added Open question §10.9 on which shape (or whether R10 Template B's existing user-sent "keep me posted" email already covers the need without the data footprint). |
 | 0.5 | 2026-09-25 | **Grounded G8 in a real case.** Sharpened from a generic "researchers discover patients" framing to the specific gap it's actually named for: ultra-rare, single-patient-variant conditions where no trial exists to find at all — the concrete example is Partaap, a 6-year-old in Wolverhampton with an ultra-rare juvenile ALS/MND variant, whose family is raising ~£1M to commission a bespoke ASO therapy since none exists for his mutation. Reframed as closer to a directory of n-of-1-capable research organizations (e.g. n-Lorem Foundation) than an open marketplace. Updated Assumption A10 and added Open question §10.8 on whether such organizations would even want this. |
 | 0.4 | 2026-09-25 | Added R1b (local-only patient profile — client-side storage, never transmitted; keeps Phase 1 scope). Expanded R10 Template B with a second, hesitancy-based trigger (early-phase or high-burden recruiting trials) alongside the original status-based trigger. Added G8 (researcher-facing patient discovery) as a new, explicitly not-yet-scoped goal, with a matching Non-goal §4.6 boundary, Assumption A10, and Open question §10.7 — this is a bidirectional flow, unlike every other goal, and needs its own consent/privacy review before design work starts. |

@@ -67,6 +67,21 @@ h1, h2 { font-family: "Literata", Georgia, serif; font-weight: 700; margin: 0; t
 }
 .strip .sep { opacity: 0.55; font-weight: 400; }
 
+.sortrow {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-bottom: 16px;
+}
+.sortrow .lbl { font-size: 0.86rem; color: var(--muted); font-weight: 700; }
+.sort-btn {
+  font: inherit; font-size: 0.86rem; font-weight: 700; color: var(--muted);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+  padding: 7px 14px; cursor: pointer;
+}
+.sort-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.group-note {
+  font-size: 0.85rem; color: var(--muted); margin: 22px 0 10px; padding: 0 2px;
+}
+.group-note:first-child { margin-top: 0; }
+
 .card {
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 18px 20px; margin-bottom: 14px;
@@ -137,6 +152,12 @@ details.excluded-drawer > summary::-webkit-details-marker { display: none; }
 
   <div class="strip" id="strip"></div>
 
+  <div class="sortrow">
+    <span class="lbl">Sort by:</span>
+    <button type="button" class="sort-btn" id="sort-burden" aria-pressed="true">Lowest burden first</button>
+    <button type="button" class="sort-btn" id="sort-evidence" aria-pressed="false">Most evidence first</button>
+  </div>
+
   <div id="results"></div>
 
   <div class="section-label" id="excluded-label" hidden>Trials not shown above</div>
@@ -182,6 +203,20 @@ details.excluded-drawer > summary::-webkit-details-marker { display: none; }
   function burdenSortKey(t) {
     var r = t.tag3_intervention.burden_rank;
     return (r === null || r === undefined) ? 99 : r;
+  }
+
+  // Evidence-level sort: how much accumulated evidence stands behind a
+  // trial (TAG 1's own phase ladder), never a claim about benefit - see
+  // TAGGING_SPEC_v0.5.md TAG 1 ("We do not label phases better or worse")
+  // and the mandatory TAG1/TAG2 adjacency rule, honored below by rendering
+  // placebo exposure on every card regardless of sort mode.
+  var PHASE_RANK = { EARLY_PHASE1: 0, PHASE1: 1, PHASE2: 2, PHASE3: 3, PHASE4: 4 };
+
+  function hasPhaseEvidence(t) {
+    return Object.prototype.hasOwnProperty.call(PHASE_RANK, t.tag1_phase.resolved_phase);
+  }
+  function evidenceSortKey(t) {
+    return -(PHASE_RANK[t.tag1_phase.resolved_phase] || 0); // descending: most evidence first
   }
 
   function interventionLine(t) {
@@ -287,10 +322,58 @@ details.excluded-drawer > summary::-webkit-details-marker { display: none; }
     return card;
   }
 
+  var sortMode = "burden";
+  var currentVisible = [];
+
+  function renderResults(visible) {
+    var results = document.getElementById("results");
+    results.innerHTML = "";
+
+    if (visible.length === 0) {
+      results.appendChild(el("div", { class: "empty" }, [text("No trials to show right now.")]));
+      return;
+    }
+
+    if (sortMode === "burden") {
+      visible.slice().sort(function (a, b) { return burdenSortKey(a) - burdenSortKey(b); })
+        .forEach(function (t) { results.appendChild(renderCard(t)); });
+      return;
+    }
+
+    // Evidence mode: trials with an FDA phase, most evidence first; trials
+    // without one kept in their own group so "no phase" never visually
+    // reads as "ranked last" - per spec, NA "is normal... not a quality
+    // signal," a different note is intentional, not a lesser rank.
+    var phased = visible.filter(hasPhaseEvidence).sort(function (a, b) { return evidenceSortKey(a) - evidenceSortKey(b); });
+    var unphased = visible.filter(function (t) { return !hasPhaseEvidence(t); });
+
+    if (phased.length) {
+      results.appendChild(el("div", { class: "group-note" }, [text("Sorted by how much evidence stands behind each trial so far — not by whether it's likely to work for you.")]));
+      phased.forEach(function (t) { results.appendChild(renderCard(t)); });
+    }
+    if (unphased.length) {
+      results.appendChild(el("div", { class: "group-note" }, [text("These trials don't have an FDA phase — normal for behavioral, device, or observational studies, not a sign of less evidence.")]));
+      unphased.forEach(function (t) { results.appendChild(renderCard(t)); });
+    }
+  }
+
+  function initSortButtons() {
+    var burdenBtn = document.getElementById("sort-burden");
+    var evidenceBtn = document.getElementById("sort-evidence");
+    function setMode(mode) {
+      sortMode = mode;
+      burdenBtn.setAttribute("aria-pressed", String(mode === "burden"));
+      evidenceBtn.setAttribute("aria-pressed", String(mode === "evidence"));
+      renderResults(currentVisible);
+    }
+    burdenBtn.addEventListener("click", function () { setMode("burden"); });
+    evidenceBtn.addEventListener("click", function () { setMode("evidence"); });
+  }
+
   function boot(data) {
     var visible = data.filter(function (t) { return !isHidden(t); });
     var hidden = data.filter(isHidden);
-    visible.sort(function (a, b) { return burdenSortKey(a) - burdenSortKey(b); });
+    currentVisible = visible;
 
     var recruiting = data.filter(function (t) {
       return ["RECRUITING", "NOT_YET_RECRUITING", "ACTIVE_NOT_RECRUITING", "ENROLLING_BY_INVITATION"].indexOf(t.tag4_status.overall_status) !== -1;
@@ -309,12 +392,8 @@ details.excluded-drawer > summary::-webkit-details-marker { display: none; }
       strip.appendChild(el("span", {}, [text(s)]));
     });
 
-    var results = document.getElementById("results");
-    if (visible.length === 0) {
-      results.appendChild(el("div", { class: "empty" }, [text("No trials to show right now.")]));
-    } else {
-      visible.forEach(function (t) { results.appendChild(renderCard(t)); });
-    }
+    initSortButtons();
+    renderResults(visible);
 
     if (hidden.length > 0) {
       document.getElementById("excluded-label").hidden = false;
@@ -326,7 +405,8 @@ details.excluded-drawer > summary::-webkit-details-marker { display: none; }
       hidden.forEach(function (t) {
         var card = renderExcludedCard(t, function (trial, cardEl) {
           cardEl.remove();
-          document.getElementById("results").appendChild(renderCard(trial));
+          currentVisible.push(trial);
+          renderResults(currentVisible);
         });
         list.appendChild(card);
       });

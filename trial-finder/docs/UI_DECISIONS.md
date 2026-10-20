@@ -100,3 +100,42 @@ a body-system taxonomy exist and `undetermined` mostly resolves to one of
 the other two.
 
 ---
+
+## D4 — "Sort by how promising" (declined), evidence-level sort (built)
+
+**Question:** Requested directly during Milestone 6: sort trials by how
+promising the therapy is, and flag dicey sponsors / unproven pay-to-enroll
+therapies (stem cell clinics named as the motivating example).
+
+**The oversight-flagging half was already built** — TAG 5 / `UI_DECISIONS.md`
+D3, and the stem-cell-clinic scenario is the literal case its criteria
+cite (ISSCR guidelines, FDA warnings). The gap is that criterion 1
+("participants pay") needs TAG 6, not yet built — motivation to prioritize
+Milestone 7 next, not a new decision.
+
+**The "promising" half was declined**, not built. `PRD_trial_finder.md`
+Non-goal §4.2 ("we do not rank trials by likelihood of benefit — we cannot
+know this") already covers this, and §5.3 already explains why: there's no
+honest computable signal, the spec's own results-framing rule says an LLM
+summarizing outcome tables "will sometimes call a failed trial promising,"
+and the PRD's risk table names "false hope" as a High-severity risk with
+"no ranking by benefit" as its stated mitigation. Confirmed this with the
+product owner rather than assuming the non-goal still held — see PRD
+versioning 0.7.
+
+**Built instead: evidence-level sort.** A toggle between "Lowest burden
+first" (the existing default) and "Most evidence first" — the latter
+sorts by TAG 1's phase ladder (`EARLY_PHASE1` → ... → `PHASE4`), which the
+spec already frames as an evidence-accumulation order ("Large-scale
+confirmation... more evidence stands behind the treatment at this stage
+than at any earlier one"), never a benefit claim.
+
+**One subtlety worth naming.** Trials with no FDA phase (`NA` — normal for
+behavioral, device, and observational studies) aren't placed at the bottom
+of the evidence sort. The spec is explicit that `NA` "is not a quality
+signal," so ranking them last would visually assert the opposite of what
+the spec says is true. They're shown in their own labeled group below the
+phased trials instead, with a one-line note saying why — a separate fact,
+not a lower rank.
+
+---

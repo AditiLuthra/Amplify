@@ -87,9 +87,21 @@ cd trial-finder/web && python3 -m http.server 8000
 
 Or the published preview: https://claude.ai/artifact/LVpYXEiR8VvXdW3ZgDTvke
 
+## Addendum: evidence-level sort, "promising" sort declined
+
+Raised directly after this milestone shipped: flag dicey sponsors/unproven
+pay-to-enroll therapies (already built — TAG 5, D3), and sort by how
+promising a therapy is (declined — conflicts with PRD Non-goal §4.2 and
+§5.3's reasoning, confirmed with the product owner rather than assumed).
+Built an evidence-level sort toggle instead (phase progression, with
+`NA`-phase trials kept in their own labeled group rather than placed last,
+since the spec is explicit that no-phase isn't a lower-quality signal).
+Full reasoning in `docs/UI_DECISIONS.md` D4.
+
 ## Next per `CLAUDE.md` build order
 
 Milestone 7: **Text extraction** — TAG 6 (cost, free text only) and
 exclusion Tiers B/C. The only milestone needing an LLM, and the one that
 would finally resolve TAG 5's "undetermined" majority (D3) once the
-participant-pays criterion exists.
+participant-pays criterion exists. Also now the direct answer to "flag
+trials that make you pay for an unproven therapy," per the addendum above.
