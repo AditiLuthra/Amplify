@@ -1,0 +1,19 @@
+{
+  "_comment": "Stage 2 classifications for scripts/tag6_cost.py's TAG 6 pipeline (TAGGING_SPEC_v0.5.md sec. 3). This sandbox has no ANTHROPIC_API_KEY configured, so these were classified directly by Claude in the same session that built this pipeline, standing in for the live API call the script makes when a key is present. The real 'uterine fibroids' corpus produced zero Stage 1 keyword hits (see reports/milestone_7_status.md), so none of these are real corpus sentences - they're synthetic fixtures proving Stage 2/3 actually discriminate correctly, including the negation-like case (entry 4) that a naive keyword match would get wrong.",
+  "Participants will be responsible for the cost of standard hospital stay unrelated to study procedures.": {
+    "status": "participant_pays",
+    "confidence": "high"
+  },
+  "Participants will be compensated $50 for each study visit to cover travel expenses.": {
+    "status": "compensated",
+    "confidence": "high"
+  },
+  "All study-related procedures are provided at no cost to participants.": {
+    "status": "no_cost",
+    "confidence": "high"
+  },
+  "There is no fee for parking at the study site, which is provided free of charge to all visitors.": {
+    "status": "unclear",
+    "confidence": "low"
+  }
+}

@@ -1,0 +1,402 @@
+{
+  "_comment": "Stage 3 structuring (TAGGING_SPEC_v0.5.md sec. 6) for Milestone 1's 10-record eligibility sample (reports/eligibility_criteria_sample.md). Done by hand by Claude in the session that built this pipeline - no ANTHROPIC_API_KEY is configured in this sandbox for a live call. Tier is assigned relative to the Milestone 1/5 test persona (30F, no prior surgery, wants future fertility, moderate anemia, BMI 20) - see reports/milestone_7_status.md for the full reasoning, including two cases flagged as structurally harder than the spec's worked example: a compound OR criterion (NCT02288130) and an investigator-discretion catch-all (NCT01369758).",
+  "records": {
+    "NCT03270605": [
+      {
+        "verbatim": "Antepartum hemorrhage",
+        "concept": "antepartum hemorrhage",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Blood diseases or bleeding tendencies.",
+        "concept": "bleeding disorder",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Medical conditions complicating pregnancy.",
+        "concept": "pregnancy complication",
+        "qualifier": "complicating (undefined)",
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Performed another surgical procedure at CS other than myomectomy.",
+        "concept": "concurrent surgical procedure at index C-section",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      }
+    ],
+    "NCT03411980": [
+      {
+        "verbatim": "Any relevant disease within 4 weeks prior to study drug administration including infections and acute gastrointestinal diseases (vomiting, diarrhea, constipation) requiring medical treatment.",
+        "concept": "recent acute illness",
+        "qualifier": "relevant (undefined)",
+        "threshold": "within 4 weeks",
+        "tier": "D"
+      },
+      {
+        "verbatim": "Severe cerebrovascular or cardiac disorders less than 6 months prior to study drug administration, e.g. stroke, myocardial infarction, unstable angina pectoris, percutaneous transluminal coronary angioplasty or coronary artery bypass graft, congestive heart failure of Grade III or IV according to New York Heart Association, or arrhythmia requiring antiarrhythmic treatment.",
+        "concept": "cardiovascular disease",
+        "qualifier": "severe",
+        "threshold": "within 6 months",
+        "tier": "D"
+      },
+      {
+        "verbatim": "Malignancy diagnosed or treated within the past 5 years. This does not include adequately treated basal cell carcinoma or localized squamous cell carcinoma of the skin.",
+        "concept": "cancer history",
+        "qualifier": null,
+        "threshold": "within 5 years",
+        "tier": "D"
+      },
+      {
+        "verbatim": "Acute renal failure or acute nephritis within the past 2 years.",
+        "concept": "kidney disease",
+        "qualifier": null,
+        "threshold": "within 2 years",
+        "tier": "D"
+      },
+      {
+        "verbatim": "Pregnancy or lactation.",
+        "concept": "current pregnancy/lactation",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Use of CYP3A4 inducers from 2 weeks before study drug administration until last day of blood sampling for PK after study drug administration, including grapefruits.",
+        "concept": "medication/diet interaction",
+        "qualifier": null,
+        "threshold": "2 weeks before",
+        "tier": "D"
+      },
+      {
+        "verbatim": "Insufficiently controlled diabetes mellitus with fasting blood glucose \\>220 mg/dL or HbA1c \\>10%.",
+        "concept": "diabetes",
+        "qualifier": "insufficiently controlled",
+        "threshold": "HbA1c >10%",
+        "tier": "D"
+      }
+    ],
+    "NCT03550703": [
+      {
+        "verbatim": "other gynecological diseases not related to myoma hysterectomy",
+        "concept": "other gynecological disease (unspecified)",
+        "qualifier": "unrelated to myoma (vague/garbled source text)",
+        "threshold": null,
+        "tier": "D"
+      }
+    ],
+    "NCT01504308": [
+      {
+        "verbatim": "Other Pelvic Disease (Other mass, endometriosis, ovarian tumor, acute pelvic disease, significant adenomyosis)",
+        "concept": "other pelvic disease",
+        "qualifier": "significant (for adenomyosis)",
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Desire for future pregnancy",
+        "concept": "fertility/future pregnancy intent",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "B"
+      },
+      {
+        "verbatim": "Significant systemic disease even if controlled",
+        "concept": "systemic disease",
+        "qualifier": "significant; explicitly 'even if controlled'",
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Positive pregnancy test",
+        "concept": "current pregnancy",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Hematocrit \\< 25%",
+        "concept": "anemia severity",
+        "qualifier": "moderate (user's term, unresolved against record's numeric threshold)",
+        "threshold": "<25%",
+        "tier": "C"
+      },
+      {
+        "verbatim": "Extensive scarring along anterior lower abdominal wall (\\>50% of area)",
+        "concept": "abdominal surgical scarring",
+        "qualifier": null,
+        "threshold": ">50% of area",
+        "tier": "B"
+      },
+      {
+        "verbatim": "Surgical clips in the potential path of the HIFU beam",
+        "concept": "prior surgical hardware",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "B"
+      },
+      {
+        "verbatim": "MRI contraindicated",
+        "concept": "MRI contraindication",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "MRI contrast agent contraindicated (including renal insufficiency)",
+        "concept": "MRI contrast contraindication",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Calcifications around or throughout uterine tissues that may affect treatment",
+        "concept": "uterine calcification",
+        "qualifier": "may affect treatment (undefined)",
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Communication barrier",
+        "concept": "communication barrier",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Highly perfused or brighter than myometrium in T2-weighted MRI (according to the T2 contrast obtained using the Philips MR-HIFU MR protocol) fibroids",
+        "concept": "fibroid MRI signal characteristics",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Fibroids not quantifiable on MRI (e.g. multi-fibroid cases where volume measurements are not feasible)",
+        "concept": "fibroid MRI quantifiability",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Menses lasting \\> 7 days or intermenstrual bleeding (patient can be included if there is endometrial biopsy within 6 months to exclude malignancy)",
+        "concept": "abnormal menstrual bleeding pattern",
+        "qualifier": "unless recent biopsy excludes malignancy",
+        "threshold": ">7 days",
+        "tier": "D"
+      },
+      {
+        "verbatim": "Patient is currently on hormonal medication for fibroids or has a hormonal medication history as described below:",
+        "concept": "hormonal medication history",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "1-month Lupron dose or equivalent: less than 1 month prior to MBL measurement or",
+        "concept": "hormonal medication history (Lupron, 1-month)",
+        "qualifier": null,
+        "threshold": "<1 month prior",
+        "tier": "D"
+      },
+      {
+        "verbatim": "3-month Lupron dose or equivalent: less than 3 months prior to MBL measurement or",
+        "concept": "hormonal medication history (Lupron, 3-month)",
+        "qualifier": null,
+        "threshold": "<3 months prior",
+        "tier": "D"
+      },
+      {
+        "verbatim": "Depo Provera or equivalent: less than 6 months prior to MBL measurement",
+        "concept": "hormonal medication history (Depo Provera)",
+        "qualifier": null,
+        "threshold": "<6 months prior",
+        "tier": "D"
+      }
+    ],
+    "NCT06430320": [
+      {
+        "verbatim": "Individuals who were not consented into the original COMPARE-UF or ULTRA study",
+        "concept": "prior-study enrollment/consent (administrative, trial-linkage)",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Individuals who did not have a uterine-sparing fibroid treatment at enrollment in COMPARE-UF or ULTRA study",
+        "concept": "prior-study treatment type (administrative, trial-linkage)",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      }
+    ],
+    "NCT01369758": [
+      {
+        "verbatim": "Subject is pregnant",
+        "concept": "current pregnancy",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Subject has an Intrauterine Device (IUD) at the time of the procedure. A subject may be enrolled in the study if the IUD is removed prior to the treatment procedure",
+        "concept": "IUD presence",
+        "qualifier": "unless removed before procedure",
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Subject is taking an anticoagulant or antiplatelet medication other than low dose aspirin",
+        "concept": "anticoagulant/antiplatelet medication",
+        "qualifier": "other than low-dose aspirin",
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Active pelvic inflammatory disease or pelvic/vaginal infection",
+        "concept": "active pelvic infection",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Subject has a known or suspected coagulopathy or bleeding disorder",
+        "concept": "bleeding disorder",
+        "qualifier": "known or suspected",
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Subject has a history of disease which increases the risk for fluid overload (i.e. significant cardiac, hepatic, or renal dysfunction)",
+        "concept": "cardiac/hepatic/renal dysfunction",
+        "qualifier": "significant",
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Subject has other co-morbid condition(s) that, in the opinion of the Investigator, could limit the subject's ability to participate in the study or impact the scientific integrity of the study",
+        "concept": "investigator-discretion catch-all",
+        "qualifier": "in the opinion of the Investigator (inherently subjective, never resolvable)",
+        "threshold": null,
+        "tier": "C"
+      }
+    ],
+    "NCT03211481": [
+      {
+        "verbatim": "insufficient knowledge and experience with fibroid patient population or interventions to reduce major blood loss at surgery",
+        "concept": "clinician qualification (this is a provider-facing study, not patient-facing)",
+        "qualifier": "insufficient (undefined)",
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "insufficient time or not willing to participate",
+        "concept": "clinician time/willingness (provider-facing)",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Not a member from academic and/or community hospital",
+        "concept": "clinician institutional affiliation (provider-facing)",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      }
+    ],
+    "NCT02192606": [],
+    "NCT02288130": [
+      {
+        "verbatim": "Current pregnancy",
+        "concept": "current pregnancy",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "(suspicion of) malignancy",
+        "concept": "cancer suspicion",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "any type 0-2 fibroids smaller than 5 cm",
+        "concept": "fibroid classification/size",
+        "qualifier": null,
+        "threshold": "<5cm, type 0-2",
+        "tier": "D"
+      },
+      {
+        "verbatim": "more than 2 type 3-6 fibroids \\> 5 cm that need to be removed (except type 7 fibroids of any size)",
+        "concept": "fibroid classification/size/count",
+        "qualifier": null,
+        "threshold": ">2 fibroids, >5cm",
+        "tier": "D"
+      },
+      {
+        "verbatim": "use of any hormonal agents and not willing to discontinue their use",
+        "concept": "hormonal medication use",
+        "qualifier": "unless willing to discontinue",
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "use of anticoagulants",
+        "concept": "anticoagulant medication",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "coagulopathy",
+        "concept": "bleeding disorder",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Use of NSAIDs impacting bleeding before surgery",
+        "concept": "NSAID medication",
+        "qualifier": "impacting bleeding (undefined)",
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "Contraindication to laparoscopy procedure or causes of complications (multiple laparotomies, frozen pelvis, severe endometriosis)",
+        "concept": "compound: prior-surgery history (multiple laparotomies) OR unrelated conditions (frozen pelvis, severe endometriosis)",
+        "qualifier": "compound OR criterion - prior-surgery part is addressed, other disjuncts are not, so the whole criterion can't be resolved from one answer",
+        "threshold": null,
+        "tier": "C"
+      },
+      {
+        "verbatim": "allergy to leuprolide acetate/comparable nonapeptides or Ulipristal",
+        "concept": "drug allergy history",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      }
+    ],
+    "NCT03169478": [
+      {
+        "verbatim": "\\[1\\] women who are already postmenopausal",
+        "concept": "menopausal status (age-correlated but not identical to the age field already evaluated in Tier A/Milestone 5 - not inferred from age here)",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      },
+      {
+        "verbatim": "\\[2\\] women who have evidence of intrauterine adhesions at the time of surgeryare",
+        "concept": "intrauterine adhesions (structural finding)",
+        "qualifier": null,
+        "threshold": null,
+        "tier": "D"
+      }
+    ]
+  }
+}

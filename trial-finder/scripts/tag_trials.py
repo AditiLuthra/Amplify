@@ -24,6 +24,8 @@ import json
 import re
 from pathlib import Path
 
+from tag6_cost import tag6_cost
+
 SPEC_VERSION = "0.5"
 
 # --- TAG 1: Phase -----------------------------------------------------
@@ -392,24 +394,29 @@ def tag3_intervention(study_type: str, interventions: list) -> dict:
 CONTROL_ARM_TYPES = {"ACTIVE_COMPARATOR", "PLACEBO_COMPARATOR", "SHAM_COMPARATOR", "NO_INTERVENTION"}
 PRIVATE_SPONSOR_CLASSES = {"OTHER", "INDIV"}
 
-# Two of the spec's eight published criteria (TAGGING_SPEC_v0.5.md sec. 3
-# TAG 5) are not computable from structured fields at this milestone:
-#   - "Participants pay to enroll" needs TAG 6 (free-text cost extraction).
-#     CLAUDE.md's own build order places TAG 6 at Milestone 7, after this
-#     one - TAG 5 as specified depends on a milestone that hasn't run yet.
-#   - "Unrelated conditions... spans 3+ unrelated body systems" has no
-#     body-system taxonomy defined anywhere in the spec. Classifying
-#     free-text conditions[] into body systems is inference, not a lookup,
-#     and inventing a taxonomy here would be exactly the kind of silent
-#     invention the working agreement prohibits.
+# As of Milestone 7, only one of the spec's eight published criteria
+# (TAGGING_SPEC_v0.5.md sec. 3 TAG 5) is structurally uncomputable:
+# "Unrelated conditions... spans 3+ unrelated body systems" has no
+# body-system taxonomy defined anywhere in the spec. Classifying free-text
+# conditions[] into body systems is inference, not a lookup, and inventing
+# a taxonomy here would be exactly the kind of silent invention the
+# working agreement prohibits.
+#
+# "Participants pay to enroll" (criterion 1) is no longer in this list -
+# Milestone 7 built TAG 6, so it's now a per-record lookup against TAG 6's
+# own output, same as any other criterion: True if TAG 6 resolved to
+# participant_pays, False if it confidently resolved to compensated/no_cost,
+# None (unresolved, not "False"/clean - P5) if TAG 6 said "not_stated" or
+# hit its own gap case. On this corpus every record is "not_stated" (see
+# reports/milestone_7_status.md), so this doesn't change today's numbers -
+# it changes what the next condition's run can resolve.
 UNCOMPUTABLE_CRITERIA = [
-    "participant_pays (needs TAG 6, Milestone 7 - not yet run)",
     "unrelated_conditions (no body-system taxonomy defined in spec)",
 ]
 N_UNCOMPUTABLE = len(UNCOMPUTABLE_CRITERIA)
 
 
-def tag5_oversight(protocol: dict) -> dict:
+def tag5_oversight(protocol: dict, tag6_result: dict) -> dict:
     oversight = protocol.get("oversightModule", {}) or {}
     sponsor = (protocol.get("sponsorCollaboratorsModule", {}) or {}).get("leadSponsor", {}) or {}
     locations = (protocol.get("contactsLocationsModule", {}) or {}).get("locations") or []
@@ -436,10 +443,20 @@ def tag5_oversight(protocol: dict) -> dict:
         "has_control_group": has_control_group,
     }
 
-    # The six criteria computable from structured fields alone. Each is
-    # True, False, or None (field missing on this record - a real,
-    # observed sparsity, not an implementation gap; see
-    # reports/milestone_4_status.md for how common this is per field).
+    # Seven criteria computable now that TAG 6 (Milestone 7) resolves
+    # "participant pays" per record instead of leaving it hardcoded
+    # uncomputable. Each is True, False, or None (field/signal missing on
+    # this record - a real, observed sparsity, not an implementation gap;
+    # see reports/milestone_4_status.md and milestone_7_status.md for how
+    # common this is per field).
+    tag6_status = tag6_result.get("status")
+    if tag6_status == "participant_pays":
+        participant_pays = True
+    elif tag6_status in ("compensated", "no_cost"):
+        participant_pays = False
+    else:  # "not_stated", or TAG 6 hit its own gap case - unresolved, not clean (P5)
+        participant_pays = None
+
     criteria = {
         "private_sponsor": (sponsor_class in PRIVATE_SPONSOR_CLASSES) if sponsor_class is not None else None,
         "no_fda_regulation": (
@@ -450,17 +467,18 @@ def tag5_oversight(protocol: dict) -> dict:
         "no_dmc": (has_dmc is False) if has_dmc is not None else None,
         "no_control_group": not has_control_group,
         "unapproved_device": bool(is_unapproved_device) if is_unapproved_device is not None else None,
+        "participant_pays": participant_pays,
     }
 
     met_count = sum(1 for v in criteria.values() if v is True)
     unresolved_among_computed = sum(1 for v in criteria.values() if v is None)
 
-    # P1/P5-driven asymmetric logic: additional criteria (the 2 uncomputable
-    # ones, and any unresolved-on-this-record ones) can only ever INCREASE
+    # P1/P5-driven asymmetric logic: additional criteria (the 1 uncomputable
+    # one, and any unresolved-on-this-record ones) can only ever INCREASE
     # the true count, never decrease it. So a confirmed met_count >= 4 is
-    # already a safe, valid "flagged" result even with 2 criteria entirely
-    # unimplemented - waiting for TAG 6/a body-system taxonomy would only
-    # delay a true positive, which is the wrong direction to err for a
+    # already a safe, valid "flagged" result even with a criterion entirely
+    # unimplemented - waiting for a body-system taxonomy would only delay a
+    # true positive, which is the wrong direction to err for a
     # safety-relevant flag. Conversely, met_count alone can't safely
     # confirm "not flagged" unless even the most generous assumption about
     # every unresolved/uncomputable criterion still can't reach 4.
@@ -596,6 +614,7 @@ def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
     arm_groups = arms_module.get("armGroups") or []
     interventions = arms_module.get("interventions") or []
     brief_summary = description_module.get("briefSummary")
+    tag6_result = _safe_tag6(protocol)
 
     return {
         "nct_id": nct_id,
@@ -613,9 +632,23 @@ def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
         "tag2_placebo": tag2_placebo(design_module, arm_groups),
         "tag3_intervention": tag3_intervention(study_type, interventions),
         "tag4_status": tag4_status(status_module, has_results, as_of),
-        "tag5_oversight": tag5_oversight(protocol),
+        "tag5_oversight": tag5_oversight(protocol, tag6_result),
         "tier_a_exclusion": tier_a_exclusion(eligibility_module, patient),
+        "tag6_cost": tag6_result,
     }
+
+
+def _safe_tag6(protocol: dict) -> dict:
+    # A Stage 1 keyword hit with no cached Stage 2 classification and no
+    # ANTHROPIC_API_KEY raises (tag6_cost.py) rather than guessing - never
+    # hit on this corpus (see milestone_7_status.md), but a future
+    # condition's data could hit it, and the pipeline should flag that
+    # record instead of crashing the whole run.
+    try:
+        return tag6_cost(protocol)
+    except RuntimeError as e:
+        return {"status": "not_stated", "evidence_sentence": None, "confidence": None,
+                "prefilter_hits": None, "gap": True, "gap_reason": str(e)}
 
 
 def main():
