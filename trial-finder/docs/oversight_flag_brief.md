@@ -1,7 +1,10 @@
 # Feature brief: TAG 5 oversight flag, patient-facing presentation
 
-**Status:** Draft — first pass, not reviewed. Written as a strawman to react
-to, per the PM mentorship thread, not a decided design.
+**Status:** Partially resolved. Written as a strawman to react to, per the
+PM mentorship thread. Its list-display prominence question (§2 below) was
+resolved by Milestone 6 once the real TAG 5 hit rate existed to answer it
+— see "Open for review" at the bottom. The confirm-step question (§4)
+remains open, blocked on R9 (shortlisting) not being built yet.
 
 **Scope:** How the TAG 5 oversight rubric (`TAGGING_SPEC_v0.5.md` §3 TAG 5,
 PRD R5/G5) actually reads to a patient, given the spec's own calibration
@@ -103,18 +106,28 @@ already trying to measure (§7) but currently has no UI event to attach to.
 
 ## Open for review
 
-This is a first pass meant to be argued with, not approved. Specific
-things worth pushing on:
+This is a first pass meant to be argued with, not approved.
 
-- Is the extra confirm step (§4) too much friction, or not enough? The
-  counter-metric needs *some* signal distinguishing "glanced past it" from
-  "saw it and still chose it" — is a confirm dialog the right shape, or
-  would a different mechanism (e.g. requiring the expanded list to have
-  been opened at least once before saving) serve the same purpose with
-  less friction?
-- Is showing the flag on every list card (§1) too prominent given how many
-  trials will likely hit it — recall Milestone 3's TAG 2/3 gap findings
-  suggest heterogeneous, messy real-world data; TAG 5's actual hit rate on
-  this corpus isn't known yet until Milestone 4 computes it. If it turns
-  out a large fraction of trials flag, that changes whether list-level
-  display is still the right call versus detail-view-only.
+- **Resolved (2026-10-21):** "Is showing the flag on every list card too
+  prominent" — yes, as originally proposed. Milestone 4 computed the real
+  hit rate this section was waiting on: 27.5% confirmed `flagged`, 70.9%
+  `undetermined`, 1.6% confirmed `not_flagged` (`reports/milestone_4_status.md`).
+  A verdict badge on roughly 7 of 10 cards (most of them ordinary small
+  academic studies, per `CLAUDE.md`'s own calibration note) would have been
+  alarm fatigue, not protection — exactly what §2's standing sub-line was
+  trying to head off, but a sub-line alone wasn't enough at that hit rate.
+  Milestone 6 built a third option instead of choosing between this
+  brief's "show on every card" and hiding it: facts panel always shown
+  (unconditionally, as §1 already required), a verdict badge only for
+  confirmed `flagged`, and a quiet, separate "we don't have enough
+  information yet" note for `undetermined` — never the accusatory label,
+  never silence either. See `UI_DECISIONS.md` D3 for the full reasoning.
+  §2's proposed sub-line is still live, unchanged, on every card that
+  does show the verdict label.
+
+- **Still open, blocked on R9:** the extra confirm step (§4) for
+  shortlisting a flagged trial. Real question, not resolved — but
+  shortlisting itself (R9) hasn't been built yet (`web/index.html` has no
+  save/shortlist feature as of Milestone 6/7, only the Tier A excluded-trial
+  restore drawer, which is a different mechanism for a different problem).
+  Nothing to decide here until R9 exists to attach a confirm step to.
