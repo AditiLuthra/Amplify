@@ -173,7 +173,7 @@ details.tips[open] > summary::before { content: "▾ "; }
 
   <div class="sortrow">
     <span class="lbl">Sort by:</span>
-    <button type="button" class="sort-btn" id="sort-burden" aria-pressed="true">Lowest burden first</button>
+    <button type="button" class="sort-btn" id="sort-involvement" aria-pressed="true">Lowest involvement first</button>
     <button type="button" class="sort-btn" id="sort-evidence" aria-pressed="false">Most evidence first</button>
   </div>
 
@@ -273,8 +273,8 @@ details.tips[open] > summary::before { content: "▾ "; }
     return t.tag4_status.excluded || t.tier_a_exclusion.excluded;
   }
 
-  function burdenSortKey(t) {
-    var r = t.tag3_intervention.burden_rank;
+  function involvementSortKey(t) {
+    var r = t.tag3_intervention.involvement_rank;
     return (r === null || r === undefined) ? 99 : r;
   }
 
@@ -398,7 +398,7 @@ details.tips[open] > summary::before { content: "▾ "; }
     return card;
   }
 
-  var sortMode = "burden";
+  var sortMode = "involvement";
   var currentVisible = [];
 
   function renderResults(visible) {
@@ -410,8 +410,8 @@ details.tips[open] > summary::before { content: "▾ "; }
       return;
     }
 
-    if (sortMode === "burden") {
-      visible.slice().sort(function (a, b) { return burdenSortKey(a) - burdenSortKey(b); })
+    if (sortMode === "involvement") {
+      visible.slice().sort(function (a, b) { return involvementSortKey(a) - involvementSortKey(b); })
         .forEach(function (t) { results.appendChild(renderCard(t)); });
       return;
     }
@@ -434,15 +434,15 @@ details.tips[open] > summary::before { content: "▾ "; }
   }
 
   function initSortButtons() {
-    var burdenBtn = document.getElementById("sort-burden");
+    var involvementBtn = document.getElementById("sort-involvement");
     var evidenceBtn = document.getElementById("sort-evidence");
     function setMode(mode) {
       sortMode = mode;
-      burdenBtn.setAttribute("aria-pressed", String(mode === "burden"));
+      involvementBtn.setAttribute("aria-pressed", String(mode === "involvement"));
       evidenceBtn.setAttribute("aria-pressed", String(mode === "evidence"));
       renderResults(currentVisible);
     }
-    burdenBtn.addEventListener("click", function () { setMode("burden"); });
+    involvementBtn.addEventListener("click", function () { setMode("involvement"); });
     evidenceBtn.addEventListener("click", function () { setMode("evidence"); });
   }
 

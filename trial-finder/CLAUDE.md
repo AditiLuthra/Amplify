@@ -25,7 +25,7 @@ over-engineered and are not:
   mismatches (age, sex, healthy-volunteer status) may remove a trial from the
   main list.
 - Cost defaults to **"Not stated"**, never "free".
-- Unrecognized devices default to burden rank **2**, never 1.
+- Unrecognized devices default to involvement rank **2**, never 1.
 
 **Plain language is the product.** Every user-facing string is written for
 someone without clinical training. If a tag label reads like it was written for
@@ -58,7 +58,7 @@ Each milestone is verifiable before the next begins. Do not scaffold ahead.
 1. **Fetch + verify** — pull trials for one condition, cache to disk, dump raw
    JSON, confirm every field name in spec §2 against a live record
 2. **TAG 1 + TAG 4** — phase and freshness. Pure lookups, no inference
-3. **TAG 2 + TAG 3** — placebo exposure and burden. Light logic
+3. **TAG 2 + TAG 3** — placebo exposure and involvement. Light logic
 4. **TAG 5** — oversight facts panel and rubric
 5. **Tier A exclusions** — structured fields only
 6. **UI**
@@ -68,7 +68,7 @@ Each milestone is verifiable before the next begins. Do not scaffold ahead.
 ## Testing
 
 Pin a handful of known NCT IDs as fixtures and check tag output by hand after
-each milestone. Domain review catches what unit tests miss — a wrong burden
+each milestone. Domain review catches what unit tests miss — a wrong involvement
 level or a misleading label is not a crash.
 
 ## Stack

@@ -35,7 +35,7 @@ surface.
 
 **P5. "Not stated" is a valid answer.** Never default a missing value to the
 optimistic case. Absence of cost information is not evidence of no cost. An
-unrecognized device is not evidence of low burden.
+unrecognized device is not evidence of low involvement.
 
 **P6. Categories are factual; rankings are hints.** A displayed category must be
 traceable to a source field and must never be wrong. A ranking derived from
@@ -158,7 +158,7 @@ almost no one reads. For a patient deciding whether a trial is worth pursuing,
 
 ---
 
-### TAG 3 — Intervention type and burden
+### TAG 3 — Intervention type and involvement
 
 Two layers, per **P6**.
 
@@ -189,10 +189,10 @@ Resolve in priority order:
 This layer carries the interpretive weight. An implant and a wristband are both
 `DEVICE`; the explanation is where that difference reaches the user.
 
-#### Layer C — Burden rank (sorting hint only)
+#### Layer C — Involvement rank (sorting hint only)
 
 Never displayed as a number or level to the user. Used for default ordering and
-for "lowest burden first" sorting.
+for "lowest involvement first" sorting.
 
 | Rank | Description | Derivation |
 |---|---|---|
@@ -219,7 +219,7 @@ Keyword pass on `interventions[].name` and `.description`:
 
 **Known gap.** `PROCEDURE` spans a skin punch biopsy and open surgery. Same
 split should be applied once the device logic exists. Currently all `PROCEDURE`
-ranks 5, which overstates burden for minor procedures. Accepted for v0.2.
+ranks 5, which overstates involvement for minor procedures. Accepted for v0.2.
 
 ---
 

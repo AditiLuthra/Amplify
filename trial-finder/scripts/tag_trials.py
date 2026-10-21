@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Milestones 2-5: TAG 1 (phase), TAG 2 (placebo exposure), TAG 3 (intervention
-type and burden), TAG 4 (freshness and status), TAG 5 (oversight facts panel
+type and involvement), TAG 4 (freshness and status), TAG 5 (oversight facts panel
 and rubric), Tier A exclusions (structured age/sex/healthy-volunteer
 mismatch - TAGGING_SPEC_v0.5.md sec. 5).
 
@@ -10,7 +10,7 @@ Per TAGGING_SPEC_v0.5.md sec. 3. Reads cached raw pages from data/raw/<slug>/
 data/tagged/<slug>.json. Never hits the network.
 
 A record that hits a case the spec doesn't cover is flagged (`gap`/
-`burden_gap`: true) rather than guessed at, per CLAUDE.md's working
+`involvement_gap`: true) rather than guessed at, per CLAUDE.md's working
 agreement. See reports/milestone_2_status.md and milestone_3_status.md for
 what was found and why.
 
@@ -265,7 +265,7 @@ def tag2_placebo(design_module: dict, arm_groups: list) -> dict:
     return {"gap": True, "arm_types_raw": types, "reason": "arm-type combination not covered by TAG 2"}
 
 
-# --- TAG 3: Intervention type and burden ----------------------------------
+# --- TAG 3: Intervention type and involvement ----------------------------------
 
 # Layer C ladder (TAGGING_SPEC_v0.5.md sec. 3 TAG 3). PROCEDURE always ranks
 # 5 per the spec's own "Known gap" note (accepted simplification for v0.2,
@@ -291,9 +291,9 @@ DEVICE_RANK4_SIGNALS = [
 # KNOWN SPEC DEFECT - see reports/milestone_3_status.md. "external" and
 # "ultrasound" collide with MR-guided HIFU / focused-ultrasound ABLATION
 # systems, a real and common DEVICE type in this corpus (20/114 records)
-# that is not low-burden - it's a sedation-requiring tissue-destruction
+# that is not low-involvement - it's a sedation-requiring tissue-destruction
 # procedure. Kept here verbatim from the spec (not silently dropped) but
-# tag3_intervention() below withholds burden_rank rather than trust a rank-1
+# tag3_intervention() below withholds involvement_rank rather than trust a rank-1
 # match against these two keywords when an ablation-family word is also
 # present, per the working agreement (spec fix needed, not a code guess).
 DEVICE_RANK1_SIGNALS = [
@@ -325,9 +325,9 @@ def tag3_intervention(study_type: str, interventions: list) -> dict:
         return {
             "layer_a_categories": ["No treatment given"],
             "layer_b": [],
-            "burden_rank": 0,
+            "involvement_rank": 0,
             "rank_components": [],
-            "burden_gap": False,
+            "involvement_gap": False,
             "gap_reasons": [],
         }
 
@@ -354,7 +354,7 @@ def tag3_intervention(study_type: str, interventions: list) -> dict:
         elif name:
             layer_b.append({"text": name, "source": "name_only", "intervention": name})
 
-        # Layer C - burden rank.
+        # Layer C - involvement rank.
         if itype in TYPE_TO_RANK:
             rank = TYPE_TO_RANK[itype]
             rank_components.append({"type": itype, "rank": rank})
@@ -369,22 +369,22 @@ def tag3_intervention(study_type: str, interventions: list) -> dict:
             any_gap = True
             gap_reasons.append(f"{itype!r} not in the TAG 3 Layer C ladder")
 
-    # Withhold burden_rank entirely if any component is unresolved - taking
-    # max() of only the resolved ranks could understate the true burden
+    # Withhold involvement_rank entirely if any component is unresolved - taking
+    # max() of only the resolved ranks could understate the true involvement
     # (P5: never default a missing value to the optimistic case).
     if any_gap:
-        burden_rank = None
+        involvement_rank = None
     elif rank_components:
-        burden_rank = max(c["rank"] for c in rank_components)
+        involvement_rank = max(c["rank"] for c in rank_components)
     else:
-        burden_rank = None  # no interventions listed at all - "Not stated", not 0
+        involvement_rank = None  # no interventions listed at all - "Not stated", not 0
 
     return {
         "layer_a_categories": layer_a,
         "layer_b": layer_b,
-        "burden_rank": burden_rank,
+        "involvement_rank": involvement_rank,
         "rank_components": rank_components,
-        "burden_gap": any_gap,
+        "involvement_gap": any_gap,
         "gap_reasons": gap_reasons,
     }
 
@@ -694,7 +694,7 @@ def main():
 
     tag1_gaps = [t for t in tagged if t["tag1_phase"].get("gap")]
     tag2_gaps = [t for t in tagged if t["tag2_placebo"].get("gap")]
-    tag3_gaps = [t for t in tagged if t["tag3_intervention"].get("burden_gap")]
+    tag3_gaps = [t for t in tagged if t["tag3_intervention"].get("involvement_gap")]
     tag4_gaps = [t for t in tagged if t["tag4_status"].get("gap")]
     tag5_flagged = [t for t in tagged if t["tag5_oversight"]["status"] == "flagged"]
     tag5_undetermined = [t for t in tagged if t["tag5_oversight"]["status"] == "undetermined"]
@@ -704,7 +704,7 @@ def main():
     out_path.write_text(json.dumps(tagged, indent=2) + "\n")
 
     print(f"[done] tagged {len(tagged)} records -> {out_path}")
-    print(f"[gaps] TAG1: {len(tag1_gaps)}  TAG2: {len(tag2_gaps)}  TAG3 (burden): {len(tag3_gaps)}  TAG4: {len(tag4_gaps)}  "
+    print(f"[gaps] TAG1: {len(tag1_gaps)}  TAG2: {len(tag2_gaps)}  TAG3 (involvement): {len(tag3_gaps)}  TAG4: {len(tag4_gaps)}  "
           f"(out of {len(tagged)}; each is a real record hitting a case not covered by the current spec - "
           f"see reports/milestone_2_status.md and milestone_3_status.md, not silently guessed at)")
     if tag1_gaps:

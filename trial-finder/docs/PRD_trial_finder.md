@@ -28,7 +28,7 @@ Concretely, the registry fails patients in five ways:
    condition, so queries return broad, unsorted result sets.
 2. **Eligibility must be deciphered by hand.** Criteria are a free-text blob
    written for research staff, mixing structured facts with clinical qualifiers.
-3. **No sorting on what matters.** No filter or rank by burden, placebo
+3. **No sorting on what matters.** No filter or rank by involvement, placebo
    probability, cost, safety oversight, or results.
 4. **Results are dense and unread.** Where a trial has posted findings, they sit
    in outcome tables that require training to interpret. There is no way to ask
@@ -59,7 +59,7 @@ whose condition is poorly controlled on existing treatment.
 Characteristics:
 
 - Actively unhappy with current options; motivated to look further
-- Willing to accept **some** burden and risk, but weighing it — not accepting
+- Willing to accept **some** involvement and risk, but weighing it — not accepting
   anything at any cost
 - Often lacks the health literacy to navigate primary sources unaided
 - **Targeted by pay-to-participate operations**, which market directly to people
@@ -68,8 +68,8 @@ Characteristics:
 **Who this is not.** Patients living normally on a treatment that works are not
 in market. Interview evidence from prior work with chronic-disease patients
 found they were consistently unwilling to leave a proven medication while
-functioning well. Burden and risk tolerance is conditional, not absolute — which
-is why burden tagging matters rather than being decoration.
+functioning well. Involvement and risk tolerance is conditional, not absolute — which
+is why involvement tagging matters rather than being decoration.
 
 Secondary users (not designed for first, likely heavy users): caregivers
 searching for someone else, and clinicians doing a quick scan for a patient.
@@ -227,9 +227,9 @@ product exists to close. Unfalsifiable adjectives are legally exposed and carry
 no information. A named rubric is useful and defensible: a sponsor can check
 whether we applied our own stated standard correctly.
 
-### 5.4 Single burden score vs. layered category
+### 5.4 Single involvement score vs. layered category
 
-**Considered:** one burden level per trial from intervention type.
+**Considered:** one involvement level per trial from intervention type.
 
 **Chose:** factual category + explanation + ranking hint.
 
@@ -266,7 +266,7 @@ adjacent. Every tag written for a reader without clinical training.
 **R3. Parsed eligibility.** Inclusion and exclusion criteria broken into atomic,
 readable items with qualifiers preserved. Addresses Problem §1.2.
 
-**R4. Sorting and filtering** on burden, placebo probability, cost, oversight,
+**R4. Sorting and filtering** on involvement, placebo probability, cost, oversight,
 and recency. Addresses Problem §1.3.
 
 **R5. Oversight rubric.** Seven published criteria; label at ≥4 with the
@@ -302,7 +302,7 @@ between Job 1 and Job 2. Two triggers, not one:
   completed. Template A doesn't apply — there's nothing to ask about fitting
   into a study that isn't open.
 - **Hesitancy trigger (new).** Trial *is* recruiting but is early-phase
-  (`EARLY_PHASE1`/`PHASE1`, TAG 1) or high-burden (Layer C rank ≥ 4, TAG 3) —
+  (`EARLY_PHASE1`/`PHASE1`, TAG 1) or high-involvement (Layer C rank ≥ 4, TAG 3) —
   offered **alongside** Template A, not instead of it. Addresses a different
   problem than the status trigger: a user who is put off by how undeveloped
   or demanding a trial is, not by its being closed. They may still want to ask
@@ -421,7 +421,7 @@ Listed in priority order — the first would invalidate the product if false.
 | A1 | The bottleneck is **finding** plausible trials, not **qualifying** for them | Better search doesn't help; address screening or site contact instead |
 | A2 | Patients search themselves rather than relying entirely on their specialist | Primary user is the clinician; the interface changes |
 | A3 | Placebo probability materially affects decisions | TAG 2 is decoration, not a differentiator |
-| A4 | Burden is weighed rather than accepted unconditionally | Burden ranking is lower value than assumed. *Partially supported by prior interviews.* |
+| A4 | Involvement is weighed rather than accepted unconditionally | Involvement ranking is lower value than assumed. *Partially supported by prior interviews.* |
 | A5 | Oversight flagging reads as protective, not as gatekeeping | Rubric may reduce trust; framing needs rework |
 | A6 | Shortlisting is a behavior this user performs | Job 1 primary metric is wrong |
 | A7 | A meaningful set of users want to follow developments without seeking a trial now | G6, R8, and the Job 2 metrics are unjustified |
@@ -441,7 +441,7 @@ trial. Where did it break down?"* Not *"would you use this?"*
 
 ## 10. Open questions
 
-1. Does gene therapy outrank implants at the top of the burden ladder?
+1. Does gene therapy outrank implants at the top of the involvement ladder?
 2. Is the results summary a premium feature? (Deferred until usage data exists.)
 3. Phase 2 privacy architecture — client-side parsing, or server-side with
    explicit consent and retention?
