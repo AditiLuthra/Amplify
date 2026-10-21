@@ -123,7 +123,7 @@ and the PRD's risk table names "false hope" as a High-severity risk with
 product owner rather than assuming the non-goal still held — see PRD
 versioning 0.7.
 
-**Built instead: evidence-level sort.** A toggle between "Lowest burden
+**Built instead: evidence-level sort.** A toggle between "Lowest involvement
 first" (the existing default) and "Most evidence first" — the latter
 sorts by TAG 1's phase ladder (`EARLY_PHASE1` → ... → `PHASE4`), which the
 spec already frames as an evidence-accumulation order ("Large-scale
