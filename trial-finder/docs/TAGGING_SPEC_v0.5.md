@@ -160,6 +160,15 @@ almost no one reads. For a patient deciding whether a trial is worth pursuing,
 
 ### TAG 3 — Intervention type and burden
 
+**Naming note (2026-10-21):** "burden" is a placeholder term, not a final
+one — product owner wants a different word for the patient-facing concept
+(the "Lowest burden first" sort button in `web/index.html`, plus every
+internal reference: `burden_rank`, Layer C, `reports/milestone_3_status.md`,
+PRD G4/R4/§5.4, `UI_DECISIONS.md` D4). Deferred — not renaming now. When it
+happens, it touches the spec's own vocabulary first (this section), then
+`tag_trials.py`'s field names, then the UI copy and PRD/UI_DECISIONS
+references, in that order, same as any other spec-first change.
+
 Two layers, per **P6**.
 
 #### Layer A — Category (factual, never wrong)
