@@ -143,6 +143,29 @@ details.more[open] > summary::before { content: "Show less "; }
 .facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; font-size: 0.85rem; color: var(--muted); margin-top: 8px; }
 .facts-grid div b { color: var(--ink); }
 
+.contact-section { margin-top: 14px; }
+.contact-label { margin: 0 0 8px; font-size: 0.9rem; }
+.contact-none { font-size: 0.88rem; color: var(--muted); margin: 0; }
+details.contact-template {
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-top: 8px;
+}
+details.contact-template > summary {
+  cursor: pointer; font-weight: 700; font-size: 0.86rem; color: var(--accent); list-style: none;
+}
+details.contact-template > summary::-webkit-details-marker { display: none; }
+.contact-template-body { margin-top: 10px; }
+.contact-template-body textarea {
+  width: 100%; font: inherit; font-size: 0.83rem; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; resize: vertical;
+}
+.contact-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.contact-mailto, .contact-copy {
+  font: inherit; font-size: 0.82rem; font-weight: 700; border-radius: 999px; padding: 6px 12px;
+  cursor: pointer; text-decoration: none; border: none;
+}
+.contact-mailto { background: var(--accent); color: #fff; }
+.contact-copy { background: var(--accent-soft); color: var(--accent); }
+
 .section-label { font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 26px 0 10px; }
 
 details.excluded-drawer { background: transparent; }
@@ -555,6 +578,110 @@ details.intake[open] > summary::before { content: "▾ "; }
     return t.tag2_placebo.gap ? "Not stated" : t.tag2_placebo.label;
   }
 
+  // R10 contact templates. Constraints below are the spec's own, not new
+  // decisions: we never send on the user's behalf (a mailto: link opens
+  // their own email client; "copy text" is a fallback for when no mail
+  // client is configured), templates never assert eligibility ("learn
+  // whether I might be a fit," never "I qualify"), and nothing from the
+  // intake panel (R1b) is inserted into the body - a user's health
+  // information never gets prefilled into a message this product didn't
+  // write for that purpose.
+  function buildTemplateA(t) {
+    var title = t.display.brief_title || t.nct_id;
+    var subject = "Question about " + title + " (" + t.nct_id + ")";
+    var body = "Hello,\n\n" +
+      "I'd like to learn whether I might be a fit for this study (" + title + ", " + t.nct_id +
+      "). Could you let me know:\n\n" +
+      "- Is the study currently enrolling participants?\n" +
+      "- What are the main eligibility requirements?\n" +
+      "- Where is the study conducted, and how often would participants need to be seen?\n" +
+      "- Are there any costs to participants?\n\n" +
+      "Thank you for your time.\n\n[Your name]";
+    return { subject: subject, body: body };
+  }
+  function buildTemplateB(t, hesitancy) {
+    var title = t.display.brief_title || t.nct_id;
+    var subject = "Please keep me posted — " + title + " (" + t.nct_id + ")";
+    var body;
+    if (hesitancy) {
+      body = "Hello,\n\n" +
+        "I'm interested in this study (" + title + ", " + t.nct_id + "), but would like more time " +
+        "before deciding whether to enroll. Could you let me know:\n\n" +
+        "- Are there related or follow-on studies I should watch for?\n" +
+        "- When might results become available?\n\n" +
+        "I may reach out again when I feel ready to discuss enrolling.\n\nThank you.\n\n[Your name]";
+    } else {
+      body = "Hello,\n\n" +
+        "I came across this study (" + title + ", " + t.nct_id + ") and wanted to ask:\n\n" +
+        "- If enrollment reopens, could you let me know?\n" +
+        "- Are there related studies I should watch for?\n" +
+        "- When might results become available?\n\n" +
+        "Thank you.\n\n[Your name]";
+    }
+    return { subject: subject, body: body };
+  }
+
+  function renderTemplateToggle(contact, label, template) {
+    var details = el("details", { class: "contact-template" });
+    details.appendChild(el("summary", {}, [text(label)]));
+    var tbody = el("div", { class: "contact-template-body" });
+    var textarea = el("textarea", { readonly: "readonly", rows: "9" });
+    textarea.value = "Subject: " + template.subject + "\n\n" + template.body;
+    tbody.appendChild(textarea);
+    var actions = el("div", { class: "contact-actions" });
+    actions.appendChild(el("a", {
+      class: "contact-mailto",
+      href: "mailto:" + contact.email + "?subject=" + encodeURIComponent(template.subject) +
+        "&body=" + encodeURIComponent(template.body)
+    }, [text("Open in your email app")]));
+    var copyBtn = el("button", { type: "button", class: "contact-copy" }, [text("Copy text")]);
+    copyBtn.addEventListener("click", function () {
+      var ok = false;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(textarea.value);
+          ok = true;
+        } else {
+          textarea.select();
+          ok = document.execCommand("copy");
+        }
+      } catch (e) {}
+      copyBtn.textContent = ok ? "Copied!" : "Couldn't copy — select the text above";
+      setTimeout(function () { copyBtn.textContent = "Copy text"; }, 2000);
+    });
+    actions.appendChild(copyBtn);
+    tbody.appendChild(actions);
+    details.appendChild(tbody);
+    return details;
+  }
+
+  function renderContactSection(t) {
+    var wrap = el("div", { class: "contact-section" });
+    if (!t.contact) {
+      wrap.appendChild(el("p", { class: "contact-none" }, [
+        text("No contact is listed in the registry for this trial — see the full listing on "),
+        el("a", { href: "https://clinicaltrials.gov/study/" + t.nct_id, target: "_blank", rel: "noopener" },
+          [text("ClinicalTrials.gov")]),
+        text(".")
+      ]));
+      return wrap;
+    }
+    wrap.appendChild(el("p", { class: "contact-label" }, [el("b", {}, [text("Contact the trial team")])]));
+
+    var isRecruiting = t.tag4_status.overall_status === "RECRUITING";
+    var earlyPhase = hasPhaseEvidence(t) && PHASE_RANK[t.tag1_phase.resolved_phase] <= 1;
+    var highBurden = (t.tag3_intervention.burden_rank || 0) >= 4;
+    var hesitancy = isRecruiting && (earlyPhase || highBurden);
+
+    if (isRecruiting) {
+      wrap.appendChild(renderTemplateToggle(t.contact, "Ask if I might be a fit", buildTemplateA(t)));
+    }
+    if (!isRecruiting || hesitancy) {
+      wrap.appendChild(renderTemplateToggle(t.contact, "Ask to be kept posted", buildTemplateB(t, hesitancy)));
+    }
+    return wrap;
+  }
+
   function renderCard(t) {
     var d = t.display;
     var card = el("div", { class: "card" });
@@ -652,6 +779,7 @@ details.intake[open] > summary::before { content: "▾ "; }
       fg.appendChild(el("div", {}, [el("b", {}, [text("Locations: ")]), text(String(fp.site_count))]));
       body.appendChild(fg);
     }
+    body.appendChild(renderContactSection(t));
     more.appendChild(el("summary", {}));
     more.appendChild(body);
     card.appendChild(more);

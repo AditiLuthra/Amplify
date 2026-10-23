@@ -600,6 +600,22 @@ def summary_snippet(text, max_len=200):
     return text[:cut].rstrip(",;:") + "…"
 
 
+def resolve_contact(contacts_locations_module: dict):
+    """R10: centralContacts[] first, then locations[].contacts[] - the
+    first entry that actually has an email (a PRINCIPAL_INVESTIGATOR or
+    SUB_INVESTIGATOR entry commonly has only a name, no way to reach
+    them). None if nothing resolvable - the caller shows the R10 fallback
+    ("say so, point to the registry page") rather than a broken contact."""
+    for c in (contacts_locations_module.get("centralContacts") or []):
+        if c.get("email"):
+            return {"name": c.get("name"), "email": c.get("email")}
+    for loc in (contacts_locations_module.get("locations") or []):
+        for c in (loc.get("contacts") or []):
+            if c.get("email"):
+                return {"name": c.get("name"), "email": c.get("email")}
+    return None
+
+
 def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
     protocol = study.get("protocolSection", {})
     identification_module = protocol.get("identificationModule", {}) or {}
@@ -609,6 +625,7 @@ def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
     status_module = protocol.get("statusModule", {}) or {}
     arms_module = protocol.get("armsInterventionsModule", {}) or {}
     eligibility_module = protocol.get("eligibilityModule", {}) or {}
+    contacts_locations_module = protocol.get("contactsLocationsModule", {}) or {}
     has_results = study.get("hasResults")
     study_type = design_module.get("studyType")
     arm_groups = arms_module.get("armGroups") or []
@@ -647,6 +664,13 @@ def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
             "sex": eligibility_module.get("sex"),
             "healthy_volunteers": eligibility_module.get("healthyVolunteers"),
         },
+        # R10 contact templates: centralContacts[] first, then
+        # locations[].contacts[], per PRD R10 - first entry with an email
+        # (PRINCIPAL_INVESTIGATOR/SUB_INVESTIGATOR entries often have no
+        # email, only a name, so skipping straight to "first contact"
+        # would silently pick an unreachable one on real records - checked
+        # against this corpus, see reports/milestone_8_status.md).
+        "contact": resolve_contact(contacts_locations_module),
         "tag6_cost": tag6_result,
     }
 

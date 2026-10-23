@@ -1,6 +1,6 @@
 # PRD — Clinical Trial Finder
 
-**Version:** 0.12
+**Version:** 0.13
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — pre-validation
 **Related:** `TAGGING_SPEC_v0.5.md` (implementation detail)
@@ -302,6 +302,11 @@ real document to hand a clinician, not an export of our interface.
 **R10. Contact templates.** Serves G3. Two templates, generated per trial and
 prefilled with the trial's identifiers and contact address from
 `contactsLocationsModule` (`centralContacts[]`, then `locations[].contacts[]`).
+**Built** (`UI_DECISIONS.md` D9): a `mailto:` link plus a copy-to-clipboard
+button, both opening/populating an email the visitor sends themselves —
+never sent by this product. Both triggers for Template B implemented and
+verified against real records, including the case where both templates
+show together.
 
 *Template A — Am I a fit?* For recruiting trials. Asks whether the study is
 enrolling, what the main eligibility requirements are, where and how often
@@ -511,6 +516,7 @@ trial. Where did it break down?"* Not *"would you use this?"*
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.13 | 2026-10-23 | R10 built: contact templates (Template A "Am I a fit?", Template B "Keep me posted", both triggers) as a `mailto:` link plus copy-to-clipboard - never sent by this product. `tag_trials.py` resolves a real contact per trial (143/501 uterine fibroids records), with the spec's own fallback when none exists. See `UI_DECISIONS.md` D9. |
 | 0.12 | 2026-10-23 | R1 partially built: a fixed condition picker (uterine fibroids, endometriosis) replaces the single hardcoded page - each condition really fetched and tagged, not free-text search (that needs Phase 2). R9's shortlist/export changed to store full trial snapshots instead of bare NCT IDs so a save survives switching conditions. See `UI_DECISIONS.md` D8. Also surfaced a real finding worth tracking: endometriosis's TAG 5 flagged rate (50.4%) is nearly double uterine fibroids' (27.5%) - the Milestone 4 baseline may not generalize across conditions. |
 | 0.11 | 2026-10-23 | R9 built: shortlist (save/unsave per trial) and export (standalone HTML file, no app logic) - `localStorage`-only, same storage model as R1b. Also resolved `oversight_flag_brief.md`'s last open question (the confirm step before saving a flagged trial), which had been explicitly blocked on R9 not existing. See `UI_DECISIONS.md` D7. |
 | 0.10 | 2026-10-23 | R1/R1b partially built: a real intake panel (age, sex, healthy-volunteer status) replaces the hardcoded example patient for Tier A exclusion, stored `localStorage`-only and re-evaluated live in the browser. See `UI_DECISIONS.md` D6. Condition search and the Tier B/C free-text intake fields remain unbuilt. |

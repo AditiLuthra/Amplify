@@ -103,6 +103,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -215,6 +216,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -318,6 +320,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -406,6 +409,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -507,6 +511,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -608,6 +613,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -734,6 +740,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Nasser Aghdami, MD,PhD",
+      "email": "nasser.aghdami@royaninstitute.org"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -832,6 +842,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -933,6 +944,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -1031,6 +1043,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -1119,6 +1132,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -1229,6 +1243,10 @@
       "maximum_age": "60 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Chi-Heum Cho, MD, PhD",
+      "email": "c0035@dsmc.or.kr"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -1371,6 +1389,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Ahmed Maged, MD",
+      "email": "prof.ahmedmaged@gmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -1487,6 +1509,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -1588,6 +1611,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -1698,6 +1722,10 @@
       "maximum_age": "80 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Giovanni Panico, MD",
+      "email": "giovanni.panico@policlinicogemelli.it"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -1810,6 +1838,10 @@
       "maximum_age": "45 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "MERAL TU\u011eBA \u00c7\u0130M\u015e\u0130R",
+      "email": "dr.tugbaacar@gmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -1926,6 +1958,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -2019,6 +2052,7 @@
       "sex": "ALL",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -2131,6 +2165,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -2218,6 +2253,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Massimo Candiani, MD, Prof",
+      "email": "candiani.massimo@hsr.it"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -2324,6 +2363,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -2425,6 +2465,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -2526,6 +2567,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -2614,6 +2656,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -2702,6 +2745,7 @@
       "sex": null,
       "healthy_volunteers": null
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -2805,6 +2849,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -2898,6 +2943,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "Sheng-Mou Hsiao, MD",
+      "email": "smhsiao2@gmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -2986,6 +3035,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -3096,6 +3146,10 @@
       "maximum_age": "65 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Sharon Blohowiak",
+      "email": "sblohowiak@wisc.edu"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -3212,6 +3266,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -3313,6 +3368,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -3424,6 +3480,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -3512,6 +3569,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -3605,6 +3663,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -3693,6 +3752,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Nadir Alikacem",
+      "email": "nadira@insightec.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -3780,6 +3843,10 @@
       "maximum_age": "75 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Ma Ding, M.D.",
+      "email": "dma@tjh.tjmu.edu.cn"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -3892,6 +3959,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "Inge de Milliano, MD",
+      "email": "i.demilliano@vumc.nl"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -3990,6 +4061,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -4091,6 +4163,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -4197,6 +4270,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -4285,6 +4359,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -4388,6 +4463,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -4485,6 +4561,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Laura Miquel Dr",
+      "email": "promotion.interne@ap-hm.fr"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -4597,6 +4677,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -4719,6 +4800,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -4820,6 +4902,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -4942,6 +5025,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Diansan Su, PhD",
+      "email": "diansansu@yahoo.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -5057,6 +5144,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -5173,6 +5261,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -5304,6 +5393,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -5447,6 +5537,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -5572,6 +5663,7 @@
       "sex": "ALL",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -5681,6 +5773,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Tonianne J Grobmyer, Physician Associate",
+      "email": "tonianne.grobmyer@ku.ac.ae"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -5803,6 +5899,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -5904,6 +6001,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -6005,6 +6103,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -6164,6 +6263,10 @@
       "sex": "ALL",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Brian Shuch",
+      "email": "Bshuch@mednet.ucla.edu"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -6256,6 +6359,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -6356,6 +6460,10 @@
       "maximum_age": "45 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Cheng-Yu Long, Professor",
+      "email": "urolong@yahoo.com.tw"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -6468,6 +6576,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -6571,6 +6680,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -6659,6 +6769,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -6760,6 +6871,7 @@
       "sex": "ALL",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -6872,6 +6984,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -6966,6 +7079,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -7087,6 +7201,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -7174,6 +7289,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Cynthia A Perry, CIP",
+      "email": "cynthia.perry@amedd.army.mil"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -7267,6 +7386,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -7399,6 +7519,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -7487,6 +7608,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -7588,6 +7710,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -7714,6 +7837,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -7825,6 +7949,10 @@
       "maximum_age": "45 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Catherine P Haering, BA",
+      "email": "cph43@case.edu"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -7948,6 +8076,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -8040,6 +8169,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": null
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -8150,6 +8280,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "Study Coordinator",
+      "email": "plumstudy@ucsf.edu"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -8238,6 +8372,7 @@
       "sex": "ALL",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -8333,6 +8468,10 @@
       "maximum_age": "85 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Krzysztof Nowosielski, professor",
+      "email": "knowosielski@sum.edu.pl"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -8435,6 +8574,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -8528,6 +8668,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -8629,6 +8770,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -8742,6 +8884,7 @@
       "sex": "ALL",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -8854,6 +8997,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -8965,6 +9109,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -9080,6 +9225,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Maged Elmohamady Rashedy, MD",
+      "email": "Magedalmohamady50@gmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -9180,6 +9329,10 @@
       "maximum_age": "45 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Patrick Renner, MSc",
+      "email": "hello@citruslabs.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -9284,6 +9437,7 @@
       "sex": "MALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -9377,6 +9531,10 @@
       "sex": "ALL",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "Yunze Xu, Ph.D.",
+      "email": "rjxuyunze@163.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -9469,6 +9627,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Antonio Simone Lagan\u00e0, M.D.",
+      "email": "antoniosimone.lagana@asst-settelaghi.it"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -9557,6 +9719,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -9657,6 +9820,10 @@
       "maximum_age": "65 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Galyna Kutsyna, MD, MD/PhD",
+      "email": "kutsynagalyna@yahoo.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -9773,6 +9940,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -9864,6 +10032,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Clinical Trials at Myovant",
+      "email": "ClinicalTrials@Myovant.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -9976,6 +10148,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -10064,6 +10237,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -10170,6 +10344,10 @@
       "maximum_age": "50 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Xueqiong Zhu, PHD",
+      "email": "zjwzzxq@163.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -10283,6 +10461,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -10371,6 +10550,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -10486,6 +10666,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -10597,6 +10778,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -10708,6 +10890,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -10796,6 +10979,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -10897,6 +11081,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -11009,6 +11194,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Mohamed R El Tahan, MD",
+      "email": "mohamedrefaateltahan@yahoo.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -11120,6 +11309,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Andrei Dubinin, MD, PhD",
+      "email": "andub@mail.ru"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -11208,6 +11401,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -11313,6 +11507,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Margaret Wingo, MD",
+      "email": "margaret.wingo@christianacare.org"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -11414,6 +11612,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -11502,6 +11701,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -11600,6 +11800,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -11711,6 +11912,10 @@
       "maximum_age": "45 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Mohamed S Abdelhafez, MD",
+      "email": "msabdelhafez@gmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -11834,6 +12039,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -11940,6 +12146,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -12051,6 +12258,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -12163,6 +12371,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -12250,6 +12459,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Andrea Etrusco, M.D.",
+      "email": "etruscoandrea@gmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -12352,6 +12565,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -12473,6 +12687,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -12565,6 +12780,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -12653,6 +12869,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -12759,6 +12976,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -12870,6 +13088,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -12974,6 +13193,10 @@
       "maximum_age": "35 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Eman ElGindy, MD, PhD",
+      "email": "eman_elgindy2013@hotmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -13086,6 +13309,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -13187,6 +13411,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -13298,6 +13523,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "waleed M El-khayat, MD",
+      "email": "waleed_elkhyat@yahoo.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -13408,6 +13637,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Stefan Timmerman, MD",
+      "email": "stefan.timmerman@uzleuven.be"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -13521,6 +13754,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Massimo Stomati, Ph. D",
+      "email": "mstomati@gmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -13632,6 +13869,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -13742,6 +13980,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -13834,6 +14073,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -13934,6 +14174,10 @@
       "maximum_age": "70 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "San-Hui Lee, M.D.",
+      "email": "sanaram@naver.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -14036,6 +14280,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Laura Miquel, Dr",
+      "email": "laura.miquel@ap-hm.fr"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -14137,6 +14385,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -14229,6 +14478,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -14320,6 +14570,10 @@
       "maximum_age": "49 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Lin Yuan, Ph.D.",
+      "email": "yuanl@sdfmu.edu.cn"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -14432,6 +14686,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -14543,6 +14798,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Qi Yu, PhD",
+      "email": "yuqimd@163.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -14659,6 +14918,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -14791,6 +15051,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -14903,6 +15164,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Shing Chee Chan",
+      "email": "symphorosa@cuhk.edu.hk"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -15004,6 +15269,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -15115,6 +15381,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -15226,6 +15493,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -15326,6 +15594,10 @@
       "maximum_age": "50 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Fengzh Feng, MD",
+      "email": "fengfzh@pumch.cn"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -15443,6 +15715,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -15554,6 +15827,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -15663,6 +15937,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Xueqiong Zhu, PHD",
+      "email": "zjwzzxq@163.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -15750,6 +16028,10 @@
       "maximum_age": "75 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Carlos Gomez, BSc, MSc",
+      "email": "carlos.gomez@igenomix.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -15851,6 +16133,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Priscilla Machado, MD",
+      "email": "priscilla.machado@jefferson.edu"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -15962,6 +16248,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -16074,6 +16361,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -16168,6 +16456,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -16269,6 +16558,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Aubert Agostini, MD/PhD",
+      "email": "aubert.agostini@ap-hm.fr"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -16361,6 +16654,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -16493,6 +16787,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -16603,6 +16898,10 @@
       "maximum_age": "55 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Fulvio Zullo, MD,PhD",
+      "email": "zullo@unicz.it"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -16716,6 +17015,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -16817,6 +17117,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -16905,6 +17206,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -17006,6 +17308,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -17138,6 +17441,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Ying Chen",
+      "email": "chenying@cms.net.cn"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -17228,6 +17535,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -17320,6 +17628,10 @@
       "maximum_age": "80 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Takelia Walker",
+      "email": "takelia-watson@northwestern.edu"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -17432,6 +17744,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -17520,6 +17833,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -17621,6 +17935,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -17732,6 +18047,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -17844,6 +18160,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -17945,6 +18262,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -18056,6 +18374,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -18171,6 +18490,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -18269,6 +18589,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -18374,6 +18695,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -18465,6 +18787,10 @@
       "maximum_age": "55 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Yu Dai, Associate Professor",
+      "email": "daiyu829@163.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -18563,6 +18889,10 @@
       "maximum_age": "50 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Yu Zhang",
+      "email": "jigoulunli_zy4y@163.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -18675,6 +19005,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Man-Deuk Kim",
+      "email": "mdkim@yuhs.ac"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -18762,6 +19096,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "DANIELA ROMUALDI, MD",
+      "email": "daniela.romualdi@policlinicogemelli.it"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -18874,6 +19212,10 @@
       "maximum_age": "55 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Helena Kopp Kallner, MD; PhD",
+      "email": "helena.kopp-kallner@ki.se"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -18997,6 +19339,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -19089,6 +19432,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -19204,6 +19548,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -19315,6 +19660,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Sevil \u00c7ankaya, MD",
+      "email": "sevilsaltek82@gmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -19448,6 +19797,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -19559,6 +19909,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -19670,6 +20021,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -19775,6 +20127,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Hanbi Wang, Dr.",
+      "email": "zhw2005@aliyun.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -19875,6 +20231,10 @@
       "maximum_age": "75 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Xingyu Yang, Master",
+      "email": "yangxy_822@163.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -19981,6 +20341,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -20103,6 +20464,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -20235,6 +20597,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -20328,6 +20691,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "Carlos G\u00f3mez, BSc, MSc",
+      "email": "carlos.gomez@igenomix.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -20416,6 +20783,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -20535,6 +20903,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "MURAT Y Murat Yassa, MD (Assoc. Prof.) - Principal Investigator, ASSOCIATE PROFESSOR IN OBS GYN",
+      "email": "murat.yassa@acibadem.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -20633,6 +21005,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -20735,6 +21108,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -20836,6 +21210,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -20947,6 +21322,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -21035,6 +21411,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -21156,6 +21533,7 @@
       "sex": "ALL",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -21252,6 +21630,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Judith Huirne, Prof.",
+      "email": "j.huirne@amsterdamumc.nl"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -21346,6 +21728,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -21456,6 +21839,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -21544,6 +21928,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -21634,6 +22019,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -21735,6 +22121,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -21840,6 +22227,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -21941,6 +22329,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -22042,6 +22431,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -22144,6 +22534,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -22245,6 +22636,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -22357,6 +22749,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "Seifeldin Sadek, MD",
+      "email": "sadeks@evms.edu"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -22468,6 +22864,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -22583,6 +22980,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -22684,6 +23082,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -22787,6 +23186,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -22888,6 +23288,7 @@
       "sex": "ALL",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -23010,6 +23411,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -23110,6 +23512,10 @@
       "maximum_age": "50 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Clinical Trials at Myovant",
+      "email": "ClinicalTrials@Myovant.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -23222,6 +23628,10 @@
       "maximum_age": null,
       "sex": "ALL",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Hyun-Chang Kim",
+      "email": "onidori@yuhs.ac"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -23338,6 +23748,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Lei Liang",
+      "email": "lianglei_csk@126.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -23439,6 +23853,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -23554,6 +23969,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -23654,6 +24070,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Janey Fang, MD",
+      "email": "jfang85@uwo.ca"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -23767,6 +24187,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -23878,6 +24299,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Deageun Song",
+      "email": "daegeun.song@jwhealthcare.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -23969,6 +24394,10 @@
       "maximum_age": "50 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Wenwen Wang, PhD",
+      "email": "wenwenwang@hust.edu.cn"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -24085,6 +24514,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -24206,6 +24636,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -24354,6 +24785,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -24454,6 +24886,10 @@
       "maximum_age": "50 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Nahida Akter, MBBS",
+      "email": "nahidamili16@gmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -24578,6 +25014,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Zhenyi Zhu",
+      "email": "zhenyi.zhu@hengrui.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -24665,6 +25105,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Sheng-Mou Hsiao, M.D.",
+      "email": "smhsiao2@gmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -24770,6 +25214,10 @@
       "maximum_age": "45 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Brunella Zizolfi, Dr.",
+      "email": "brunellazizolfi@hotmail.it"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -24898,6 +25346,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -24986,6 +25435,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": null
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -25078,6 +25528,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -25170,6 +25621,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -25289,6 +25741,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Dean Marki\u0107, MD, PHD, Prof.",
+      "email": "dean.markic@medri.uniri.hr"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -25377,6 +25833,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -25465,6 +25922,7 @@
       "sex": "ALL",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -25570,6 +26028,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -25662,6 +26121,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -25750,6 +26210,7 @@
       "sex": "ALL",
       "healthy_volunteers": null
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -25838,6 +26299,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -25949,6 +26411,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -26054,6 +26517,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -26142,6 +26606,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -26234,6 +26699,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -26376,6 +26842,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -26476,6 +26943,10 @@
       "maximum_age": "70 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Giovanni Scambia, MD",
+      "email": "giovanni.scambia@rm.unicatt.it"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -26578,6 +27049,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -26683,6 +27155,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -26802,6 +27275,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -26919,6 +27393,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -27042,6 +27517,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -27129,6 +27605,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": null
+    },
+    "contact": {
+      "name": "Simone Ferrero, MD, PhD",
+      "email": "simone.ferrero@unige.it"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -27231,6 +27711,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -27343,6 +27824,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -27431,6 +27913,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -27556,6 +28039,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -27672,6 +28156,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -27784,6 +28269,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -27896,6 +28382,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -27989,6 +28476,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -28087,6 +28575,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -28188,6 +28677,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -28298,6 +28788,10 @@
       "maximum_age": "70 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "MERAL TU\u011eBA \u00c7\u0130M\u015e\u0130R",
+      "email": "dr.tugbaacar@gmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -28430,6 +28924,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -28546,6 +29041,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "WU zaigui",
+      "email": "411773@zju.edu.cn"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -28657,6 +29156,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -28769,6 +29269,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -28870,6 +29371,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -28971,6 +29473,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -29058,6 +29561,10 @@
       "maximum_age": "50 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "shixuan Wang, Phd",
+      "email": "shixuanwang@tjh.tjmu.edu.cn"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -29171,6 +29678,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Hannah Pope, MD",
+      "email": "hannah.pope@nm.org"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -29270,6 +29781,10 @@
       "maximum_age": "45 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Chin-Jung Wang, MD",
+      "email": "wang2260@cgmh.org.tw"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -29376,6 +29891,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -29471,6 +29987,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Katarzyna A. Skorupska, PhD",
+      "email": "kasiaperzylo@hotmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -29559,6 +30079,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -29660,6 +30181,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -29761,6 +30283,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -29883,6 +30406,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -29988,6 +30512,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Lei Guo",
+      "email": "guolei.yale@163.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -30076,6 +30604,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -30188,6 +30717,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -30303,6 +30833,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -30413,6 +30944,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -30514,6 +31046,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -30635,6 +31168,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -30756,6 +31290,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -30857,6 +31392,7 @@
       "sex": "ALL",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -30969,6 +31505,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -31064,6 +31601,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -31176,6 +31714,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "MERAL TU\u011eBA \u00c7\u0130M\u015e\u0130R",
+      "email": "dr.tugbaacar@gmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -31277,6 +31819,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -31369,6 +31912,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -31480,6 +32024,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -31595,6 +32140,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Jing Liang, MD",
+      "email": "jacyliang@sina.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -31687,6 +32236,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -31775,6 +32325,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -31867,6 +32418,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -31968,6 +32520,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -32056,6 +32609,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -32178,6 +32732,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -32279,6 +32834,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -32370,6 +32926,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Yann SALHI, MD",
+      "email": "yann.salhi@chicreteil.fr"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -32472,6 +33032,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -32594,6 +33155,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Taejong Song, MD PhD",
+      "email": "taejong.song@gmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -32705,6 +33270,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -32792,6 +33358,10 @@
       "maximum_age": "80 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Kenneth Thomson, MBBS RANZCR",
+      "email": "k.thomson@alfred.org.au"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -32894,6 +33464,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -32981,6 +33552,10 @@
       "maximum_age": "55 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Emanuele Barabino, MD",
+      "email": "emanuele.barabino@hsanmartino.it"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -33083,6 +33658,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -33194,6 +33770,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -33281,6 +33858,10 @@
       "maximum_age": "80 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Anna Myriam Perrone, MD",
+      "email": "myriam.perrone@unibo.it"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -33383,6 +33964,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -33470,6 +34052,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Gwendolin Manegold-Brauer, Prof. Dr.",
+      "email": "gwendolin.manegold-brauer@usb.ch"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -33572,6 +34158,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -33683,6 +34270,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -33781,6 +34369,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -33882,6 +34471,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -33995,6 +34585,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -34085,6 +34676,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -34186,6 +34778,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -34297,6 +34890,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Hongyu Jin, MD",
+      "email": "jinhongyu324@icloud.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -34385,6 +34982,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -34496,6 +35094,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Jamie Kroft, MD, FRCSC",
+      "email": "jamie.kroft@utoronto.ca"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -34602,6 +35204,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -34724,6 +35327,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -34811,6 +35415,10 @@
       "maximum_age": "80 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Torng Pao-Ling, MD, PhD",
+      "email": "pltorng@ha.mc.ntu.edu.tw"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -34923,6 +35531,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -35024,6 +35633,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Nagham N Omar, Professor",
+      "email": "Nagham.omar@aun.edu.eg"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -35116,6 +35729,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -35204,6 +35818,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -35291,6 +35906,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Christine De Bruyn, MD",
+      "email": "christine.debruyn@uzleuven.be"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -35424,6 +36043,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -35545,6 +36165,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -35633,6 +36254,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -35734,6 +36356,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -35845,6 +36468,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -35950,6 +36574,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -36038,6 +36663,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -36150,6 +36776,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -36259,6 +36886,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -36370,6 +36998,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "Fulvio Zullo, MD,PhD",
+      "email": "zullo@unicz.it"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -36480,6 +37112,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -36567,6 +37200,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": null
+    },
+    "contact": {
+      "name": "Ashraqat Sherif",
+      "email": "ashrakat.gehad@gmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -36679,6 +37316,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -36794,6 +37432,7 @@
       "sex": "ALL",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -36887,6 +37526,10 @@
       "maximum_age": "40 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Thea F. Mikkelsen, MD",
+      "email": "themik@ous-hf.no"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -36999,6 +37642,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Ying Tzu Li, Master&#39;s degree",
+      "email": "irb-app@kmuh.org.tw"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -37090,6 +37737,10 @@
       "maximum_age": "50 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Shixuan Wang",
+      "email": "shixuanwang@tjh.tjmu.edu.cn"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -37222,6 +37873,7 @@
       "sex": "ALL",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -37383,6 +38035,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -37485,6 +38138,10 @@
       "maximum_age": "65 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Cunming Liu, doctorate",
+      "email": "1335587409@qq.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -37597,6 +38254,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -37708,6 +38366,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -37809,6 +38468,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -37931,6 +38591,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -38063,6 +38724,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -38170,6 +38832,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -38279,6 +38942,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -38380,6 +39044,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -38491,6 +39156,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -38602,6 +39268,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -38703,6 +39370,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -38813,6 +39481,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Moses Mugisha",
+      "email": "mugisha5964@gmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -38914,6 +39586,10 @@
       "maximum_age": null,
       "sex": "ALL",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Hyun-Chang Kim",
+      "email": "gsirb@yuhs.ac"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -39027,6 +39703,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -39127,6 +39804,10 @@
       "maximum_age": "45 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "LD Tang, PhD",
+      "email": "ldtang2002@yahoo.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -39283,6 +39964,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -39392,6 +40074,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -39484,6 +40167,10 @@
       "maximum_age": null,
       "sex": "ALL",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Deborah A Nielsen, R.N.",
+      "email": "deborah.nielsen@nih.gov"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -39585,6 +40272,10 @@
       "maximum_age": "50 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Kirsi M Joronen, PhD",
+      "email": "kirsi.joronen@tyks.fi"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -39698,6 +40389,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -39803,6 +40495,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Trudy D Estridge, PhD",
+      "email": "trudy.estridge@actamax.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -39904,6 +40600,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -39991,6 +40688,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Molly Ryan",
+      "email": "molly.ryan@merit.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -40080,6 +40781,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -40181,6 +40883,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -40313,6 +41016,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -40401,6 +41105,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -40493,6 +41198,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -40635,6 +41341,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -40733,6 +41440,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -40834,6 +41542,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -40950,6 +41659,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -41081,6 +41791,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -41183,6 +41894,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -41271,6 +41983,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -41387,6 +42100,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -41498,6 +42212,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -41629,6 +42344,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Ahmed Maged, MD",
+      "email": "prof.ahmedmaged@gmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -41730,6 +42449,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -41843,6 +42563,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -41931,6 +42652,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -42043,6 +42765,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -42144,6 +42867,7 @@
       "sex": "ALL",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -42245,6 +42969,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -42332,6 +43057,10 @@
       "maximum_age": "55 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "James Segars, MD",
+      "email": "jsegars2@jhmi.edu"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -42439,6 +43168,7 @@
       "sex": "ALL",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -42544,6 +43274,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -42651,6 +43382,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Wen-Hsun Chang, NB",
+      "email": "whchang@vghtpe.gov.tw"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -42748,6 +43483,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Hee Seung Kim, MD/PhD",
+      "email": "bboddi0311@snu.ac.kr"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -42914,6 +43653,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -43002,6 +43742,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -43117,6 +43858,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -43239,6 +43981,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Taejong Song, M.D., Ph.D.",
+      "email": "taejong.song@gmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -43331,6 +44077,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": null
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -43432,6 +44179,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -43533,6 +44281,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -43625,6 +44374,7 @@
       "sex": "ALL",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -43736,6 +44486,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -43841,6 +44592,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -43963,6 +44715,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -44068,6 +44821,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -44163,6 +44917,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "Kristyna Hlinecka, MD, PhD",
+      "email": "Kristyna.Hlinecka2@vfn.cz"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -44254,6 +45012,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Francesco Fanfani, Professor",
+      "email": "francesco.fanfani74@gmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -44367,6 +45129,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -44475,6 +45238,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -44589,6 +45353,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -44721,6 +45486,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Lisa Chen",
+      "email": "Lisa.Chen@Bio-Genuine.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -44832,6 +45601,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -44933,6 +45703,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -45045,6 +45816,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Maurice Hurd, M.A.",
+      "email": "mah4011@med.cornell.edu"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -45156,6 +45931,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -45271,6 +46047,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -45384,6 +46161,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "Fulvio Zullo",
+      "email": "zullo@unicz.it"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -45484,6 +46265,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Aubert AGOSTINI",
+      "email": "aubert.agostini@ap-hm.fr"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -45597,6 +46382,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Hung-Chang Lai, M.D/Ph. D.",
+      "email": "hclai30656@gmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -45688,6 +46477,10 @@
       "maximum_age": "45 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Mohamed Samy, Bachelor",
+      "email": "dr.mohamed.tolis@gmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -45790,6 +46583,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -45895,6 +46689,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -46006,6 +46801,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Ahmed E Abd eltawab, MD",
+      "email": "aea11@fayoum.edu.eg"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -46110,6 +46909,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Mostafa Borahay, MD, MBA, PhD",
+      "email": "mboraha1@jhmi.edu"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -46223,6 +47026,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -46335,6 +47139,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -46423,6 +47228,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -46539,6 +47345,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -46671,6 +47478,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -46772,6 +47580,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -46883,6 +47692,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -46970,6 +47780,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "WENWEN WANG, DOCTOR",
+      "email": "petrawang@163.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -47083,6 +47897,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -47184,6 +47999,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -47283,6 +48099,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -47385,6 +48202,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -47486,6 +48304,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -47580,6 +48399,10 @@
       "maximum_age": "45 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Nandor Acs, PhD",
+      "email": "acs.nandor@semmelweis.hu"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -47692,6 +48515,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Erkan G\u00f6l, MD",
+      "email": "drerkangol@gmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -47793,6 +48620,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "Manuela Viviano, MD",
+      "email": "manuela.viviano@hug.ch"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -47881,6 +48712,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -48013,6 +48845,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -48134,6 +48967,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -48253,6 +49087,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -48365,6 +49200,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -48457,6 +49293,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "WENWEN WANG",
+      "email": "wenwenwang@hust.edu.cn"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -48548,6 +49388,10 @@
       "maximum_age": "40 Years",
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Prof Kanna Jayaprakasan",
+      "email": "kanna.jayaprakasan@nhs.net"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -48656,6 +49500,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -48768,6 +49613,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "dina yahia mansour, MD",
+      "email": "dinayahiamansour@hotmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -48855,6 +49704,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Helena K Kallner, MD",
+      "email": "helena.kopp-kallner@ki.se"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -48967,6 +49820,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -49065,6 +49919,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Kai-Wen Huang, MD, PhD",
+      "email": "fangyu0429@gmail.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -49153,6 +50011,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -49254,6 +50113,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "Stefano Angioni, Prof",
+      "email": "sangioni@yahoo.it"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -49347,6 +50210,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -49458,6 +50322,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -49549,6 +50414,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "ahmed Al Dr, Msc",
+      "email": "rcogahmedali@gmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -49666,6 +50535,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -49766,6 +50636,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Alexandra Snyder, MD",
+      "email": "alexandra.snyder@medstar.net"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -49868,6 +50742,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Patrick Martin",
+      "email": "patrick@mirabilismed.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -49956,6 +50834,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -50057,6 +50936,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -50145,6 +51025,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": null
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -50237,6 +51118,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -50347,6 +51229,10 @@
       "maximum_age": "45 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Xianguo Qu",
+      "email": "syyykyb@126.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -50471,6 +51357,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -50559,6 +51446,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -50650,6 +51538,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": true
+    },
+    "contact": {
+      "name": "Sofiane Bendifallah, MD",
+      "email": "sofiane.bendifallah@yahoo.fr"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -50749,6 +51641,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -50864,6 +51757,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -50969,6 +51863,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Moran PAZ, M.D.",
+      "email": "MORANPA@CLALIT.GOV.IL"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -51067,6 +51965,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -51159,6 +52058,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -51270,6 +52170,10 @@
       "maximum_age": "43 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Lise LACLAUTRE",
+      "email": "promo_internet_drci@chu-clermontferrand.fr"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -51403,6 +52307,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -51491,6 +52396,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -51592,6 +52498,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -51692,6 +52599,10 @@
       "maximum_age": "50 Years",
       "sex": "FEMALE",
       "healthy_volunteers": false
+    },
+    "contact": {
+      "name": "Barbara MacDowell",
+      "email": "macdowb@mail.amc.edu"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -51825,6 +52736,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -51913,6 +52825,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -52014,6 +52927,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": true
     },
+    "contact": {
+      "name": "Anette Berg, MD",
+      "email": "anette.berg@uus.no"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -52105,6 +53022,10 @@
       "maximum_age": null,
       "sex": "FEMALE",
       "healthy_volunteers": null
+    },
+    "contact": {
+      "name": "Francesco Fanfani, Professor",
+      "email": "francesco.fanfani74@gmail.com"
     },
     "tag6_cost": {
       "status": "not_stated",
@@ -52217,6 +53138,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -52329,6 +53251,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -52440,6 +53363,10 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": {
+      "name": "Yahui Wang",
+      "email": "362303714@qq.com"
+    },
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -52528,6 +53455,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -52639,6 +53567,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,
@@ -52779,6 +53708,7 @@
       "sex": "FEMALE",
       "healthy_volunteers": false
     },
+    "contact": null,
     "tag6_cost": {
       "status": "not_stated",
       "evidence_sentence": null,

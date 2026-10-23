@@ -330,3 +330,38 @@ and the patient profile (R1b) and shortlist (R9) are both intentionally
 condition-independent - they're about the person, not the search.
 
 ---
+
+## D9 — Contact templates (R10): mailto, not sending on the user's behalf
+
+**Question:** R10 was speced (Template A "Am I a fit?", Template B "Keep me
+posted," with explicit constraints) but never built. How to implement
+"the user copies the text and sends it from their own email client"
+without a backend?
+
+**Decision:** `tag_trials.py` now resolves a `contact` field per trial
+(first entry with an email, `centralContacts[]` then `locations[].contacts[]`
+— checked against the real corpus: `PRINCIPAL_INVESTIGATOR`/`SUB_INVESTIGATOR`
+entries often have a name but no email, so "first contact" alone would
+silently pick an unreachable one on real records). 143/501 uterine
+fibroids records and the equivalent share of endometriosis resolve to a
+real contact; the rest show R10's own fallback ("no contact is listed...
+see the full listing") rather than a fabricated route.
+
+Each card's "more" details gets a `mailto:` link (prefilled subject +
+body, opens the visitor's own configured email client) plus a "Copy
+text" button (clipboard, with a manual-select fallback for browsers
+without Clipboard API access) - two ways to get the same text into an
+email the visitor sends themselves, never sent by this product.
+
+**Trigger logic, per spec, verified against real records in all four
+branches:** Template A alone when `overall_status === "RECRUITING"` and
+not hesitant; Template B alone when not recruiting; **both together**
+when recruiting but early-phase (`EARLY_PHASE1`/`PHASE1`) or high-burden
+(rank ≥ 4) - confirmed on a real record that hits this exact combination,
+not just reasoned about in the abstract.
+
+**Constraints already in the spec, not new decisions, confirmed in the
+implementation:** never "I qualify," never prefilled with intake-panel
+(R1b) answers, one trial at a time (no bulk-contact UI exists to misuse).
+
+---
