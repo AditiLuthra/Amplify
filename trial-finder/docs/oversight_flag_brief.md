@@ -1,10 +1,10 @@
 # Feature brief: TAG 5 oversight flag, patient-facing presentation
 
-**Status:** Partially resolved. Written as a strawman to react to, per the
-PM mentorship thread. Its list-display prominence question (§2 below) was
-resolved by Milestone 6 once the real TAG 5 hit rate existed to answer it
-— see "Open for review" at the bottom. The confirm-step question (§4)
-remains open, blocked on R9 (shortlisting) not being built yet.
+**Status:** Both open questions resolved — see "Open for review" at the
+bottom. List-display prominence (§2) was resolved by Milestone 6 once the
+real TAG 5 hit rate existed to answer it; the confirm-step question (§4)
+was resolved once R9 (shortlisting) was built and gave it something to
+attach to.
 
 **Scope:** How the TAG 5 oversight rubric (`TAGGING_SPEC_v0.5.md` §3 TAG 5,
 PRD R5/G5) actually reads to a patient, given the spec's own calibration
@@ -125,9 +125,12 @@ This is a first pass meant to be argued with, not approved.
   §2's proposed sub-line is still live, unchanged, on every card that
   does show the verdict label.
 
-- **Still open, blocked on R9:** the extra confirm step (§4) for
-  shortlisting a flagged trial. Real question, not resolved — but
-  shortlisting itself (R9) hasn't been built yet (`web/index.html` has no
-  save/shortlist feature as of Milestone 6/7, only the Tier A excluded-trial
-  restore drawer, which is a different mechanism for a different problem).
-  Nothing to decide here until R9 exists to attach a confirm step to.
+- **Resolved (2026-10-23):** the extra confirm step (§4) for shortlisting a
+  flagged trial. R9 is now built (`UI_DECISIONS.md` D7) — saving a trial
+  with `tag5_oversight.status === "flagged"` triggers a `window.confirm()`
+  with this brief's own proposed copy verbatim ("You're saving a trial
+  flagged on N of 8 oversight criteria. Save anyway?"). Simplified from the
+  brief's exact proposal — a native confirm only offers OK/Cancel, not the
+  suggested [Save]/[Learn more first] button pair — judged not worth a
+  custom modal for a two-button decision. Cancel declines the save only;
+  the trial stays fully visible either way, G7 intact.

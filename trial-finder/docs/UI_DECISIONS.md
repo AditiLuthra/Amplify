@@ -241,3 +241,47 @@ visitor sees the same thing Milestone 6 already shipped, personalization is
 additive, not a precondition for seeing anything.
 
 ---
+
+## D7 — Shortlist + export (R9), and the confirm-step it unblocked
+
+**Question:** R9 ("save trials; export a physician-ready file") was speced
+but never built. Building it also directly answers
+`oversight_flag_brief.md` §4's confirm-step question, which was explicitly
+blocked on shortlisting not existing yet — "nothing to decide here until
+R9 exists to attach a confirm step to" (this doc's own D6 entry said as
+much).
+
+**Decision:** Client-side only, same storage model as R1b (`localStorage`,
+nothing transmitted). A "☆ Save for later" / "✓ Saved" toggle on every
+visible card; a shortlist bar (count + "Download for your doctor") that
+only appears once something's saved. Export is a self-contained static
+HTML file — no app JS inside it, so it's genuinely something to hand to a
+clinician (PRD G2), not an export of our interface. Each entry: title,
+NCT ID + link, phase, placebo exposure, intervention category, brief
+summary, oversight status, cost status — the same facts already on the
+card, not new content.
+
+**The confirm step, resolved:** saving a flagged trial (`tag5_oversight.status
+=== "flagged"`) triggers one `window.confirm()` with the brief's own
+proposed copy: *"You're saving a trial flagged on N of 8 oversight
+criteria. Save anyway?"* Cancel just declines the save — the trial stays
+fully visible and nothing else changes, preserving G7. This is a
+simplification of the brief's exact proposal (native `confirm()` only
+offers OK/Cancel, not the brief's suggested [Save]/[Learn more first]
+button pair) — judged not worth a custom modal for a two-button decision;
+revisit if usage data says otherwise.
+
+**Scope boundary:** no multi-condition support (there's only one condition's
+data to save from), and no "shared list" or server sync — purely a local
+list of NCT IDs re-joined against `allData` at export time.
+
+**Bug caught by testing, not inspection:** the shortlist bar's own CSS
+(`display: flex`) silently overrode its `hidden` attribute — same
+specificity, author rule wins, so it rendered even when JS had correctly
+set `hidden`. Found by asserting `is_hidden()` in a real browser rather
+than trusting the attribute was being respected; fixed with an explicit
+`.shortlist-bar[hidden] { display: none; }` override. Worth remembering
+for any future element that combines the native `hidden` attribute with
+its own `display` override.
+
+---

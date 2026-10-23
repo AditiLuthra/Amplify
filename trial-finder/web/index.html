@@ -86,10 +86,30 @@ h1, h2 { font-family: "Literata", Georgia, serif; font-weight: 700; margin: 0; t
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 18px 20px; margin-bottom: 14px;
 }
-.card h2 { font-size: 1.12rem; line-height: 1.35; margin-bottom: 8px; }
+.card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.card-head h2 { margin-bottom: 0; }
+.card h2 { font-size: 1.12rem; line-height: 1.35; }
 .card h2 a { color: var(--ink); text-decoration: none; }
 .card h2 a:hover { color: var(--accent); }
 .snippet { color: var(--muted); font-size: 0.93rem; margin: 0 0 14px; }
+
+.save-btn {
+  font: inherit; font-size: 0.8rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+  background: var(--accent-soft); color: var(--accent); border: none; border-radius: 999px;
+  padding: 6px 12px; cursor: pointer;
+}
+.save-btn[aria-pressed="true"] { background: var(--accent); color: #fff; }
+
+.shortlist-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  background: var(--accent-soft); border-radius: 999px; padding: 10px 18px; margin-bottom: 16px;
+  font-size: 0.88rem; font-weight: 700; color: var(--accent);
+}
+.shortlist-bar[hidden] { display: none; }
+.shortlist-export {
+  font: inherit; font-size: 0.84rem; font-weight: 700; color: #fff; background: var(--accent);
+  border: none; border-radius: 999px; padding: 8px 16px; cursor: pointer;
+}
 
 .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
 .pill {
@@ -227,6 +247,11 @@ details.intake[open] > summary::before { content: "▾ "; }
     <span class="lbl">Sort by:</span>
     <button type="button" class="sort-btn" id="sort-burden" aria-pressed="true">Lowest burden first</button>
     <button type="button" class="sort-btn" id="sort-evidence" aria-pressed="false">Most evidence first</button>
+  </div>
+
+  <div class="shortlist-bar" id="shortlist-bar" hidden>
+    <span id="shortlist-count"></span>
+    <button type="button" class="shortlist-export" id="shortlist-export">Download for your doctor</button>
   </div>
 
   <div id="results"></div>
@@ -379,6 +404,99 @@ details.intake[open] > summary::before { content: "▾ "; }
 
   var patientProfile = loadProfile();
 
+  // R9: shortlist + export. localStorage array of nct_ids, same storage
+  // model as the patient profile (R1b) - nothing leaves the browser.
+  var SHORTLIST_KEY = "tf_shortlist_v1";
+  function loadShortlist() {
+    try {
+      var raw = localStorage.getItem(SHORTLIST_KEY);
+      var parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+  function saveShortlistToStorage(list) {
+    try { localStorage.setItem(SHORTLIST_KEY, JSON.stringify(list)); } catch (e) {}
+  }
+  var shortlist = loadShortlist();
+  function isShortlisted(nctId) { return shortlist.indexOf(nctId) !== -1; }
+  function addToShortlist(nctId) {
+    if (!isShortlisted(nctId)) { shortlist.push(nctId); saveShortlistToStorage(shortlist); updateShortlistBar(); }
+  }
+  function removeFromShortlist(nctId) {
+    var i = shortlist.indexOf(nctId);
+    if (i !== -1) { shortlist.splice(i, 1); saveShortlistToStorage(shortlist); updateShortlistBar(); }
+  }
+  function updateShortlistBar() {
+    var bar = document.getElementById("shortlist-bar");
+    if (!bar) return;
+    if (shortlist.length === 0) { bar.hidden = true; return; }
+    bar.hidden = false;
+    document.getElementById("shortlist-count").textContent =
+      shortlist.length + " trial" + (shortlist.length === 1 ? "" : "s") + " saved for later";
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  // Plain, physician-readable static HTML - no interactivity, no app JS -
+  // matches PRD G2 ("a document the user can hand to a clinician, not
+  // just a saved list inside our product").
+  function buildShortlistExportHtml(trials) {
+    var rows = trials.map(function (t) {
+      var d = t.display;
+      var iv = interventionLine(t);
+      var o = t.tag5_oversight;
+      var oversightLine = o.status === "flagged"
+        ? "Oversight: flagged on " + o.criteria_met_count + " of 8 checklist criteria - worth asking the trial team about."
+        : (o.status === "undetermined"
+          ? "Oversight: not enough information to fully check against our checklist."
+          : "Oversight: no concerns found on our checklist.");
+      var costLine = "Cost: " + (t.tag6_cost.status === "not_stated" ? "Not stated in the registry" : t.tag6_cost.status.replace(/_/g, " "));
+      return "<section style=\"margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #ddd;\">" +
+        "<h2 style=\"margin:0 0 6px;font-size:16px;\">" + escapeHtml(d.brief_title || t.nct_id) + "</h2>" +
+        "<p style=\"margin:0 0 6px;color:#555;\">" +
+        "<a href=\"https://clinicaltrials.gov/study/" + escapeHtml(t.nct_id) + "\">" + escapeHtml(t.nct_id) + "</a>" +
+        " &middot; " + escapeHtml(t.tag1_phase.label) +
+        " &middot; " + escapeHtml(placeboLabel(t)) +
+        " &middot; " + escapeHtml(iv.category) +
+        "</p>" +
+        (d.summary_snippet ? "<p style=\"margin:0 0 6px;\">" + escapeHtml(d.summary_snippet) + "</p>" : "") +
+        "<p style=\"margin:0 0 2px;font-size:13px;color:#444;\">" + escapeHtml(oversightLine) + "</p>" +
+        "<p style=\"margin:0;font-size:13px;color:#444;\">" + escapeHtml(costLine) + "</p>" +
+        "</section>";
+    }).join("\n");
+    var today = new Date().toISOString().slice(0, 10);
+    return "<!doctype html><html><head><meta charset=\"utf-8\"><title>Clinical trial shortlist</title></head>" +
+      "<body style=\"font-family:Georgia,serif;max-width:680px;margin:40px auto;padding:0 20px;color:#222;\">" +
+      "<h1 style=\"font-size:20px;\">Clinical trial shortlist</h1>" +
+      "<p style=\"color:#555;\">Generated " + today + " from Clinical Trial Finder. This is not medical " +
+      "advice and does not confirm eligibility for any trial - bring this list to your own doctor or the " +
+      "trial team to discuss.</p>" +
+      rows +
+      "</body></html>";
+  }
+
+  function initShortlistExport() {
+    var btn = document.getElementById("shortlist-export");
+    btn.addEventListener("click", function () {
+      var saved = allData.filter(function (t) { return isShortlisted(t.nct_id); });
+      var html = buildShortlistExportHtml(saved);
+      var blob = new Blob([html], { type: "text/html" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "clinical-trial-shortlist.html";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+    updateShortlistBar();
+  }
+
   function effectiveTierA(t) {
     return patientProfile ? tierAExclusionJS(t.eligibility_raw, patientProfile) : t.tier_a_exclusion;
   }
@@ -423,10 +541,37 @@ details.intake[open] > summary::before { content: "▾ "; }
     var d = t.display;
     var card = el("div", { class: "card" });
 
-    card.appendChild(el("h2", {}, [
+    var h2 = el("h2", {}, [
       el("a", { href: "https://clinicaltrials.gov/study/" + t.nct_id, target: "_blank", rel: "noopener" },
         [text(d.brief_title || t.nct_id)])
-    ]));
+    ]);
+    var saved = isShortlisted(t.nct_id);
+    var saveBtn = el("button", { type: "button", class: "save-btn", "aria-pressed": String(saved) },
+      [text(saved ? "✓ Saved" : "☆ Save for later")]);
+    saveBtn.addEventListener("click", function () {
+      if (isShortlisted(t.nct_id)) {
+        removeFromShortlist(t.nct_id);
+        saveBtn.setAttribute("aria-pressed", "false");
+        saveBtn.textContent = "☆ Save for later";
+        return;
+      }
+      // Resolves oversight_flag_brief.md sec. 4: saving a flagged trial
+      // takes one extra confirmation so the counter-metric (sec. 7) has a
+      // deliberate act to measure, not an accidental tap identical to any
+      // other save. Never a blocker - Cancel just declines to save, the
+      // trial stays fully visible either way (G7).
+      if (t.tag5_oversight.status === "flagged") {
+        var ok = window.confirm(
+          "You're saving a trial flagged on " + t.tag5_oversight.criteria_met_count +
+          " of 8 oversight criteria. Save anyway?"
+        );
+        if (!ok) return;
+      }
+      addToShortlist(t.nct_id);
+      saveBtn.setAttribute("aria-pressed", "true");
+      saveBtn.textContent = "✓ Saved";
+    });
+    card.appendChild(el("div", { class: "card-head" }, [h2, saveBtn]));
     if (d.summary_snippet) card.appendChild(el("p", { class: "snippet" }, [text(d.summary_snippet)]));
 
     var facts = el("div", { class: "facts" });
@@ -682,6 +827,7 @@ details.intake[open] > summary::before { content: "▾ "; }
 
   initTipsLinks();
   initIntakePanel();
+  initShortlistExport();
   loadData()
     .then(boot)
     .catch(function (err) {

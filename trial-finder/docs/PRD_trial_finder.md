@@ -1,6 +1,6 @@
 # PRD — Clinical Trial Finder
 
-**Version:** 0.10
+**Version:** 0.11
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — pre-validation
 **Related:** `TAGGING_SPEC_v0.5.md` (implementation detail)
@@ -292,7 +292,9 @@ a condition and how far along it is, independent of whether the user is
 currently seeking a trial. Serves G6.
 
 **R9. Shortlist and export.** Save trials; export a physician-ready file. Serves
-G1 and G2.
+G1 and G2. **Built** (`UI_DECISIONS.md` D7): `localStorage`-only save list,
+export as a standalone static HTML file (no app logic embedded) so it's a
+real document to hand a clinician, not an export of our interface.
 
 **R10. Contact templates.** Serves G3. Two templates, generated per trial and
 prefilled with the trial's identifiers and contact address from
@@ -506,6 +508,7 @@ trial. Where did it break down?"* Not *"would you use this?"*
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.11 | 2026-10-23 | R9 built: shortlist (save/unsave per trial) and export (standalone HTML file, no app logic) - `localStorage`-only, same storage model as R1b. Also resolved `oversight_flag_brief.md`'s last open question (the confirm step before saving a flagged trial), which had been explicitly blocked on R9 not existing. See `UI_DECISIONS.md` D7. |
 | 0.10 | 2026-10-23 | R1/R1b partially built: a real intake panel (age, sex, healthy-volunteer status) replaces the hardcoded example patient for Tier A exclusion, stored `localStorage`-only and re-evaluated live in the browser. See `UI_DECISIONS.md` D6. Condition search and the Tier B/C free-text intake fields remain unbuilt. |
 | 0.9 | 2026-10-20 | Added R11: "common signs of a predatory trial" tips content, linked from the oversight panel (`UI_DECISIONS.md` D5) rather than a standalone page. Raised after confirming the FDA has no usable structured/searchable warning-letter data to join against trial sponsors (Open question 10.10's investigation) — this covers the same gap (a legitimate-looking trial testing an unvalidated therapy) with static, citable patient guidance instead. |
 | 0.8 | 2026-10-20 | Added Open question §10.10: community-sourced sponsor/trial flagging, raised after Milestone 7's TAG 6 found zero real cost-language hits on the corpus (undisclosed cost may only ever surface via patient report). Parked, not scoped — needs the same anti-gaming/liability, Phase-2-shared-state, and condition-sensitivity review as G8/G9 before any design work. |
