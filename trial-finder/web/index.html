@@ -738,7 +738,9 @@ details.intake[open] > summary::before { content: "▾ "; }
     if (d.summary_snippet) card.appendChild(el("p", { class: "snippet" }, [text(d.summary_snippet)]));
 
     var facts = el("div", { class: "facts" });
-    facts.appendChild(el("span", { class: "pill" }, [text(t.tag1_phase.label)]));
+    var phaseAttrs = { class: "pill" };
+    if (t.tag1_phase.explanation) phaseAttrs.title = t.tag1_phase.explanation;
+    facts.appendChild(el("span", phaseAttrs, [text(t.tag1_phase.label)]));
     facts.appendChild(el("span", { class: "pill" }, [text(placeboLabel(t))]));
     var iv = interventionLine(t);
     facts.appendChild(el("span", { class: "pill plain" }, [text(iv.category)]));
@@ -770,6 +772,12 @@ details.intake[open] > summary::before { content: "▾ "; }
     var more = el("details", { class: "more" });
     var body = el("div", { class: "more-body" });
     if (d.brief_summary) body.appendChild(el("p", {}, [text(d.brief_summary)]));
+    if (t.tag1_phase.explanation) {
+      body.appendChild(el("p", {}, [
+        el("b", {}, [text("What \"" + t.tag1_phase.label + "\" means: ")]),
+        text(t.tag1_phase.explanation)
+      ]));
+    }
     if (iv.explanation && iv.explanation !== d.summary_snippet) {
       body.appendChild(el("p", {}, [el("b", {}, [text("What's involved: ")]), text(iv.explanation)]));
     }

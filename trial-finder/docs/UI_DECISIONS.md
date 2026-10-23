@@ -405,3 +405,38 @@ shortlist (R9), there's no "losing something real" cost to resetting on
 reload, and persisting it would be unrequested scope.
 
 ---
+
+## D11 — Surface TAG 1's phase explanation (found via a live screenshot, not a planned milestone)
+
+**Finding:** The product owner spotted a real trial in production — an
+esketamine trial for postoperative endometriosis pain, Phase 4, 50%
+placebo arm — whose phase pill just said **"Already approved,"** with no
+context, right next to "You may receive a placebo (about 50%)." Read on
+its own, that reads as "this is proven to work," when what `PHASE4`
+actually means (per `TAGGING_SPEC_v0.5.md`'s own table) is that the
+underlying drug is approved *for something* — esketamine is approved for
+treatment-resistant depression, not this use — and this trial exists
+*because* that's still unproven for this condition, hence the placebo arm.
+`tag1_phase()` has always computed an `explanation` field for exactly this
+("Studies a treatment already on the market, usually for long-term or
+real-world effects") — it was simply never rendered anywhere, for any
+phase, since Milestone 2. Not a new bug from this session's work; a
+pre-existing gap this screenshot happened to surface.
+
+**Fix:** The phase pill now carries the explanation as a native `title`
+(hover, desktop), and "More about this trial" gets an explicit "What
+'{label}' means: {explanation}" line, same pattern as TAG 3's existing
+"What's involved" line. No spec change, no new field — `explanation`
+already existed on every resolved phase (single, combined, and `NA`); this
+only exposes it. Verified against the exact record that surfaced the gap
+(`NCT07881562`).
+
+**Left alone, flagged for later:** the spec's own `PHASE4` explanation
+text doesn't explicitly say "not necessarily approved for *this* use" —
+it's implied once you think about why a Phase 4 trial would need a
+placebo arm, but a patient skimming might not make that leap unassisted.
+Didn't rewrite the spec's wording unilaterally here (that's a spec
+decision, not a UI one) — worth the product owner's own pass on whether
+`PHASE4`'s explanation text should say this more directly.
+
+---
