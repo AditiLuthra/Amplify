@@ -423,20 +423,37 @@ real-world effects") — it was simply never rendered anywhere, for any
 phase, since Milestone 2. Not a new bug from this session's work; a
 pre-existing gap this screenshot happened to surface.
 
-**Fix:** The phase pill now carries the explanation as a native `title`
-(hover, desktop), and "More about this trial" gets an explicit "What
-'{label}' means: {explanation}" line, same pattern as TAG 3's existing
-"What's involved" line. No spec change, no new field — `explanation`
-already existed on every resolved phase (single, combined, and `NA`); this
-only exposes it. Verified against the exact record that surfaced the gap
-(`NCT07881562`).
+**First fix (insufficient):** the phase pill gained the explanation as a
+native `title` (hover, desktop), plus an explicit "What '{label}' means:
+..." line in "More about this trial." Shipped, verified in a desktop
+browser against the exact record — and wrong-sized for how this product
+is actually used. The product owner hit the *identical* confusion again
+immediately after, on a phone, looking at the collapsed card: `title`
+doesn't exist on touch, and nobody taps "More about this trial" before
+forming a first impression. A fix that only helps once you've already
+gone looking for more context doesn't help with a pill that's misleading
+at a glance — the whole problem.
 
-**Left alone, flagged for later:** the spec's own `PHASE4` explanation
-text doesn't explicitly say "not necessarily approved for *this* use" —
-it's implied once you think about why a Phase 4 trial would need a
-placebo arm, but a patient skimming might not make that leap unassisted.
-Didn't rewrite the spec's wording unilaterally here (that's a spec
-decision, not a UI one) — worth the product owner's own pass on whether
-`PHASE4`'s explanation text should say this more directly.
+**Actual fix:** changed the always-visible pill text itself, no
+interaction required. `TAGGING_SPEC_v0.5.md`'s own `PHASE4` row changed
+from **"Already approved"** to **"Already approved (for other uses)"**,
+with the explanation sharpened to say directly what was previously only
+implied: *"The treatment is already approved and sold for a different
+use — this trial is testing whether it also works for this one. That's
+exactly why there's a placebo or comparison group: it isn't proven for
+this yet."* This is a spec wording change, not just a UI one — treated
+that way (`TAGGING_SPEC_v0.5.md` edited in the same change as
+`tag_trials.py`), since the previous entry's "flagged for later" on
+exactly this point turned out not to survive contact with a real user for
+even one more exchange. Reverified on the same record
+(`NCT07881562`), this time confirming the pill text alone, collapsed, no
+hover, no tap, already says the disambiguating thing.
+
+**Why this one became the actual fix and the hover/expand version
+didn't:** this product's own screenshots, across this entire session,
+are consistently phone-shaped. Designing a safety-relevant disambiguation
+to depend on hover was never going to hold up — worth remembering for any
+future case like this: if the fact matters enough to clarify, it belongs
+in the string that's always on screen, not behind an interaction.
 
 ---
