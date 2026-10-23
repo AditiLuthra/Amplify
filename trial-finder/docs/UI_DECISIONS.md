@@ -438,16 +438,21 @@ at a glance — the whole problem.
 interaction required. `TAGGING_SPEC_v0.5.md`'s own `PHASE4` row changed
 from **"Already approved"** to **"Already approved (for other uses)"**,
 with the explanation sharpened to say directly what was previously only
-implied: *"The treatment is already approved and sold for a different
-use — this trial is testing whether it also works for this one. That's
-exactly why there's a placebo or comparison group: it isn't proven for
-this yet."* This is a spec wording change, not just a UI one — treated
-that way (`TAGGING_SPEC_v0.5.md` edited in the same change as
-`tag_trials.py`), since the previous entry's "flagged for later" on
-exactly this point turned out not to survive contact with a real user for
-even one more exchange. Reverified on the same record
-(`NCT07881562`), this time confirming the pill text alone, collapsed, no
-hover, no tap, already says the disambiguating thing.
+implied. Reverified on the same record (`NCT07881562`), this time
+confirming the pill text alone, collapsed, no hover, no tap, already says
+the disambiguating thing.
+
+**Second round, same lesson:** the product owner saw this live and said
+plainly it still wasn't clear, and named the word they wanted:
+**"repurposing."** `PHASE4`'s label became **"Repurposing an FDA-approved
+drug,"** explanation: *"This drug is already FDA-approved and sold for a
+different use. This trial is testing whether it also works for this one
+— that's exactly why there's a placebo or comparison group: it isn't
+proven for this condition yet."* Same spec-plus-code pairing as the first
+round (`TAGGING_SPEC_v0.5.md`'s `PHASE4` row and `tag_trials.py`'s
+`PHASE_LABELS`/`PHASE_EXPLANATIONS` changed together). Two rounds past the
+original gap is the actual count here — the product owner's own wording
+was the thing that finally landed it, not a third guess of our own.
 
 **Why this one became the actual fix and the hover/expand version
 didn't:** this product's own screenshots, across this entire session,
@@ -455,5 +460,89 @@ are consistently phone-shaped. Designing a safety-relevant disambiguation
 to depend on hover was never going to hold up — worth remembering for any
 future case like this: if the fact matters enough to clarify, it belongs
 in the string that's always on screen, not behind an interaction.
+
+---
+
+## D12 — Exclusion-concept keyword flags on the intake panel, and dropping the intro paragraph
+
+**Request:** the product owner, reacting to a hand-annotated screenshot,
+asked for three things: drop the intro paragraph entirely; expand the
+intake panel past age/sex/healthy-volunteer into more of what actually
+drives exclusion; and do it from real data ("brainstorm the top 10
+exclusion criterias... is diabetes one of them?"), not a guess.
+
+**Intro paragraph:** removed outright from `web/index.html`. Checked
+first whether anything it said was load-bearing — the `.disclaimer`
+paragraph at the bottom already covers the same ground ("we don't tell
+you whether you qualify, always check with the trial team"), so nothing
+was lost.
+
+**Why this can't be a Tier A exclusion field:** age, sex, and
+healthy-volunteer status are the only patient facts this product can
+safely hard-filter on, because they're the only ones that arrive as
+*structured fields* from the ClinicalTrials.gov API (`eligibility_raw`).
+Everything the product owner actually wants — diabetes, prior surgery,
+kidney disease — only exists as free text inside `eligibilityCriteria`,
+and `TAGGING_SPEC_v0.5.md` §5.2 is explicit that text-derived signals
+**downrank, never hide** (the asymmetric cost in play: wrongly hiding a
+trial someone could actually join is worse than showing one they'll later
+rule out themselves). So this had to be a new kind of control, not an
+extension of the existing Tier A intake fields — confirmed with the
+product owner before building ("Yes, build it").
+
+**What it actually is:** a checklist of up-front concerns
+(`#intake-concerns`, 11 items) saved onto the local patient profile
+(`concerns: []` in `tf_patient_profile_v1`) alongside age/sex/HV. Each
+trial's `exclusion_keyword_flags` (new field, `tag_trials.py`) is a
+`{concept_key: verbatim_criterion}` map built by reusing Milestone 7's
+`parse_eligibility.stage1_split`/`stage2_atomize` (split out the
+Exclusion Criteria section, atomize it, regex-match each atomic criterion
+against each concept) — deliberately *not* the full Tier B/C structuring
+(no qualifiers, no thresholds; that still needs the LLM stage this
+project doesn't have a key for). When a trial's flags intersect the
+patient's saved concerns, the card shows a **"Worth asking about"** note
+— directly on the collapsed card, not inside "More about this trial",
+per the D11 lesson that a disambiguation gated behind an interaction
+doesn't reach anyone glancing at a card. The note is explicit about its
+own limits: *"A keyword match, not a confirmed exclusion — the exact
+wording may not apply to you."* The trial is never removed from the list
+regardless of a match; verified with Playwright (checking/unchecking a
+concern leaves the rendered card count unchanged).
+
+**The 11 concepts, and why these:** rather than guess, pulled real
+frequency data from Milestone 7's already-atomized uterine fibroids
+eligibility output (3,754 atomic criteria) before picking anything.
+Pregnancy was the clear majority concern (7.6% of criteria); diabetes,
+specifically asked about, was comparatively rare (1.1%) but included
+anyway per explicit confirmation ("All 10 listed, including diabetes").
+Final list: pregnancy, diabetes, cancer/malignancy, prior surgery, kidney
+disease, allergy/hypersensitivity, liver disease, breastfeeding, bleeding
+disorder/blood thinner use, heart disease, psychiatric/mental health
+condition.
+
+**False-positive check before shipping:** this session already has two
+known false-positive regex bugs on record (`"fee"` matching inside
+"breast-**fee**ding" for TAG6, `"ultrasound"` over-matching for TAG3) —
+so the three riskiest new patterns (`heart`, `depression`, `lactat`) were
+each checked against the real 3,754-criterion corpus for spurious matches
+before shipping. All three came back clean.
+
+**Bug found by testing, not inspection — fixed before shipping:** running
+the Playwright check surfaced a real atomization gap. A small share of
+records (23/492 in the uterine fibroids corpus, ~4.7%) have no bullets or
+line breaks between exclusion items at all, so `stage2_atomize` returns
+the *entire* exclusion section as a single "atomic" criterion. On one
+such record (`NCT07474688`), checking both "Pregnancy" and "Cancer or
+other malignancy" rendered the *same* run-on block of unrelated text
+twice, once under each header — worse than the underlying atomization
+limitation on its own. Fixed by grouping `exclusion_keyword_flags` entries
+by their verbatim text in `renderCard()` before rendering, so concepts
+that resolve to the same blob (whether a genuine single compound
+sentence, e.g. "pregnant or breastfeeding," or an unsplit run-on) show
+one combined-label entry instead of repeating the text per concept. This
+does not fix `stage2_atomize`'s underlying inability to split
+bullet-less exclusion text — that's a known, pre-existing Milestone 7
+limitation, still correctly scoped out until the LLM-based Stage 3
+structuring this project doesn't yet have a key for.
 
 ---

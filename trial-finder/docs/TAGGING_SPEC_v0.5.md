@@ -574,6 +574,24 @@ Derive, don't guess:
 Present progressively in a side panel, never as an upfront form. Show what each
 answer buys: *"3 more questions could rule out 40 trials."*
 
+> **Correction (v0.5, second).** The "derive top N by frequency, present
+> progressively, show what each answer buys" design above remained
+> unbuilt until a direct product-owner request to expand the intake panel
+> past age/sex/healthy-volunteer. What shipped (PRD R1b extension,
+> `UI_DECISIONS.md` D12) is a **fixed checklist of 11 concepts**, chosen
+> once from real corpus frequency data (not re-ranked per condition or
+> per session) and presented as ordinary checkboxes in the existing
+> intake panel — not a progressive side panel, and without the "N
+> questions could rule out M trials" impact preview. It also stops at
+> Stage 2 (atomize only): no qualifier/threshold structuring, since that
+> still needs Stage 3's LLM step, which this project has never had a key
+> for. A match only ever produces a non-hiding "worth asking about" note
+> (§5's Tier B/C display rule), never a filter. The progressive,
+> frequency-ranked, impact-previewed version above is still the better
+> end state and remains open for whenever Stage 3 is unblocked — this
+> correction records what Phase 1 actually ships now, not a retraction of
+> that goal.
+
 **Phase 1:** questions only, evaluated client-side, ~~nothing stored~~.
 
 > **Correction (v0.5).** "Nothing stored" was too strong. The actual boundary
@@ -598,6 +616,7 @@ Every tag assignment records spec version and computation date.
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.5 | 2026-10-23 | **Second §7 correction.** PHASE4 label changed twice this round (first "Already approved (for other uses)", then "Repurposing an FDA-approved drug" per direct product-owner wording). Added a fixed 11-concept exclusion checklist to the intake panel (Stage 1+2 only, no Stage 3 structuring) as a non-hiding keyword note — recorded in §7 as a correction, not a replacement, since it ships the Stage-2-only subset of §7's design rather than the full progressive/frequency-ranked/impact-previewed version, which remains open. |
 | 0.5 | 2026-09-25 | **Reverted the v0.1 "nothing stored" claim in §7 — too strong.** A local-only patient profile (PRD R1b) may persist intake answers in browser storage; the actual Phase 1/2 boundary is transmission (nothing leaves the device), not persistence. Struck through, not deleted, matching this doc's convention for retracted claims. |
 | 0.4 | 2026-09-24 | **Reverted the v0.3 TAG 4 correction — it was itself wrong.** Milestone 1's live fetch of 501 "uterine fibroids" records (`trial-finder/reports/milestone_1_status.md`) found `overallStatus == UNKNOWN` on 97/501 records (19.4%), confirmed on `NCT03134157`. `UNKNOWN` is real, stored, and common — added back to the enum. TAG 4 now checks `overallStatus == UNKNOWN` directly (highest confidence, it's the registry's own determination) with the v0.3 derived-staleness heuristic kept as a supplementary signal for records the registry hasn't relabeled yet, gated on `overallStatus != UNKNOWN`. `UNKNOWN` routes to Excluded Trials with `lastKnownStatus` shown as supporting detail. |
 | 0.3 | 2026-08-26 | **API verified against v2 field reference.** ~~Corrected TAG 4: `overallStatus == UNKNOWN` does not exist in API v2 — staleness now derived from `statusVerifiedDate` + status + completion date.~~ (Reverted in 0.4 — this was wrong.) Added `ENROLLING_BY_INVITATION` handling. Added TAG 4b Expanded Access. Added `isUnapprovedDevice` as 8th oversight criterion. Added `COMBINATION_PRODUCT` to burden ladder. Added `referencesModule`, `centralContacts`, `stdAges`, `geoPoint` to data source table. Added API mechanics section (cursor pagination, fields-parameter casing, `query.patient`, `filter.geo`). |

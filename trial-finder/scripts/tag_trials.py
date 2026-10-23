@@ -25,6 +25,7 @@ import re
 from pathlib import Path
 
 from tag6_cost import tag6_cost
+from parse_eligibility import stage1_split, stage2_atomize
 
 SPEC_VERSION = "0.5"
 
@@ -606,6 +607,60 @@ def summary_snippet(text, max_len=200):
     return text[:cut].rstrip(",;:") + "…"
 
 
+# Keyword-match concept flags for the intake panel's "common exclusion
+# concerns" checkboxes (Milestone 9, raised directly by the product owner).
+# NOT Tier B/C per TAGGING_SPEC_v0.5.md sec. 6 - this skips the
+# qualifier/threshold structuring step Stage 3 does (that needs an LLM,
+# not available in this sandbox). A keyword hit here only means the
+# concept is MENTIONED somewhere in the trial's exclusion criteria, not
+# that it's a confirmed exclusion for any given patient - "active
+# malignancy within 5 years" and "history of any cancer, including
+# resolved" are both a "cancer" keyword hit, but exclude completely
+# different people. Per spec sec. 5.2 ("text-derived exclusions downrank,
+# never hide" - P1, false exclusion costs more than false inclusion),
+# this can only ever justify a visible, non-hiding note - never remove a
+# trial from view. Patterns checked against the real corpus
+# (reports/milestone_9_status.md) for the same false-positive class of bug
+# already found twice this project (TAG3's "ultrasound", TAG6's "fee") -
+# "heart", "depression", and "lactat" as bare substrings were specifically
+# checked and found clean on this corpus, not assumed safe.
+EXCLUSION_CONCEPTS = {
+    "pregnancy": ("Pregnancy", re.compile(r"pregnan", re.IGNORECASE)),
+    "diabetes": ("Diabetes", re.compile(r"diabet", re.IGNORECASE)),
+    "cancer": ("Cancer or other malignancy", re.compile(r"cancer|malignan", re.IGNORECASE)),
+    "prior_surgery": ("Prior surgery", re.compile(r"surg", re.IGNORECASE)),
+    "kidney": ("Kidney disease", re.compile(r"renal|kidney", re.IGNORECASE)),
+    "allergy": ("Allergy or hypersensitivity", re.compile(r"allerg|hypersensitiv", re.IGNORECASE)),
+    "liver": ("Liver disease", re.compile(r"hepatic|liver", re.IGNORECASE)),
+    "breastfeeding": ("Breastfeeding", re.compile(r"breast.?feed|lactat", re.IGNORECASE)),
+    "bleeding_disorder": ("Bleeding disorder or blood thinner use",
+                          re.compile(r"anticoagul|bleeding disorder|coagulopathy", re.IGNORECASE)),
+    "heart": ("Heart disease", re.compile(r"cardiac|heart", re.IGNORECASE)),
+    "psychiatric": ("Psychiatric or mental health condition",
+                     re.compile(r"psychiatric|mental (illness|health)|depression|schizophreni", re.IGNORECASE)),
+}
+
+
+def exclusion_keyword_flags(criteria_text):
+    """Returns {concept_key: verbatim_criterion} for the first atomic
+    exclusion criterion matching each concept - empty dict if the Stage 1
+    split fails (logged elsewhere in parse_eligibility.py's own run, not
+    re-logged here) or nothing matches. First match only, not every match,
+    to keep the per-card note short - P4 (verbatim source text) still
+    applies: the stored text is the real criterion, never paraphrased."""
+    split = stage1_split(criteria_text)
+    if split is None:
+        return {}
+    _, exclusion_text = split
+    criteria = stage2_atomize(exclusion_text)
+    flags = {}
+    for criterion in criteria:
+        for key, (_, pattern) in EXCLUSION_CONCEPTS.items():
+            if key not in flags and pattern.search(criterion):
+                flags[key] = criterion
+    return flags
+
+
 def resolve_contact(contacts_locations_module: dict):
     """R10: centralContacts[] first, then locations[].contacts[] - the
     first entry that actually has an email (a PRINCIPAL_INVESTIGATOR or
@@ -677,6 +732,7 @@ def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
         # would silently pick an unreachable one on real records - checked
         # against this corpus, see reports/milestone_8_status.md).
         "contact": resolve_contact(contacts_locations_module),
+        "exclusion_keyword_flags": exclusion_keyword_flags(eligibility_module.get("eligibilityCriteria")),
         "tag6_cost": tag6_result,
     }
 

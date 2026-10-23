@@ -230,6 +230,18 @@ details.intake[open] > summary::before { content: "▾ "; }
   border-radius: 8px; background: var(--bg); color: var(--ink); flex: 1; max-width: 160px;
 }
 .intake-checkbox label { min-width: 0; font-weight: 400; display: flex; align-items: center; gap: 8px; }
+.intake-subhead { font-size: 0.85rem; color: var(--muted); margin: 14px 0 8px; }
+.intake-concerns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.concern-chip {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 0.84rem; font-weight: 400;
+  color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 999px;
+  padding: 6px 12px 6px 8px; cursor: pointer;
+}
+.concern-chip input { margin: 0; accent-color: var(--accent); }
+
+.note.concern { background: var(--caution-bg); color: var(--caution-ink); }
+.note.concern .concern-item { display: block; margin-top: 4px; }
+.note.concern .concern-item:first-of-type { margin-top: 8px; }
 .intake-actions { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
 .intake-save, .intake-clear {
   font: inherit; font-size: 0.86rem; font-weight: 700; border: none; border-radius: 999px;
@@ -256,7 +268,6 @@ details.intake[open] > summary::before { content: "▾ "; }
         <option value="endometriosis">Endometriosis</option>
       </select>
     </div>
-    <p>Everything below is written in plain language and comes straight from each trial's public record. We don't tell you whether you qualify — always check with the trial team before deciding anything.</p>
   </div>
 
   <div class="strip" id="strip"></div>
@@ -280,6 +291,21 @@ details.intake[open] > summary::before { content: "▾ "; }
       </div>
       <div class="intake-row intake-checkbox">
         <label><input type="checkbox" id="intake-healthy-volunteer"> I don't have this condition — I'd be a healthy volunteer</label>
+      </div>
+      <p class="intake-subhead">Any of these apply to you? (optional) — never hides a trial,
+      just notes on a card when its exclusion criteria mention it, so you know to ask.</p>
+      <div class="intake-concerns" id="intake-concerns">
+        <label class="concern-chip"><input type="checkbox" value="pregnancy"> Pregnancy</label>
+        <label class="concern-chip"><input type="checkbox" value="diabetes"> Diabetes</label>
+        <label class="concern-chip"><input type="checkbox" value="cancer"> Cancer or other malignancy</label>
+        <label class="concern-chip"><input type="checkbox" value="prior_surgery"> Prior surgery</label>
+        <label class="concern-chip"><input type="checkbox" value="kidney"> Kidney disease</label>
+        <label class="concern-chip"><input type="checkbox" value="allergy"> Allergy or hypersensitivity</label>
+        <label class="concern-chip"><input type="checkbox" value="liver"> Liver disease</label>
+        <label class="concern-chip"><input type="checkbox" value="breastfeeding"> Breastfeeding</label>
+        <label class="concern-chip"><input type="checkbox" value="bleeding_disorder"> Bleeding disorder or blood thinner use</label>
+        <label class="concern-chip"><input type="checkbox" value="heart"> Heart disease</label>
+        <label class="concern-chip"><input type="checkbox" value="psychiatric"> Psychiatric or mental health condition</label>
       </div>
       <div class="intake-actions">
         <button type="button" class="intake-save" id="intake-save">Save</button>
@@ -386,6 +412,17 @@ details.intake[open] > summary::before { content: "▾ "; }
     DIAGNOSTIC_TEST: "Diagnostic test", DEVICE: "Device", DRUG: "Drug",
     BIOLOGICAL: "Biological", COMBINATION_PRODUCT: "Combination product",
     PROCEDURE: "Procedure", RADIATION: "Radiation", GENETIC: "Genetic", OTHER: "Other"
+  };
+
+  // Mirrors tag_trials.py's EXCLUSION_CONCEPTS labels exactly (display
+  // text only - the matching itself already happened server-side; this
+  // page never re-runs the keyword search).
+  var CONCERN_LABELS = {
+    pregnancy: "Pregnancy", diabetes: "Diabetes", cancer: "Cancer or other malignancy",
+    prior_surgery: "Prior surgery", kidney: "Kidney disease", allergy: "Allergy or hypersensitivity",
+    liver: "Liver disease", breastfeeding: "Breastfeeding",
+    bleeding_disorder: "Bleeding disorder or blood thinner use", heart: "Heart disease",
+    psychiatric: "Psychiatric or mental health condition"
   };
 
   function el(tag, attrs, children) {
@@ -769,6 +806,40 @@ details.intake[open] > summary::before { content: "▾ "; }
       ]));
     }
 
+    // Keyword-matched exclusion concerns (never hides - sec. 5.2). Shown
+    // directly on the collapsed card, not behind "More about this trial" -
+    // the D11 lesson (a hover/tap-gated disambiguation didn't help anyone
+    // actually glancing at a card) applies here just as much.
+    var myConcerns = (patientProfile && patientProfile.concerns) || [];
+    var hits = myConcerns.filter(function (c) { return t.exclusion_keyword_flags && t.exclusion_keyword_flags[c]; });
+    if (hits.length) {
+      var concernNote = el("div", { class: "note concern" }, [
+        el("b", {}, [text("Worth asking about: ")]),
+        text("this trial's exclusion criteria mention something you told us about. A keyword match, not a confirmed exclusion — the exact wording may not apply to you.")
+      ]);
+      // Group by the matched verbatim text: when the source eligibility text
+      // has no bullets/newlines to split on, stage2_atomize (milestone 7)
+      // can return several unrelated criteria as one run-on blob, which then
+      // matches more than one concept with the identical string. Showing
+      // that same wall of text twice under two headers is worse than the
+      // underlying atomization limitation, so collapse it to one entry.
+      var byText = {};
+      var order = [];
+      hits.forEach(function (c) {
+        var txt = t.exclusion_keyword_flags[c];
+        if (!byText[txt]) { byText[txt] = []; order.push(txt); }
+        byText[txt].push(c);
+      });
+      order.forEach(function (txt) {
+        var labels = byText[txt].map(function (c) { return CONCERN_LABELS[c]; }).join(", ");
+        concernNote.appendChild(el("span", { class: "concern-item" }, [
+          el("b", {}, [text(labels + ": ")]),
+          text("“" + txt + "”")
+        ]));
+      });
+      card.appendChild(concernNote);
+    }
+
     var more = el("details", { class: "more" });
     var body = el("div", { class: "more-body" });
     if (d.brief_summary) body.appendChild(el("p", {}, [text(d.brief_summary)]));
@@ -1032,11 +1103,14 @@ details.intake[open] > summary::before { content: "▾ "; }
     var sexSelect = document.getElementById("intake-sex");
     var hvCheckbox = document.getElementById("intake-healthy-volunteer");
     var statusEl = document.getElementById("intake-status");
+    var concernCheckboxes = document.querySelectorAll("#intake-concerns input[type=checkbox]");
 
     function fillForm(p) {
       ageInput.value = (p && p.age_years !== null && p.age_years !== undefined) ? p.age_years : "";
       sexSelect.value = (p && p.sex) ? p.sex : "";
       hvCheckbox.checked = !!(p && p.healthy_volunteer);
+      var concerns = (p && p.concerns) || [];
+      concernCheckboxes.forEach(function (cb) { cb.checked = concerns.indexOf(cb.value) !== -1; });
     }
     function updateStatus() {
       statusEl.textContent = patientProfile
@@ -1049,10 +1123,13 @@ details.intake[open] > summary::before { content: "▾ "; }
 
     document.getElementById("intake-save").addEventListener("click", function () {
       var ageVal = ageInput.value.trim();
+      var concerns = [];
+      concernCheckboxes.forEach(function (cb) { if (cb.checked) concerns.push(cb.value); });
       patientProfile = {
         age_years: ageVal === "" ? null : parseFloat(ageVal),
         sex: sexSelect.value || null,
-        healthy_volunteer: hvCheckbox.checked
+        healthy_volunteer: hvCheckbox.checked,
+        concerns: concerns
       };
       saveProfileToStorage(patientProfile);
       updateStatus();
