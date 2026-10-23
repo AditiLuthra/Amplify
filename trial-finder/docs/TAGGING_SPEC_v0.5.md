@@ -108,7 +108,7 @@ dumping one live record before building, but the names above are confirmed.
 | `PHASE1` | Early safety testing | Tests safety and dosing in a small group. Not designed to prove the treatment works. |
 | `PHASE2` | Testing whether it works | Tests whether the treatment has a real effect. Mid-sized. |
 | `PHASE3` | Large-scale confirmation | Large study comparing against current standard care. More evidence stands behind the treatment at this stage than at any earlier one. |
-| `PHASE4` | Already approved (for other uses) | The treatment is already approved and sold for a different use — this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet. |
+| `PHASE4` | Repurposing an FDA-approved drug | This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one — that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet. |
 | `NA` | No FDA phase | Normal for behavioral, device, dietary, and observational studies. **Not a quality signal.** |
 
 Combined arrays take the later phase's label, prefixed "Early-to-mid" or

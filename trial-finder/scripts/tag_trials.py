@@ -35,7 +35,7 @@ PHASE_LABELS = {
     "PHASE1": "Early safety testing",
     "PHASE2": "Testing whether it works",
     "PHASE3": "Large-scale confirmation",
-    "PHASE4": "Already approved (for other uses)",
+    "PHASE4": "Repurposing an FDA-approved drug",
     "NA": "No FDA phase",
 }
 
@@ -45,9 +45,9 @@ PHASE_EXPLANATIONS = {
     "PHASE2": "Tests whether the treatment has a real effect. Mid-sized.",
     "PHASE3": "Large study comparing against current standard care. More evidence stands behind "
               "the treatment at this stage than at any earlier one.",
-    "PHASE4": "The treatment is already approved and sold for a different use — this trial "
-              "is testing whether it also works for this one. That's exactly why there's a "
-              "placebo or comparison group: it isn't proven for this yet.",
+    "PHASE4": "This drug is already FDA-approved and sold for a different use. This trial is "
+              "testing whether it also works for this one — that's exactly why there's a "
+              "placebo or comparison group: it isn't proven for this condition yet.",
     "NA": "Normal for behavioral, device, dietary, and observational studies. Not a quality signal.",
 }
 

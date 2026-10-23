@@ -539,8 +539,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "Everyone receives the treatment",
@@ -3907,8 +3907,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -5612,8 +5612,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "gap": true,
@@ -7168,8 +7168,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -7933,8 +7933,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "You may receive a placebo (about 50%)",
@@ -8050,8 +8050,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "You may receive a placebo (about 50%)",
@@ -8268,8 +8268,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "You may receive a placebo (about 50%)",
@@ -8772,8 +8772,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "Everyone receives the treatment",
@@ -8875,8 +8875,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -10789,8 +10789,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -11531,8 +11531,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "gap": true,
@@ -11934,8 +11934,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "You may receive a placebo (about 50%)",
@@ -12051,8 +12051,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "You may receive a placebo (about 33%)",
@@ -13013,8 +13013,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "gap": true,
@@ -13121,8 +13121,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "Everyone receives the treatment",
@@ -14022,8 +14022,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "You may receive a placebo (about 50%)",
@@ -15661,8 +15661,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "Everyone receives the treatment",
@@ -16967,8 +16967,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -18456,8 +18456,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -19637,8 +19637,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "gap": true,
@@ -23101,8 +23101,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "gap": true,
@@ -24766,8 +24766,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -28197,8 +28197,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "gap": true,
@@ -28442,8 +28442,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "You may receive a placebo (about 50%)",
@@ -29864,8 +29864,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "You may receive a placebo (about 50%)",
@@ -30383,8 +30383,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "Everyone receives the treatment",
@@ -30913,8 +30913,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "You may receive a placebo (about 50%)",
@@ -31256,8 +31256,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "Everyone receives the treatment",
@@ -32744,8 +32744,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "Everyone receives the treatment",
@@ -34501,8 +34501,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -35449,8 +35449,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "gap": true,
@@ -37144,8 +37144,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -37255,8 +37255,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -37905,8 +37905,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -38748,8 +38748,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "Everyone receives the treatment",
@@ -39545,8 +39545,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -40097,8 +40097,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "Not stated",
@@ -41953,8 +41953,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "gap": true,
@@ -42071,8 +42071,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "Everyone receives the treatment",
@@ -49567,8 +49567,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "You may receive a placebo (about 50%)",
@@ -51734,8 +51734,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "label": "All participants receive an active treatment (you may receive the standard treatment rather than the new one)",
@@ -52146,8 +52146,8 @@
       ],
       "combined": false,
       "resolved_phase": "PHASE4",
-      "label": "Already approved (for other uses)",
-      "explanation": "The treatment is already approved and sold for a different use \u2014 this trial is testing whether it also works for this one. That's exactly why there's a placebo or comparison group: it isn't proven for this yet."
+      "label": "Repurposing an FDA-approved drug",
+      "explanation": "This drug is already FDA-approved and sold for a different use. This trial is testing whether it also works for this one \u2014 that's exactly why there's a placebo or comparison group: it isn't proven for this condition yet."
     },
     "tag2_placebo": {
       "gap": true,
