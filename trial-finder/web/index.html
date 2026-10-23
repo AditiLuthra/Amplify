@@ -72,6 +72,10 @@ h1, h2 { font-family: "Literata", Georgia, serif; font-weight: 700; margin: 0; t
   display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline;
 }
 .strip .sep { opacity: 0.55; font-weight: 400; }
+.strip-link {
+  font: inherit; font-weight: 700; color: #fff; background: transparent; border: none;
+  padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px;
+}
 
 .sortrow {
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-bottom: 16px;
@@ -335,6 +339,12 @@ details.intake[open] > summary::before { content: "▾ "; }
   </div>
 
   <div id="results"></div>
+
+  <div class="section-label" id="completed-label" hidden>Completed trials</div>
+  <details class="excluded-drawer" id="completed-drawer" hidden>
+    <summary id="completed-summary"></summary>
+    <div id="completed-list"></div>
+  </details>
 
   <div class="section-label" id="excluded-label" hidden>Trials not shown above</div>
   <details class="excluded-drawer" id="excluded-drawer" hidden>
@@ -983,15 +993,30 @@ details.intake[open] > summary::before { content: "▾ "; }
     outdatedCb.addEventListener("change", onChange);
   }
 
+  function openCompletedDrawer() {
+    var d = document.getElementById("completed-drawer");
+    d.open = true;
+    d.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   function renderAll() {
     var data = allData;
     var visible = data.filter(function (t) { return !isHidden(t); });
     var hidden = data.filter(isHidden);
-    var filtered = applyFilters(visible);
+
+    // Completed-with-results trials are real, valid records - not a TAG4/
+    // Tier A exclusion, just a different question ("what did this trial
+    // find") than the recruiting list answers ("what can I join"). Per
+    // product-owner request, never mixed into the main list: kept out by
+    // default and shown only via the opt-in drawer below.
+    var completed = visible.filter(function (t) { return t.tag4_status.completed_with_results; });
+    var active = visible.filter(function (t) { return !t.tag4_status.completed_with_results; });
+
+    var filtered = applyFilters(active);
     currentVisible = filtered;
 
     var filterNote = document.getElementById("filter-note");
-    var hiddenByFilters = visible.length - filtered.length;
+    var hiddenByFilters = active.length - filtered.length;
     filterNote.hidden = hiddenByFilters === 0;
     if (hiddenByFilters > 0) {
       filterNote.textContent = hiddenByFilters + " trial" + (hiddenByFilters === 1 ? "" : "s") + " hidden by your filters.";
@@ -1000,22 +1025,44 @@ details.intake[open] > summary::before { content: "▾ "; }
     var recruiting = data.filter(function (t) {
       return ["RECRUITING", "NOT_YET_RECRUITING", "ACTIVE_NOT_RECRUITING", "ENROLLING_BY_INVITATION"].indexOf(t.tag4_status.overall_status) !== -1;
     }).length;
-    var withResults = data.filter(function (t) { return t.tag4_status.completed_with_results; }).length;
+    var withResults = completed.length;
     var flagged = data.filter(function (t) { return t.tag5_oversight.status === "flagged"; }).length;
 
     var strip = document.getElementById("strip");
     strip.innerHTML = "";
     [
-      data.length + " trials found",
-      recruiting + " currently recruiting",
-      withResults + " completed with results",
-      flagged + " worth a closer look"
+      { text: data.length + " trials found" },
+      { text: recruiting + " currently recruiting" },
+      { text: withResults + " completed with results", action: withResults > 0 ? openCompletedDrawer : null },
+      { text: flagged + " worth a closer look" }
     ].forEach(function (s, i) {
       if (i > 0) strip.appendChild(el("span", { class: "sep" }, [text("·")]));
-      strip.appendChild(el("span", {}, [text(s)]));
+      if (s.action) {
+        var stripBtn = el("button", { type: "button", class: "strip-link" }, [text(s.text)]);
+        stripBtn.addEventListener("click", s.action);
+        strip.appendChild(stripBtn);
+      } else {
+        strip.appendChild(el("span", {}, [text(s.text)]));
+      }
     });
 
     renderResults(filtered);
+
+    var cLabel = document.getElementById("completed-label");
+    var cDrawer = document.getElementById("completed-drawer");
+    var cList = document.getElementById("completed-list");
+    cList.innerHTML = "";
+    if (completed.length > 0) {
+      cLabel.hidden = false;
+      cDrawer.hidden = false;
+      document.getElementById("completed-summary").textContent =
+        "Show " + completed.length + " completed trial" + (completed.length === 1 ? "" : "s") + " with posted results";
+      completed.slice().sort(function (a, b) { return burdenSortKey(a) - burdenSortKey(b); })
+        .forEach(function (t) { cList.appendChild(renderCard(t)); });
+    } else {
+      cLabel.hidden = true;
+      cDrawer.hidden = true;
+    }
 
     var label = document.getElementById("excluded-label");
     var drawer = document.getElementById("excluded-drawer");

@@ -546,3 +546,52 @@ limitation, still correctly scoped out until the LLM-based Stage 3
 structuring this project doesn't yet have a key for.
 
 ---
+
+## D13 — Stop mixing completed-with-results trials into the recruiting list
+
+**Request:** "I don't want to mix completed w results and recruiting
+together - the ones completed w results should be a button to press
+otherwise those should be excluded."
+
+**Finding confirming the request was right:** `tag4_status()`
+(`tag_trials.py`) has always treated `COMPLETED` + `hasResults` as
+*not* excluded — it's a legitimate, informative record, just answering a
+different question ("what did this trial find") than the rest of the
+list ("what can I join"). But `web/index.html` rendered it with the same
+`.card` component in the same list, same position a recruiting trial
+would get, distinguished only by one caution note ("This trial has
+finished and posted results...") easy to miss while scanning. Not a TAG4
+bug — TAG4's own classification was always correct — a UI problem: two
+different kinds of answers, presented as one undifferentiated list.
+
+**Fix:** `renderAll()` now splits the already-visible set (post Tier
+A/TAG4-exclusion) into `active` (recruiting-shaped statuses) and
+`completed` (`tag4_status.completed_with_results`) before anything else
+happens — sorting, the three "Hide:" filters, and the main `#results`
+list all operate on `active` only. `completed` renders into its own
+`<details>` drawer, same collapsed-by-default disclosure pattern as the
+existing "Trials not shown above" (R6) drawer, labeled **"Completed
+trials"** with a summary reading "Show N completed trials with posted
+results" — collapsed is the resting state, matching "a button to press"
+exactly. The existing strip stat ("N completed with results") became a
+clickable button that opens this same drawer and scrolls to it, so the
+number visitors already glance at is also the door to see them.
+
+**Why a new drawer, not the existing R6 "not shown above" one:** that
+drawer's framing is specifically about eligibility ("you may not qualify
+for, based on what you told us... tap to see why"), with a minimal
+`.excluded-card` (title + one-line reason + a restore button) built for
+that message. A completed trial isn't excluded for eligibility — nothing
+about it is wrong or restored-from — so it gets the full `.card`
+component (title, phase, placebo, oversight, results note, contact,
+"More about this trial") like any trial in the main list, just in its own
+section. Reusing the eligibility drawer's copy and card shape for a
+completed trial would have been confusing in the other direction.
+
+**Verified with Playwright:** 0 completed-with-results cards render
+inside `#results`; the drawer starts collapsed (`open` attribute false)
+and the strip button correctly opens it; `active.length +
+completed.length` equals the full visible set, so nothing is dropped,
+only re-sectioned.
+
+---
