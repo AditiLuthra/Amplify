@@ -183,3 +183,61 @@ stack. A "last reviewed" date is shown in the content itself so staleness is
 visible rather than silently assumed-current.
 
 ---
+
+## D6 — Real intake (R1/R1b), replacing the hardcoded example patient
+
+**Question:** Every trial card's Tier A exclusion was baked at pipeline
+time against one hardcoded example patient (30F, no prior surgery) passed
+via `tag_trials.py --patient-*` CLI flags — not a real visitor's own
+profile. R1 (structured intake) and R1b (local-only patient profile)
+were speced but never built. How should real intake work, given Phase 1's
+"nothing leaves the device" boundary?
+
+**Options considered:**
+- A — Keep Tier A exclusion server/pipeline-side; regenerate the tagged
+  JSON per visitor profile (requires a server — Phase 2, out of scope)
+- B — Expose the raw structured eligibility fields
+  (`minimumAge`/`maximumAge`/`sex`/`healthyVolunteers`) per trial in the
+  tagged JSON, unevaluated, and recompute Tier A exclusion **live in the
+  browser** against whatever profile the visitor enters
+- C — Client-side intake UI only, still evaluated against the one baked
+  example profile (cosmetic form, no real effect)
+
+**Decision: B.**
+
+**Why:** A needs a server, which is exactly the Phase 1/Phase 2 boundary
+R1b already drew ("nothing leaves the device," `UI_DECISIONS.md` D2). C
+would be a form that does nothing — worse than not building it, since it
+implies personalization that isn't real. B keeps everything client-side:
+`tag_trials.py` now also emits an `eligibility_raw` field per trial (the
+same four fields `tier_a_exclusion` was already computed from, just not
+re-evaluated), and `web/index.html` carries a JS port of
+`tier_a_exclusion()`/`parse_age_to_years()` — same logic, same reasons
+text, verified to produce identical results to the Python original on
+this corpus (spot-checked age/sex/healthy-volunteer mismatches against
+known records).
+
+**Placement, per R1b's progressive-disclosure requirement:** a collapsed
+`<details>` panel ("Tell us about yourself (optional)") right below the
+landscape strip, not a blocking modal or a separate screen before results
+show — consistent with D1's "nobody has to declare intent before seeing
+anything." Three fields only: age, sex, healthy-volunteer status — the
+exact three Tier A already uses. The free-text attributes from
+`reports/persona_field_categorization.md` (prior surgery, fertility
+intent, anemia severity) are **not** in this panel; they'd feed Tier B/C,
+which isn't wired into the UI yet (Milestone 7 status: only 10/501 records
+have Stage 3 structuring) — adding fields that don't affect anything yet
+would be the same "cosmetic form" problem option C had.
+
+**Storage and disclosure:** `localStorage`, one JSON blob, wrapped in
+try/catch (private browsing, blocked storage). The panel states plainly,
+every time it's open, that this never leaves the browser and is lost on
+clearing data or switching devices — R1b's own requirement, not a new
+decision.
+
+**Default behavior preserved:** with no saved profile, every card still
+renders exactly as before (the baked example-persona result) — a first-time
+visitor sees the same thing Milestone 6 already shipped, personalization is
+additive, not a precondition for seeing anything.
+
+---

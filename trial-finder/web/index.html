@@ -156,6 +156,30 @@ details.tips[open] > summary::before { content: "▾ "; }
 .tips-body .sources { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
 .tips-body .sources a { color: inherit; }
 
+details.intake { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 16px 20px; margin-bottom: 20px; }
+details.intake > summary { cursor: pointer; font-weight: 700; font-size: 0.95rem; list-style: none; }
+details.intake > summary::-webkit-details-marker { display: none; }
+details.intake > summary::before { content: "▸ "; color: var(--accent); }
+details.intake[open] > summary::before { content: "▾ "; }
+.intake-body { margin-top: 14px; }
+.intake-note { font-size: 0.85rem; color: var(--muted); margin: 0 0 14px; }
+.intake-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.intake-row label { font-size: 0.9rem; font-weight: 700; min-width: 90px; }
+.intake-row input[type="number"], .intake-row select {
+  font: inherit; font-size: 0.9rem; padding: 7px 10px; border: 1px solid var(--line);
+  border-radius: 8px; background: var(--bg); color: var(--ink); flex: 1; max-width: 160px;
+}
+.intake-checkbox label { min-width: 0; font-weight: 400; display: flex; align-items: center; gap: 8px; }
+.intake-actions { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
+.intake-save, .intake-clear {
+  font: inherit; font-size: 0.86rem; font-weight: 700; border: none; border-radius: 999px;
+  padding: 8px 16px; cursor: pointer;
+}
+.intake-save { background: var(--accent); color: #fff; }
+.intake-clear { background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+.intake-status { font-size: 0.82rem; color: var(--muted); margin-top: 10px; }
+
 @media (max-width: 480px) {
   .facts-grid { grid-template-columns: 1fr; }
 }
@@ -170,6 +194,34 @@ details.tips[open] > summary::before { content: "▾ "; }
   </div>
 
   <div class="strip" id="strip"></div>
+
+  <details class="intake" id="intake-panel">
+    <summary>Tell us about yourself (optional) — hides trials you clearly don't qualify for</summary>
+    <div class="intake-body">
+      <p class="intake-note">Stored only in your browser — never sent anywhere. Clearing your
+      browser data or switching devices loses it.</p>
+      <div class="intake-row">
+        <label for="intake-age">Age</label>
+        <input type="number" id="intake-age" min="0" max="120" inputmode="numeric" placeholder="e.g. 34">
+      </div>
+      <div class="intake-row">
+        <label for="intake-sex">Sex</label>
+        <select id="intake-sex">
+          <option value="">Prefer not to say</option>
+          <option value="FEMALE">Female</option>
+          <option value="MALE">Male</option>
+        </select>
+      </div>
+      <div class="intake-row intake-checkbox">
+        <label><input type="checkbox" id="intake-healthy-volunteer"> I don't have this condition — I'd be a healthy volunteer</label>
+      </div>
+      <div class="intake-actions">
+        <button type="button" class="intake-save" id="intake-save">Save</button>
+        <button type="button" class="intake-clear" id="intake-clear">Clear</button>
+      </div>
+      <p class="intake-status" id="intake-status"></p>
+    </div>
+  </details>
 
   <div class="sortrow">
     <span class="lbl">Sort by:</span>
@@ -269,8 +321,70 @@ details.tips[open] > summary::before { content: "▾ "; }
   }
   function text(s) { return document.createTextNode(s); }
 
+  // Tier A (TAGGING_SPEC_v0.5.md sec. 5): structured-field-only exclusion.
+  // Mirrors scripts/tag_trials.py's tier_a_exclusion()/parse_age_to_years()
+  // exactly, so a real visitor's own profile (stored only in this browser,
+  // per R1b) can be evaluated live against eligibility_raw instead of the
+  // one example profile baked into tier_a_exclusion at pipeline time.
+  var AGE_UNIT_TO_YEARS = {
+    year: 1, years: 1, month: 1 / 12, months: 1 / 12,
+    week: 1 / 52, weeks: 1 / 52, day: 1 / 365, days: 1 / 365
+  };
+  function parseAgeToYears(ageStr) {
+    if (!ageStr) return null;
+    var m = /^([\d.]+)\s+(\w+)/.exec(ageStr);
+    if (!m) return null;
+    var factor = AGE_UNIT_TO_YEARS[m[2].toLowerCase()];
+    return factor === undefined ? null : parseFloat(m[1]) * factor;
+  }
+  function tierAExclusionJS(raw, patient) {
+    var reasons = [];
+    var minAge = parseAgeToYears(raw.minimum_age);
+    var maxAge = parseAgeToYears(raw.maximum_age);
+    var patientAge = patient.age_years;
+    if (patientAge !== null && patientAge !== undefined) {
+      if (minAge !== null && patientAge < minAge) {
+        reasons.push("Age outside range: trial requires at least " + raw.minimum_age + "; you told us " + patientAge + ".");
+      }
+      if (maxAge !== null && patientAge > maxAge) {
+        reasons.push("Age outside range: trial requires at most " + raw.maximum_age + "; you told us " + patientAge + ".");
+      }
+    }
+    var trialSex = raw.sex, patientSex = patient.sex;
+    if (trialSex && trialSex !== "ALL" && patientSex && trialSex !== patientSex) {
+      reasons.push("Sex mismatch: trial is for " + trialSex.toLowerCase() + " participants; you told us " + patientSex.toLowerCase() + ".");
+    }
+    // Same asymmetric reasoning as the Python original: healthyVolunteers
+    // == false only ever means "does not accept healthy volunteers," never
+    // the reverse, so this only excludes in that one direction.
+    if (raw.healthy_volunteers === false && patient.healthy_volunteer === true) {
+      reasons.push("Healthy-volunteer mismatch: this trial does not accept healthy volunteers.");
+    }
+    return { excluded: reasons.length > 0, reasons: reasons };
+  }
+
+  var PROFILE_KEY = "tf_patient_profile_v1";
+  function loadProfile() {
+    try {
+      var raw = localStorage.getItem(PROFILE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function saveProfileToStorage(p) {
+    try { localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); } catch (e) {}
+  }
+  function clearProfileFromStorage() {
+    try { localStorage.removeItem(PROFILE_KEY); } catch (e) {}
+  }
+
+  var patientProfile = loadProfile();
+
+  function effectiveTierA(t) {
+    return patientProfile ? tierAExclusionJS(t.eligibility_raw, patientProfile) : t.tier_a_exclusion;
+  }
+
   function isHidden(t) {
-    return t.tag4_status.excluded || t.tier_a_exclusion.excluded;
+    return t.tag4_status.excluded || effectiveTierA(t).excluded;
   }
 
   function burdenSortKey(t) {
@@ -383,7 +497,8 @@ details.tips[open] > summary::before { content: "▾ "; }
   }
 
   function exclusionReason(t) {
-    if (t.tier_a_exclusion.excluded) return t.tier_a_exclusion.reasons.join(" ");
+    var tierA = effectiveTierA(t);
+    if (tierA.excluded) return tierA.reasons.join(" ");
     if (t.tag4_status.excluded) return t.tag4_status.exclusion_reason;
     return "";
   }
@@ -446,7 +561,10 @@ details.tips[open] > summary::before { content: "▾ "; }
     evidenceBtn.addEventListener("click", function () { setMode("evidence"); });
   }
 
-  function boot(data) {
+  var allData = [];
+
+  function renderAll() {
+    var data = allData;
     var visible = data.filter(function (t) { return !isHidden(t); });
     var hidden = data.filter(isHidden);
     currentVisible = visible;
@@ -458,6 +576,7 @@ details.tips[open] > summary::before { content: "▾ "; }
     var flagged = data.filter(function (t) { return t.tag5_oversight.status === "flagged"; }).length;
 
     var strip = document.getElementById("strip");
+    strip.innerHTML = "";
     [
       data.length + " trials found",
       recruiting + " currently recruiting",
@@ -468,16 +587,18 @@ details.tips[open] > summary::before { content: "▾ "; }
       strip.appendChild(el("span", {}, [text(s)]));
     });
 
-    initSortButtons();
     renderResults(visible);
 
+    var label = document.getElementById("excluded-label");
+    var drawer = document.getElementById("excluded-drawer");
+    var list = document.getElementById("excluded-list");
+    list.innerHTML = "";
     if (hidden.length > 0) {
-      document.getElementById("excluded-label").hidden = false;
-      var drawer = document.getElementById("excluded-drawer");
+      label.hidden = false;
       drawer.hidden = false;
-      document.getElementById("excluded-summary").textContent =
-        hidden.length + " trial" + (hidden.length === 1 ? "" : "s") + " we filtered out for an example 30-year-old profile (not a real account yet) — tap to see why";
-      var list = document.getElementById("excluded-list");
+      document.getElementById("excluded-summary").textContent = patientProfile
+        ? (hidden.length + " trial" + (hidden.length === 1 ? "" : "s") + " you may not qualify for, based on what you told us — tap to see why")
+        : (hidden.length + " trial" + (hidden.length === 1 ? "" : "s") + " we filtered out for an example 30-year-old profile (not a real account yet) — tap to see why");
       hidden.forEach(function (t) {
         var card = renderExcludedCard(t, function (trial, cardEl) {
           cardEl.remove();
@@ -486,7 +607,16 @@ details.tips[open] > summary::before { content: "▾ "; }
         });
         list.appendChild(card);
       });
+    } else {
+      label.hidden = true;
+      drawer.hidden = true;
     }
+  }
+
+  function boot(data) {
+    allData = data;
+    initSortButtons();
+    renderAll();
   }
 
   // Repo layout serves this file from web/, one level above data/tagged/.
@@ -509,7 +639,49 @@ details.tips[open] > summary::before { content: "▾ "; }
     });
   }
 
+  function initIntakePanel() {
+    var ageInput = document.getElementById("intake-age");
+    var sexSelect = document.getElementById("intake-sex");
+    var hvCheckbox = document.getElementById("intake-healthy-volunteer");
+    var statusEl = document.getElementById("intake-status");
+
+    function fillForm(p) {
+      ageInput.value = (p && p.age_years !== null && p.age_years !== undefined) ? p.age_years : "";
+      sexSelect.value = (p && p.sex) ? p.sex : "";
+      hvCheckbox.checked = !!(p && p.healthy_volunteer);
+    }
+    function updateStatus() {
+      statusEl.textContent = patientProfile
+        ? "Using your saved profile — trials above are filtered against it."
+        : "Showing an example profile until you save your own.";
+    }
+
+    fillForm(patientProfile);
+    updateStatus();
+
+    document.getElementById("intake-save").addEventListener("click", function () {
+      var ageVal = ageInput.value.trim();
+      patientProfile = {
+        age_years: ageVal === "" ? null : parseFloat(ageVal),
+        sex: sexSelect.value || null,
+        healthy_volunteer: hvCheckbox.checked
+      };
+      saveProfileToStorage(patientProfile);
+      updateStatus();
+      if (allData.length) renderAll();
+    });
+
+    document.getElementById("intake-clear").addEventListener("click", function () {
+      patientProfile = null;
+      clearProfileFromStorage();
+      fillForm(null);
+      updateStatus();
+      if (allData.length) renderAll();
+    });
+  }
+
   initTipsLinks();
+  initIntakePanel();
   loadData()
     .then(boot)
     .catch(function (err) {

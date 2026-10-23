@@ -1,6 +1,6 @@
 # PRD — Clinical Trial Finder
 
-**Version:** 0.9
+**Version:** 0.10
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — pre-validation
 **Related:** `TAGGING_SPEC_v0.5.md` (implementation detail)
@@ -247,6 +247,12 @@ High-level only. Implementation detail in `TAGGING_SPEC_v0.5.md`.
 **R1. Structured intake.** Let the user describe disease and current condition
 in enough detail to sort results — progressive questions in a side panel,
 ordered by how much each narrows the set. Directly addresses Problem §1.1.
+**Partially built:** the Tier A fields (age, sex, healthy-volunteer status)
+have a real intake panel as of `UI_DECISIONS.md` D6 — condition search
+and the Tier B/C free-text fields (prior surgery, fertility intent, anemia
+severity) are not; the latter has nothing to feed yet (Tiers B/C aren't
+wired into the UI — Milestone 7's Stage 3 structuring only covers
+10/501 records).
 
 **R1b. Local patient profile (optional).** Let a user who wants to save
 themselves re-answering save their intake answers as a profile. **Local-only**
@@ -257,7 +263,10 @@ architecture decision is needed for data that never leaves the browser. Feeds
 straight back into R1's intake and the Tier A/B/C exclusion evaluation so
 repeat visits and new searches don't start from zero. Tell the user plainly
 that clearing browser data or switching devices loses it — no silent
-assumption of durability it doesn't have.
+assumption of durability it doesn't have. **Built** (`UI_DECISIONS.md` D6):
+`localStorage`-only, Tier A fields only, live-reevaluated client-side
+against `tag_trials.py`'s new `eligibility_raw` field rather than a
+pipeline-baked result.
 
 **R2. Plain-language tag display.** Phase, placebo exposure, intervention
 category with explanation, cost status, freshness. Phase and placebo render
@@ -497,6 +506,7 @@ trial. Where did it break down?"* Not *"would you use this?"*
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.10 | 2026-10-23 | R1/R1b partially built: a real intake panel (age, sex, healthy-volunteer status) replaces the hardcoded example patient for Tier A exclusion, stored `localStorage`-only and re-evaluated live in the browser. See `UI_DECISIONS.md` D6. Condition search and the Tier B/C free-text intake fields remain unbuilt. |
 | 0.9 | 2026-10-20 | Added R11: "common signs of a predatory trial" tips content, linked from the oversight panel (`UI_DECISIONS.md` D5) rather than a standalone page. Raised after confirming the FDA has no usable structured/searchable warning-letter data to join against trial sponsors (Open question 10.10's investigation) — this covers the same gap (a legitimate-looking trial testing an unvalidated therapy) with static, citable patient guidance instead. |
 | 0.8 | 2026-10-20 | Added Open question §10.10: community-sourced sponsor/trial flagging, raised after Milestone 7's TAG 6 found zero real cost-language hits on the corpus (undisclosed cost may only ever surface via patient report). Parked, not scoped — needs the same anti-gaming/liability, Phase-2-shared-state, and condition-sensitivity review as G8/G9 before any design work. |
 | 0.7 | 2026-10-20 | Reaffirmed Non-goal §4.2 ("we do not rank trials by likelihood of benefit") after it was requested directly during Milestone 6 UI work — declined for the reasons already in §5.3 and the spec's results-framing rule; built an evidence-level sort (phase progression + results-posted status) instead. See `UI_DECISIONS.md` D4. |

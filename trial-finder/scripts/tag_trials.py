@@ -633,7 +633,20 @@ def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
         "tag3_intervention": tag3_intervention(study_type, interventions),
         "tag4_status": tag4_status(status_module, has_results, as_of),
         "tag5_oversight": tag5_oversight(protocol, tag6_result),
+        # Baked against the one example patient from this run's --patient-*
+        # args (default: Milestone 1's test persona) - a reasonable default
+        # view for a visitor who hasn't entered their own profile yet. Not
+        # the only source of truth: "eligibility_raw" below carries the
+        # same structured fields unevaluated, so a real UI can recompute
+        # Tier A live against whatever profile an actual visitor enters,
+        # per PRD R1/R1b - see web/index.html's intake panel (Milestone 8).
         "tier_a_exclusion": tier_a_exclusion(eligibility_module, patient),
+        "eligibility_raw": {
+            "minimum_age": eligibility_module.get("minimumAge"),
+            "maximum_age": eligibility_module.get("maximumAge"),
+            "sex": eligibility_module.get("sex"),
+            "healthy_volunteers": eligibility_module.get("healthyVolunteers"),
+        },
         "tag6_cost": tag6_result,
     }
 
