@@ -59,6 +59,12 @@ h1, h2 { font-family: "Literata", Georgia, serif; font-weight: 700; margin: 0; t
 .intro { margin-bottom: 18px; }
 .intro h1 { font-size: 1.55rem; line-height: 1.25; }
 .intro p { color: var(--muted); margin: 8px 0 0; font-size: 0.97rem; }
+.condition-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.condition-row label { font-size: 0.86rem; font-weight: 700; color: var(--muted); }
+.condition-row select {
+  font: inherit; font-size: 0.9rem; font-weight: 700; padding: 6px 10px; border: 1px solid var(--line);
+  border-radius: 8px; background: var(--surface); color: var(--ink);
+}
 
 .strip {
   background: var(--accent); color: #fff; border-radius: var(--radius);
@@ -66,6 +72,10 @@ h1, h2 { font-family: "Literata", Georgia, serif; font-weight: 700; margin: 0; t
   display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline;
 }
 .strip .sep { opacity: 0.55; font-weight: 400; }
+.strip-link {
+  font: inherit; font-weight: 700; color: #fff; background: transparent; border: none;
+  padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px;
+}
 
 .sortrow {
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-bottom: 16px;
@@ -77,6 +87,16 @@ h1, h2 { font-family: "Literata", Georgia, serif; font-weight: 700; margin: 0; t
   padding: 7px 14px; cursor: pointer;
 }
 .sort-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.filter-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-bottom: 4px; }
+.filter-chip {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 0.86rem; font-weight: 700;
+  color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+  padding: 7px 14px 7px 10px; cursor: pointer;
+}
+.filter-chip input { margin: 0; accent-color: var(--accent); }
+.filter-note { font-size: 0.83rem; color: var(--muted); margin: 6px 0 16px; }
+.filter-note[hidden] { display: none; }
 .group-note {
   font-size: 0.85rem; color: var(--muted); margin: 22px 0 10px; padding: 0 2px;
 }
@@ -86,10 +106,30 @@ h1, h2 { font-family: "Literata", Georgia, serif; font-weight: 700; margin: 0; t
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 18px 20px; margin-bottom: 14px;
 }
-.card h2 { font-size: 1.12rem; line-height: 1.35; margin-bottom: 8px; }
+.card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.card-head h2 { margin-bottom: 0; }
+.card h2 { font-size: 1.12rem; line-height: 1.35; }
 .card h2 a { color: var(--ink); text-decoration: none; }
 .card h2 a:hover { color: var(--accent); }
 .snippet { color: var(--muted); font-size: 0.93rem; margin: 0 0 14px; }
+
+.save-btn {
+  font: inherit; font-size: 0.8rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+  background: var(--accent-soft); color: var(--accent); border: none; border-radius: 999px;
+  padding: 6px 12px; cursor: pointer;
+}
+.save-btn[aria-pressed="true"] { background: var(--accent); color: #fff; }
+
+.shortlist-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  background: var(--accent-soft); border-radius: 999px; padding: 10px 18px; margin-bottom: 16px;
+  font-size: 0.88rem; font-weight: 700; color: var(--accent);
+}
+.shortlist-bar[hidden] { display: none; }
+.shortlist-export {
+  font: inherit; font-size: 0.84rem; font-weight: 700; color: #fff; background: var(--accent);
+  border: none; border-radius: 999px; padding: 8px 16px; cursor: pointer;
+}
 
 .facts { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
 .pill {
@@ -116,6 +156,29 @@ details.more[open] > summary::before { content: "Show less "; }
 .more-body li { margin-bottom: 4px; }
 .facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; font-size: 0.85rem; color: var(--muted); margin-top: 8px; }
 .facts-grid div b { color: var(--ink); }
+
+.contact-section { margin-top: 14px; }
+.contact-label { margin: 0 0 8px; font-size: 0.9rem; }
+.contact-none { font-size: 0.88rem; color: var(--muted); margin: 0; }
+details.contact-template {
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-top: 8px;
+}
+details.contact-template > summary {
+  cursor: pointer; font-weight: 700; font-size: 0.86rem; color: var(--accent); list-style: none;
+}
+details.contact-template > summary::-webkit-details-marker { display: none; }
+.contact-template-body { margin-top: 10px; }
+.contact-template-body textarea {
+  width: 100%; font: inherit; font-size: 0.83rem; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; resize: vertical;
+}
+.contact-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.contact-mailto, .contact-copy {
+  font: inherit; font-size: 0.82rem; font-weight: 700; border-radius: 999px; padding: 6px 12px;
+  cursor: pointer; text-decoration: none; border: none;
+}
+.contact-mailto { background: var(--accent); color: #fff; }
+.contact-copy { background: var(--accent-soft); color: var(--accent); }
 
 .section-label { font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 26px 0 10px; }
 
@@ -156,6 +219,42 @@ details.tips[open] > summary::before { content: "▾ "; }
 .tips-body .sources { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
 .tips-body .sources a { color: inherit; }
 
+details.intake { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 16px 20px; margin-bottom: 20px; }
+details.intake > summary { cursor: pointer; font-weight: 700; font-size: 0.95rem; list-style: none; }
+details.intake > summary::-webkit-details-marker { display: none; }
+details.intake > summary::before { content: "▸ "; color: var(--accent); }
+details.intake[open] > summary::before { content: "▾ "; }
+.intake-body { margin-top: 14px; }
+.intake-note { font-size: 0.85rem; color: var(--muted); margin: 0 0 14px; }
+.intake-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.intake-row label { font-size: 0.9rem; font-weight: 700; min-width: 90px; }
+.intake-row input[type="number"], .intake-row select {
+  font: inherit; font-size: 0.9rem; padding: 7px 10px; border: 1px solid var(--line);
+  border-radius: 8px; background: var(--bg); color: var(--ink); flex: 1; max-width: 160px;
+}
+.intake-checkbox label { min-width: 0; font-weight: 400; display: flex; align-items: center; gap: 8px; }
+.intake-subhead { font-size: 0.85rem; color: var(--muted); margin: 14px 0 8px; }
+.intake-concerns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.concern-chip {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 0.84rem; font-weight: 400;
+  color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 999px;
+  padding: 6px 12px 6px 8px; cursor: pointer;
+}
+.concern-chip input { margin: 0; accent-color: var(--accent); }
+
+.note.concern { background: var(--caution-bg); color: var(--caution-ink); }
+.note.concern .concern-item { display: block; margin-top: 4px; }
+.note.concern .concern-item:first-of-type { margin-top: 8px; }
+.intake-actions { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
+.intake-save, .intake-clear {
+  font: inherit; font-size: 0.86rem; font-weight: 700; border: none; border-radius: 999px;
+  padding: 8px 16px; cursor: pointer;
+}
+.intake-save { background: var(--accent); color: #fff; }
+.intake-clear { background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+.intake-status { font-size: 0.82rem; color: var(--muted); margin-top: 10px; }
+
 @media (max-width: 480px) {
   .facts-grid { grid-template-columns: 1fr; }
 }
@@ -165,11 +264,60 @@ details.tips[open] > summary::before { content: "▾ "; }
 <div class="wrap">
 
   <div class="intro">
-    <h1>Clinical trials for uterine fibroids</h1>
-    <p>Everything below is written in plain language and comes straight from each trial's public record. We don't tell you whether you qualify — always check with the trial team before deciding anything.</p>
+    <h1>Clinical trials for <span id="condition-label">uterine fibroids</span></h1>
+    <div class="condition-row">
+      <label for="condition-select">Condition:</label>
+      <select id="condition-select">
+        <option value="uterine_fibroids">Uterine fibroids</option>
+        <option value="endometriosis">Endometriosis</option>
+      </select>
+    </div>
   </div>
 
   <div class="strip" id="strip"></div>
+
+  <details class="intake" id="intake-panel">
+    <summary>Tell us about yourself (optional) — hides trials you clearly don't qualify for</summary>
+    <div class="intake-body">
+      <p class="intake-note">Stored only in your browser — never sent anywhere. Clearing your
+      browser data or switching devices loses it.</p>
+      <div class="intake-row">
+        <label for="intake-age">Age</label>
+        <input type="number" id="intake-age" min="0" max="120" inputmode="numeric" placeholder="e.g. 34">
+      </div>
+      <div class="intake-row">
+        <label for="intake-sex">Sex</label>
+        <select id="intake-sex">
+          <option value="">Prefer not to say</option>
+          <option value="FEMALE">Female</option>
+          <option value="MALE">Male</option>
+        </select>
+      </div>
+      <div class="intake-row intake-checkbox">
+        <label><input type="checkbox" id="intake-healthy-volunteer"> I don't have this condition — I'd be a healthy volunteer</label>
+      </div>
+      <p class="intake-subhead">Any of these apply to you? (optional) — never hides a trial,
+      just notes on a card when its exclusion criteria mention it, so you know to ask.</p>
+      <div class="intake-concerns" id="intake-concerns">
+        <label class="concern-chip"><input type="checkbox" value="pregnancy"> Pregnancy</label>
+        <label class="concern-chip"><input type="checkbox" value="diabetes"> Diabetes</label>
+        <label class="concern-chip"><input type="checkbox" value="cancer"> Cancer or other malignancy</label>
+        <label class="concern-chip"><input type="checkbox" value="prior_surgery"> Prior surgery</label>
+        <label class="concern-chip"><input type="checkbox" value="kidney"> Kidney disease</label>
+        <label class="concern-chip"><input type="checkbox" value="allergy"> Allergy or hypersensitivity</label>
+        <label class="concern-chip"><input type="checkbox" value="liver"> Liver disease</label>
+        <label class="concern-chip"><input type="checkbox" value="breastfeeding"> Breastfeeding</label>
+        <label class="concern-chip"><input type="checkbox" value="bleeding_disorder"> Bleeding disorder or blood thinner use</label>
+        <label class="concern-chip"><input type="checkbox" value="heart"> Heart disease</label>
+        <label class="concern-chip"><input type="checkbox" value="psychiatric"> Psychiatric or mental health condition</label>
+      </div>
+      <div class="intake-actions">
+        <button type="button" class="intake-save" id="intake-save">Save</button>
+        <button type="button" class="intake-clear" id="intake-clear">Clear</button>
+      </div>
+      <p class="intake-status" id="intake-status"></p>
+    </div>
+  </details>
 
   <div class="sortrow">
     <span class="lbl">Sort by:</span>
@@ -177,7 +325,26 @@ details.tips[open] > summary::before { content: "▾ "; }
     <button type="button" class="sort-btn" id="sort-evidence" aria-pressed="false">Most evidence first</button>
   </div>
 
+  <div class="filter-row">
+    <span class="lbl">Hide:</span>
+    <label class="filter-chip"><input type="checkbox" id="filter-flagged"> Flagged trials</label>
+    <label class="filter-chip"><input type="checkbox" id="filter-placebo"> Trials with placebo risk</label>
+    <label class="filter-chip"><input type="checkbox" id="filter-outdated"> Records not updated in 2+ years</label>
+  </div>
+  <p class="filter-note" id="filter-note" hidden></p>
+
+  <div class="shortlist-bar" id="shortlist-bar" hidden>
+    <span id="shortlist-count"></span>
+    <button type="button" class="shortlist-export" id="shortlist-export">Download for your doctor</button>
+  </div>
+
   <div id="results"></div>
+
+  <div class="section-label" id="completed-label" hidden>Completed trials</div>
+  <details class="excluded-drawer" id="completed-drawer" hidden>
+    <summary id="completed-summary"></summary>
+    <div id="completed-list"></div>
+  </details>
 
   <div class="section-label" id="excluded-label" hidden>Trials not shown above</div>
   <details class="excluded-drawer" id="excluded-drawer" hidden>
@@ -240,9 +407,9 @@ details.tips[open] > summary::before { content: "▾ "; }
   </details>
 
   <p class="disclaimer">
-    This page shows one condition (uterine fibroids) from a single, fixed example — searching other
-    conditions and saving a shortlist aren't built yet. This isn't medical advice, and it can't tell you
-    whether you're eligible for a trial; only the trial team can do that.
+    Pick from the conditions listed above — typing in any condition isn't built yet, only choosing
+    from this fixed list. This isn't medical advice, and it can't tell you whether you're eligible for
+    a trial; only the trial team can do that.
   </p>
 </div>
 
@@ -257,6 +424,17 @@ details.tips[open] > summary::before { content: "▾ "; }
     PROCEDURE: "Procedure", RADIATION: "Radiation", GENETIC: "Genetic", OTHER: "Other"
   };
 
+  // Mirrors tag_trials.py's EXCLUSION_CONCEPTS labels exactly (display
+  // text only - the matching itself already happened server-side; this
+  // page never re-runs the keyword search).
+  var CONCERN_LABELS = {
+    pregnancy: "Pregnancy", diabetes: "Diabetes", cancer: "Cancer or other malignancy",
+    prior_surgery: "Prior surgery", kidney: "Kidney disease", allergy: "Allergy or hypersensitivity",
+    liver: "Liver disease", breastfeeding: "Breastfeeding",
+    bleeding_disorder: "Bleeding disorder or blood thinner use", heart: "Heart disease",
+    psychiatric: "Psychiatric or mental health condition"
+  };
+
   function el(tag, attrs, children) {
     var e = document.createElement(tag);
     if (attrs) for (var k in attrs) {
@@ -269,8 +447,168 @@ details.tips[open] > summary::before { content: "▾ "; }
   }
   function text(s) { return document.createTextNode(s); }
 
+  // Tier A (TAGGING_SPEC_v0.5.md sec. 5): structured-field-only exclusion.
+  // Mirrors scripts/tag_trials.py's tier_a_exclusion()/parse_age_to_years()
+  // exactly, so a real visitor's own profile (stored only in this browser,
+  // per R1b) can be evaluated live against eligibility_raw instead of the
+  // one example profile baked into tier_a_exclusion at pipeline time.
+  var AGE_UNIT_TO_YEARS = {
+    year: 1, years: 1, month: 1 / 12, months: 1 / 12,
+    week: 1 / 52, weeks: 1 / 52, day: 1 / 365, days: 1 / 365
+  };
+  function parseAgeToYears(ageStr) {
+    if (!ageStr) return null;
+    var m = /^([\d.]+)\s+(\w+)/.exec(ageStr);
+    if (!m) return null;
+    var factor = AGE_UNIT_TO_YEARS[m[2].toLowerCase()];
+    return factor === undefined ? null : parseFloat(m[1]) * factor;
+  }
+  function tierAExclusionJS(raw, patient) {
+    var reasons = [];
+    var minAge = parseAgeToYears(raw.minimum_age);
+    var maxAge = parseAgeToYears(raw.maximum_age);
+    var patientAge = patient.age_years;
+    if (patientAge !== null && patientAge !== undefined) {
+      if (minAge !== null && patientAge < minAge) {
+        reasons.push("Age outside range: trial requires at least " + raw.minimum_age + "; you told us " + patientAge + ".");
+      }
+      if (maxAge !== null && patientAge > maxAge) {
+        reasons.push("Age outside range: trial requires at most " + raw.maximum_age + "; you told us " + patientAge + ".");
+      }
+    }
+    var trialSex = raw.sex, patientSex = patient.sex;
+    if (trialSex && trialSex !== "ALL" && patientSex && trialSex !== patientSex) {
+      reasons.push("Sex mismatch: trial is for " + trialSex.toLowerCase() + " participants; you told us " + patientSex.toLowerCase() + ".");
+    }
+    // Same asymmetric reasoning as the Python original: healthyVolunteers
+    // == false only ever means "does not accept healthy volunteers," never
+    // the reverse, so this only excludes in that one direction.
+    if (raw.healthy_volunteers === false && patient.healthy_volunteer === true) {
+      reasons.push("Healthy-volunteer mismatch: this trial does not accept healthy volunteers.");
+    }
+    return { excluded: reasons.length > 0, reasons: reasons };
+  }
+
+  var PROFILE_KEY = "tf_patient_profile_v1";
+  function loadProfile() {
+    try {
+      var raw = localStorage.getItem(PROFILE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function saveProfileToStorage(p) {
+    try { localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); } catch (e) {}
+  }
+  function clearProfileFromStorage() {
+    try { localStorage.removeItem(PROFILE_KEY); } catch (e) {}
+  }
+
+  var patientProfile = loadProfile();
+
+  // R9: shortlist + export. localStorage array of full trial snapshots
+  // (not just nct_ids) - same storage model as the patient profile (R1b),
+  // nothing leaves the browser. Snapshots, not IDs, so a saved trial
+  // survives switching to a different condition's dataset (Milestone 8:
+  // multi-condition support) without needing all conditions loaded at
+  // once just to re-resolve a save.
+  var SHORTLIST_KEY = "tf_shortlist_v1";
+  function loadShortlist() {
+    try {
+      var raw = localStorage.getItem(SHORTLIST_KEY);
+      var parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) { return []; }
+  }
+  function saveShortlistToStorage(list) {
+    try { localStorage.setItem(SHORTLIST_KEY, JSON.stringify(list)); } catch (e) {}
+  }
+  var shortlist = loadShortlist();
+  function isShortlisted(nctId) {
+    return shortlist.some(function (t) { return t.nct_id === nctId; });
+  }
+  function addToShortlist(trial) {
+    if (!isShortlisted(trial.nct_id)) { shortlist.push(trial); saveShortlistToStorage(shortlist); updateShortlistBar(); }
+  }
+  function removeFromShortlist(nctId) {
+    var i = shortlist.findIndex(function (t) { return t.nct_id === nctId; });
+    if (i !== -1) { shortlist.splice(i, 1); saveShortlistToStorage(shortlist); updateShortlistBar(); }
+  }
+  function updateShortlistBar() {
+    var bar = document.getElementById("shortlist-bar");
+    if (!bar) return;
+    if (shortlist.length === 0) { bar.hidden = true; return; }
+    bar.hidden = false;
+    document.getElementById("shortlist-count").textContent =
+      shortlist.length + " trial" + (shortlist.length === 1 ? "" : "s") + " saved for later";
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  // Plain, physician-readable static HTML - no interactivity, no app JS -
+  // matches PRD G2 ("a document the user can hand to a clinician, not
+  // just a saved list inside our product").
+  function buildShortlistExportHtml(trials) {
+    var rows = trials.map(function (t) {
+      var d = t.display;
+      var iv = interventionLine(t);
+      var o = t.tag5_oversight;
+      var oversightLine = o.status === "flagged"
+        ? "Oversight: flagged on " + o.criteria_met_count + " of 8 checklist criteria - worth asking the trial team about."
+        : (o.status === "undetermined"
+          ? "Oversight: not enough information to fully check against our checklist."
+          : "Oversight: no concerns found on our checklist.");
+      var costLine = "Cost: " + (t.tag6_cost.status === "not_stated" ? "Not stated in the registry" : t.tag6_cost.status.replace(/_/g, " "));
+      return "<section style=\"margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid #ddd;\">" +
+        "<h2 style=\"margin:0 0 6px;font-size:16px;\">" + escapeHtml(d.brief_title || t.nct_id) + "</h2>" +
+        "<p style=\"margin:0 0 6px;color:#555;\">" +
+        "<a href=\"https://clinicaltrials.gov/study/" + escapeHtml(t.nct_id) + "\">" + escapeHtml(t.nct_id) + "</a>" +
+        " &middot; " + escapeHtml(t.tag1_phase.label) +
+        " &middot; " + escapeHtml(placeboLabel(t)) +
+        " &middot; " + escapeHtml(iv.category) +
+        "</p>" +
+        (d.summary_snippet ? "<p style=\"margin:0 0 6px;\">" + escapeHtml(d.summary_snippet) + "</p>" : "") +
+        "<p style=\"margin:0 0 2px;font-size:13px;color:#444;\">" + escapeHtml(oversightLine) + "</p>" +
+        "<p style=\"margin:0;font-size:13px;color:#444;\">" + escapeHtml(costLine) + "</p>" +
+        "</section>";
+    }).join("\n");
+    var today = new Date().toISOString().slice(0, 10);
+    return "<!doctype html><html><head><meta charset=\"utf-8\"><title>Clinical trial shortlist</title></head>" +
+      "<body style=\"font-family:Georgia,serif;max-width:680px;margin:40px auto;padding:0 20px;color:#222;\">" +
+      "<h1 style=\"font-size:20px;\">Clinical trial shortlist</h1>" +
+      "<p style=\"color:#555;\">Generated " + today + " from Clinical Trial Finder. This is not medical " +
+      "advice and does not confirm eligibility for any trial - bring this list to your own doctor or the " +
+      "trial team to discuss.</p>" +
+      rows +
+      "</body></html>";
+  }
+
+  function initShortlistExport() {
+    var btn = document.getElementById("shortlist-export");
+    btn.addEventListener("click", function () {
+      var html = buildShortlistExportHtml(shortlist);
+      var blob = new Blob([html], { type: "text/html" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "clinical-trial-shortlist.html";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+    updateShortlistBar();
+  }
+
+  function effectiveTierA(t) {
+    return patientProfile ? tierAExclusionJS(t.eligibility_raw, patientProfile) : t.tier_a_exclusion;
+  }
+
   function isHidden(t) {
-    return t.tag4_status.excluded || t.tier_a_exclusion.excluded;
+    return t.tag4_status.excluded || effectiveTierA(t).excluded;
   }
 
   function burdenSortKey(t) {
@@ -305,18 +643,151 @@ details.tips[open] > summary::before { content: "▾ "; }
     return t.tag2_placebo.gap ? "Not stated" : t.tag2_placebo.label;
   }
 
+  // R10 contact templates. Constraints below are the spec's own, not new
+  // decisions: we never send on the user's behalf (a mailto: link opens
+  // their own email client; "copy text" is a fallback for when no mail
+  // client is configured), templates never assert eligibility ("learn
+  // whether I might be a fit," never "I qualify"), and nothing from the
+  // intake panel (R1b) is inserted into the body - a user's health
+  // information never gets prefilled into a message this product didn't
+  // write for that purpose.
+  function buildTemplateA(t) {
+    var title = t.display.brief_title || t.nct_id;
+    var subject = "Question about " + title + " (" + t.nct_id + ")";
+    var body = "Hello,\n\n" +
+      "I'd like to learn whether I might be a fit for this study (" + title + ", " + t.nct_id +
+      "). Could you let me know:\n\n" +
+      "- Is the study currently enrolling participants?\n" +
+      "- What are the main eligibility requirements?\n" +
+      "- Where is the study conducted, and how often would participants need to be seen?\n" +
+      "- Are there any costs to participants?\n\n" +
+      "Thank you for your time.\n\n[Your name]";
+    return { subject: subject, body: body };
+  }
+  function buildTemplateB(t, hesitancy) {
+    var title = t.display.brief_title || t.nct_id;
+    var subject = "Please keep me posted — " + title + " (" + t.nct_id + ")";
+    var body;
+    if (hesitancy) {
+      body = "Hello,\n\n" +
+        "I'm interested in this study (" + title + ", " + t.nct_id + "), but would like more time " +
+        "before deciding whether to enroll. Could you let me know:\n\n" +
+        "- Are there related or follow-on studies I should watch for?\n" +
+        "- When might results become available?\n\n" +
+        "I may reach out again when I feel ready to discuss enrolling.\n\nThank you.\n\n[Your name]";
+    } else {
+      body = "Hello,\n\n" +
+        "I came across this study (" + title + ", " + t.nct_id + ") and wanted to ask:\n\n" +
+        "- If enrollment reopens, could you let me know?\n" +
+        "- Are there related studies I should watch for?\n" +
+        "- When might results become available?\n\n" +
+        "Thank you.\n\n[Your name]";
+    }
+    return { subject: subject, body: body };
+  }
+
+  function renderTemplateToggle(contact, label, template) {
+    var details = el("details", { class: "contact-template" });
+    details.appendChild(el("summary", {}, [text(label)]));
+    var tbody = el("div", { class: "contact-template-body" });
+    var textarea = el("textarea", { readonly: "readonly", rows: "9" });
+    textarea.value = "Subject: " + template.subject + "\n\n" + template.body;
+    tbody.appendChild(textarea);
+    var actions = el("div", { class: "contact-actions" });
+    actions.appendChild(el("a", {
+      class: "contact-mailto",
+      href: "mailto:" + contact.email + "?subject=" + encodeURIComponent(template.subject) +
+        "&body=" + encodeURIComponent(template.body)
+    }, [text("Open in your email app")]));
+    var copyBtn = el("button", { type: "button", class: "contact-copy" }, [text("Copy text")]);
+    copyBtn.addEventListener("click", function () {
+      var ok = false;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(textarea.value);
+          ok = true;
+        } else {
+          textarea.select();
+          ok = document.execCommand("copy");
+        }
+      } catch (e) {}
+      copyBtn.textContent = ok ? "Copied!" : "Couldn't copy — select the text above";
+      setTimeout(function () { copyBtn.textContent = "Copy text"; }, 2000);
+    });
+    actions.appendChild(copyBtn);
+    tbody.appendChild(actions);
+    details.appendChild(tbody);
+    return details;
+  }
+
+  function renderContactSection(t) {
+    var wrap = el("div", { class: "contact-section" });
+    if (!t.contact) {
+      wrap.appendChild(el("p", { class: "contact-none" }, [
+        text("No contact is listed in the registry for this trial — see the full listing on "),
+        el("a", { href: "https://clinicaltrials.gov/study/" + t.nct_id, target: "_blank", rel: "noopener" },
+          [text("ClinicalTrials.gov")]),
+        text(".")
+      ]));
+      return wrap;
+    }
+    wrap.appendChild(el("p", { class: "contact-label" }, [el("b", {}, [text("Contact the trial team")])]));
+
+    var isRecruiting = t.tag4_status.overall_status === "RECRUITING";
+    var earlyPhase = hasPhaseEvidence(t) && PHASE_RANK[t.tag1_phase.resolved_phase] <= 1;
+    var highBurden = (t.tag3_intervention.burden_rank || 0) >= 4;
+    var hesitancy = isRecruiting && (earlyPhase || highBurden);
+
+    if (isRecruiting) {
+      wrap.appendChild(renderTemplateToggle(t.contact, "Ask if I might be a fit", buildTemplateA(t)));
+    }
+    if (!isRecruiting || hesitancy) {
+      wrap.appendChild(renderTemplateToggle(t.contact, "Ask to be kept posted", buildTemplateB(t, hesitancy)));
+    }
+    return wrap;
+  }
+
   function renderCard(t) {
     var d = t.display;
     var card = el("div", { class: "card" });
 
-    card.appendChild(el("h2", {}, [
+    var h2 = el("h2", {}, [
       el("a", { href: "https://clinicaltrials.gov/study/" + t.nct_id, target: "_blank", rel: "noopener" },
         [text(d.brief_title || t.nct_id)])
-    ]));
+    ]);
+    var saved = isShortlisted(t.nct_id);
+    var saveBtn = el("button", { type: "button", class: "save-btn", "aria-pressed": String(saved) },
+      [text(saved ? "✓ Saved" : "☆ Save for later")]);
+    saveBtn.addEventListener("click", function () {
+      if (isShortlisted(t.nct_id)) {
+        removeFromShortlist(t.nct_id);
+        saveBtn.setAttribute("aria-pressed", "false");
+        saveBtn.textContent = "☆ Save for later";
+        return;
+      }
+      // Resolves oversight_flag_brief.md sec. 4: saving a flagged trial
+      // takes one extra confirmation so the counter-metric (sec. 7) has a
+      // deliberate act to measure, not an accidental tap identical to any
+      // other save. Never a blocker - Cancel just declines to save, the
+      // trial stays fully visible either way (G7).
+      if (t.tag5_oversight.status === "flagged") {
+        var ok = window.confirm(
+          "You're saving a trial flagged on " + t.tag5_oversight.criteria_met_count +
+          " of 8 oversight criteria. Save anyway?"
+        );
+        if (!ok) return;
+      }
+      addToShortlist(t);
+      saveBtn.setAttribute("aria-pressed", "true");
+      saveBtn.textContent = "✓ Saved";
+    });
+    card.appendChild(el("div", { class: "card-head" }, [h2, saveBtn]));
     if (d.summary_snippet) card.appendChild(el("p", { class: "snippet" }, [text(d.summary_snippet)]));
 
     var facts = el("div", { class: "facts" });
-    facts.appendChild(el("span", { class: "pill" }, [text(t.tag1_phase.label)]));
+    var phaseAttrs = { class: "pill" };
+    if (t.tag1_phase.explanation) phaseAttrs.title = t.tag1_phase.explanation;
+    facts.appendChild(el("span", phaseAttrs, [text(t.tag1_phase.label)]));
     facts.appendChild(el("span", { class: "pill" }, [text(placeboLabel(t))]));
     var iv = interventionLine(t);
     facts.appendChild(el("span", { class: "pill plain" }, [text(iv.category)]));
@@ -345,9 +816,49 @@ details.tips[open] > summary::before { content: "▾ "; }
       ]));
     }
 
+    // Keyword-matched exclusion concerns (never hides - sec. 5.2). Shown
+    // directly on the collapsed card, not behind "More about this trial" -
+    // the D11 lesson (a hover/tap-gated disambiguation didn't help anyone
+    // actually glancing at a card) applies here just as much.
+    var myConcerns = (patientProfile && patientProfile.concerns) || [];
+    var hits = myConcerns.filter(function (c) { return t.exclusion_keyword_flags && t.exclusion_keyword_flags[c]; });
+    if (hits.length) {
+      var concernNote = el("div", { class: "note concern" }, [
+        el("b", {}, [text("Worth asking about: ")]),
+        text("this trial's exclusion criteria mention something you told us about. A keyword match, not a confirmed exclusion — the exact wording may not apply to you.")
+      ]);
+      // Group by the matched verbatim text: when the source eligibility text
+      // has no bullets/newlines to split on, stage2_atomize (milestone 7)
+      // can return several unrelated criteria as one run-on blob, which then
+      // matches more than one concept with the identical string. Showing
+      // that same wall of text twice under two headers is worse than the
+      // underlying atomization limitation, so collapse it to one entry.
+      var byText = {};
+      var order = [];
+      hits.forEach(function (c) {
+        var txt = t.exclusion_keyword_flags[c];
+        if (!byText[txt]) { byText[txt] = []; order.push(txt); }
+        byText[txt].push(c);
+      });
+      order.forEach(function (txt) {
+        var labels = byText[txt].map(function (c) { return CONCERN_LABELS[c]; }).join(", ");
+        concernNote.appendChild(el("span", { class: "concern-item" }, [
+          el("b", {}, [text(labels + ": ")]),
+          text("“" + txt + "”")
+        ]));
+      });
+      card.appendChild(concernNote);
+    }
+
     var more = el("details", { class: "more" });
     var body = el("div", { class: "more-body" });
     if (d.brief_summary) body.appendChild(el("p", {}, [text(d.brief_summary)]));
+    if (t.tag1_phase.explanation) {
+      body.appendChild(el("p", {}, [
+        el("b", {}, [text("What \"" + t.tag1_phase.label + "\" means: ")]),
+        text(t.tag1_phase.explanation)
+      ]));
+    }
     if (iv.explanation && iv.explanation !== d.summary_snippet) {
       body.appendChild(el("p", {}, [el("b", {}, [text("What's involved: ")]), text(iv.explanation)]));
     }
@@ -375,6 +886,7 @@ details.tips[open] > summary::before { content: "▾ "; }
       fg.appendChild(el("div", {}, [el("b", {}, [text("Locations: ")]), text(String(fp.site_count))]));
       body.appendChild(fg);
     }
+    body.appendChild(renderContactSection(t));
     more.appendChild(el("summary", {}));
     more.appendChild(body);
     card.appendChild(more);
@@ -383,7 +895,8 @@ details.tips[open] > summary::before { content: "▾ "; }
   }
 
   function exclusionReason(t) {
-    if (t.tier_a_exclusion.excluded) return t.tier_a_exclusion.reasons.join(" ");
+    var tierA = effectiveTierA(t);
+    if (tierA.excluded) return tierA.reasons.join(" ");
     if (t.tag4_status.excluded) return t.tag4_status.exclusion_reason;
     return "";
   }
@@ -446,38 +959,121 @@ details.tips[open] > summary::before { content: "▾ "; }
     evidenceBtn.addEventListener("click", function () { setMode("evidence"); });
   }
 
-  function boot(data) {
+  var allData = [];
+
+  // R4's remaining filter dimensions (burden/evidence already have sort
+  // toggles). Cost is deliberately not a filter here - tag6_cost.status is
+  // "not_stated" on every record in both corpora (Milestone 7), so a cost
+  // filter would be a control that never does anything, the same
+  // non-functional-control problem D6/D8 already avoided for other
+  // features. Revisit once a corpus actually resolves a cost status.
+  var activeFilters = { flagged: false, placebo: false, outdated: false };
+
+  function applyFilters(visible) {
+    return visible.filter(function (t) {
+      if (activeFilters.flagged && t.tag5_oversight.status === "flagged") return false;
+      if (activeFilters.placebo && t.tag2_placebo.has_placebo === true) return false;
+      if (activeFilters.outdated && t.tag4_status.record_out_of_date) return false;
+      return true;
+    });
+  }
+
+  function initFilterRow() {
+    var flaggedCb = document.getElementById("filter-flagged");
+    var placeboCb = document.getElementById("filter-placebo");
+    var outdatedCb = document.getElementById("filter-outdated");
+    function onChange() {
+      activeFilters.flagged = flaggedCb.checked;
+      activeFilters.placebo = placeboCb.checked;
+      activeFilters.outdated = outdatedCb.checked;
+      if (allData.length) renderAll();
+    }
+    flaggedCb.addEventListener("change", onChange);
+    placeboCb.addEventListener("change", onChange);
+    outdatedCb.addEventListener("change", onChange);
+  }
+
+  function openCompletedDrawer() {
+    var d = document.getElementById("completed-drawer");
+    d.open = true;
+    d.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function renderAll() {
+    var data = allData;
     var visible = data.filter(function (t) { return !isHidden(t); });
     var hidden = data.filter(isHidden);
-    currentVisible = visible;
+
+    // Completed-with-results trials are real, valid records - not a TAG4/
+    // Tier A exclusion, just a different question ("what did this trial
+    // find") than the recruiting list answers ("what can I join"). Per
+    // product-owner request, never mixed into the main list: kept out by
+    // default and shown only via the opt-in drawer below.
+    var completed = visible.filter(function (t) { return t.tag4_status.completed_with_results; });
+    var active = visible.filter(function (t) { return !t.tag4_status.completed_with_results; });
+
+    var filtered = applyFilters(active);
+    currentVisible = filtered;
+
+    var filterNote = document.getElementById("filter-note");
+    var hiddenByFilters = active.length - filtered.length;
+    filterNote.hidden = hiddenByFilters === 0;
+    if (hiddenByFilters > 0) {
+      filterNote.textContent = hiddenByFilters + " trial" + (hiddenByFilters === 1 ? "" : "s") + " hidden by your filters.";
+    }
 
     var recruiting = data.filter(function (t) {
       return ["RECRUITING", "NOT_YET_RECRUITING", "ACTIVE_NOT_RECRUITING", "ENROLLING_BY_INVITATION"].indexOf(t.tag4_status.overall_status) !== -1;
     }).length;
-    var withResults = data.filter(function (t) { return t.tag4_status.completed_with_results; }).length;
+    var withResults = completed.length;
     var flagged = data.filter(function (t) { return t.tag5_oversight.status === "flagged"; }).length;
 
     var strip = document.getElementById("strip");
+    strip.innerHTML = "";
     [
-      data.length + " trials found",
-      recruiting + " currently recruiting",
-      withResults + " completed with results",
-      flagged + " worth a closer look"
+      { text: data.length + " trials found" },
+      { text: recruiting + " currently recruiting" },
+      { text: withResults + " completed with results", action: withResults > 0 ? openCompletedDrawer : null },
+      { text: flagged + " worth a closer look" }
     ].forEach(function (s, i) {
       if (i > 0) strip.appendChild(el("span", { class: "sep" }, [text("·")]));
-      strip.appendChild(el("span", {}, [text(s)]));
+      if (s.action) {
+        var stripBtn = el("button", { type: "button", class: "strip-link" }, [text(s.text)]);
+        stripBtn.addEventListener("click", s.action);
+        strip.appendChild(stripBtn);
+      } else {
+        strip.appendChild(el("span", {}, [text(s.text)]));
+      }
     });
 
-    initSortButtons();
-    renderResults(visible);
+    renderResults(filtered);
 
+    var cLabel = document.getElementById("completed-label");
+    var cDrawer = document.getElementById("completed-drawer");
+    var cList = document.getElementById("completed-list");
+    cList.innerHTML = "";
+    if (completed.length > 0) {
+      cLabel.hidden = false;
+      cDrawer.hidden = false;
+      document.getElementById("completed-summary").textContent =
+        "Show " + completed.length + " completed trial" + (completed.length === 1 ? "" : "s") + " with posted results";
+      completed.slice().sort(function (a, b) { return burdenSortKey(a) - burdenSortKey(b); })
+        .forEach(function (t) { cList.appendChild(renderCard(t)); });
+    } else {
+      cLabel.hidden = true;
+      cDrawer.hidden = true;
+    }
+
+    var label = document.getElementById("excluded-label");
+    var drawer = document.getElementById("excluded-drawer");
+    var list = document.getElementById("excluded-list");
+    list.innerHTML = "";
     if (hidden.length > 0) {
-      document.getElementById("excluded-label").hidden = false;
-      var drawer = document.getElementById("excluded-drawer");
+      label.hidden = false;
       drawer.hidden = false;
-      document.getElementById("excluded-summary").textContent =
-        hidden.length + " trial" + (hidden.length === 1 ? "" : "s") + " we filtered out for an example 30-year-old profile (not a real account yet) — tap to see why";
-      var list = document.getElementById("excluded-list");
+      document.getElementById("excluded-summary").textContent = patientProfile
+        ? (hidden.length + " trial" + (hidden.length === 1 ? "" : "s") + " you may not qualify for, based on what you told us — tap to see why")
+        : (hidden.length + " trial" + (hidden.length === 1 ? "" : "s") + " we filtered out for an example 30-year-old profile (not a real account yet) — tap to see why");
       hidden.forEach(function (t) {
         var card = renderExcludedCard(t, function (trial, cardEl) {
           cardEl.remove();
@@ -486,19 +1082,59 @@ details.tips[open] > summary::before { content: "▾ "; }
         });
         list.appendChild(card);
       });
+    } else {
+      label.hidden = true;
+      drawer.hidden = true;
     }
   }
+
+  function boot(data) {
+    allData = data;
+    renderAll();
+  }
+
+  // Milestone 8: a fixed, pre-tagged set of conditions - not free-text
+  // search. Each condition's own fetch_trials.py + tag_trials.py run is
+  // real Milestone-1-scale work (live API fetch, full tagging pass), not
+  // something this product can do on demand without a server (Phase 1's
+  // "nothing leaves the device" boundary, same reasoning as D6/D8). Add
+  // an entry here only after actually running both scripts for it.
+  var CONDITIONS = {
+    uterine_fibroids: { label: "uterine fibroids", file: "uterine_fibroids.json" },
+    endometriosis: { label: "endometriosis", file: "endometriosis.json" }
+  };
 
   // Repo layout serves this file from web/, one level above data/tagged/.
   // A preview context (e.g. an Artifact) may publish the data alongside
   // the page instead - try the repo-relative path first, then a flat one.
-  function loadData() {
-    return fetch("../data/tagged/uterine_fibroids.json").then(function (r) {
+  function loadConditionData(file) {
+    return fetch("../data/tagged/" + file).then(function (r) {
       if (!r.ok) throw new Error("not found at repo path");
       return r.json();
     }).catch(function () {
-      return fetch("data/tagged/uterine_fibroids.json").then(function (r) { return r.json(); });
+      return fetch("data/tagged/" + file).then(function (r) { return r.json(); });
     });
+  }
+
+  function loadCondition(slug) {
+    var cond = CONDITIONS[slug];
+    if (!cond) return;
+    document.getElementById("results").innerHTML = "<div class=\"empty\">Loading…</div>";
+    loadConditionData(cond.file)
+      .then(function (data) {
+        document.getElementById("condition-label").textContent = cond.label;
+        boot(data);
+      })
+      .catch(function (err) {
+        document.getElementById("results").innerHTML =
+          "<div class=\"empty\">Couldn't load trial data: " + err + "</div>";
+      });
+  }
+
+  function initConditionPicker() {
+    var select = document.getElementById("condition-select");
+    select.addEventListener("change", function () { loadCondition(select.value); });
+    return select.value;
   }
 
   function initTipsLinks() {
@@ -509,13 +1145,59 @@ details.tips[open] > summary::before { content: "▾ "; }
     });
   }
 
-  initTipsLinks();
-  loadData()
-    .then(boot)
-    .catch(function (err) {
-      document.getElementById("results").innerHTML =
-        "<div class=\"empty\">Couldn't load trial data: " + err + "</div>";
+  function initIntakePanel() {
+    var ageInput = document.getElementById("intake-age");
+    var sexSelect = document.getElementById("intake-sex");
+    var hvCheckbox = document.getElementById("intake-healthy-volunteer");
+    var statusEl = document.getElementById("intake-status");
+    var concernCheckboxes = document.querySelectorAll("#intake-concerns input[type=checkbox]");
+
+    function fillForm(p) {
+      ageInput.value = (p && p.age_years !== null && p.age_years !== undefined) ? p.age_years : "";
+      sexSelect.value = (p && p.sex) ? p.sex : "";
+      hvCheckbox.checked = !!(p && p.healthy_volunteer);
+      var concerns = (p && p.concerns) || [];
+      concernCheckboxes.forEach(function (cb) { cb.checked = concerns.indexOf(cb.value) !== -1; });
+    }
+    function updateStatus() {
+      statusEl.textContent = patientProfile
+        ? "Using your saved profile — trials above are filtered against it."
+        : "Showing an example profile until you save your own.";
+    }
+
+    fillForm(patientProfile);
+    updateStatus();
+
+    document.getElementById("intake-save").addEventListener("click", function () {
+      var ageVal = ageInput.value.trim();
+      var concerns = [];
+      concernCheckboxes.forEach(function (cb) { if (cb.checked) concerns.push(cb.value); });
+      patientProfile = {
+        age_years: ageVal === "" ? null : parseFloat(ageVal),
+        sex: sexSelect.value || null,
+        healthy_volunteer: hvCheckbox.checked,
+        concerns: concerns
+      };
+      saveProfileToStorage(patientProfile);
+      updateStatus();
+      if (allData.length) renderAll();
     });
+
+    document.getElementById("intake-clear").addEventListener("click", function () {
+      patientProfile = null;
+      clearProfileFromStorage();
+      fillForm(null);
+      updateStatus();
+      if (allData.length) renderAll();
+    });
+  }
+
+  initTipsLinks();
+  initIntakePanel();
+  initShortlistExport();
+  initSortButtons();
+  initFilterRow();
+  loadCondition(initConditionPicker());
 })();
 </script>
 </body>

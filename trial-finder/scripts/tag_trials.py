@@ -25,6 +25,7 @@ import re
 from pathlib import Path
 
 from tag6_cost import tag6_cost
+from parse_eligibility import stage1_split, stage2_atomize
 
 SPEC_VERSION = "0.5"
 
@@ -35,7 +36,7 @@ PHASE_LABELS = {
     "PHASE1": "Early safety testing",
     "PHASE2": "Testing whether it works",
     "PHASE3": "Large-scale confirmation",
-    "PHASE4": "Already approved",
+    "PHASE4": "Repurposing an FDA-approved drug",
     "NA": "No FDA phase",
 }
 
@@ -45,7 +46,9 @@ PHASE_EXPLANATIONS = {
     "PHASE2": "Tests whether the treatment has a real effect. Mid-sized.",
     "PHASE3": "Large study comparing against current standard care. More evidence stands behind "
               "the treatment at this stage than at any earlier one.",
-    "PHASE4": "Studies a treatment already on the market, usually for long-term or real-world effects.",
+    "PHASE4": "This drug is already FDA-approved and sold for a different use. This trial is "
+              "testing whether it also works for this one — that's exactly why there's a "
+              "placebo or comparison group: it isn't proven for this condition yet.",
     "NA": "Normal for behavioral, device, dietary, and observational studies. Not a quality signal.",
 }
 
@@ -230,7 +233,7 @@ def tag2_placebo(design_module: dict, arm_groups: list) -> dict:
     types = [a.get("type") for a in arm_groups]
 
     if intervention_model == "SINGLE_GROUP" or len(arm_groups) == 1:
-        return {"label": "Everyone receives the treatment", "gap": False}
+        return {"label": "Everyone receives the treatment", "gap": False, "has_placebo": False}
 
     if any(t in PLACEBO_SHAM for t in types):
         if allocation == "RANDOMIZED":
@@ -241,11 +244,13 @@ def tag2_placebo(design_module: dict, arm_groups: list) -> dict:
                 "label": f"You may receive a placebo (about {chance:.0%})",
                 "placebo_chance": chance,
                 "gap": False,
+                "has_placebo": True,
             }
         return {
             "label": "This study includes a placebo group. Assignment is not "
                      "random — ask the site how groups are chosen.",
             "gap": False,
+            "has_placebo": True,
         }
 
     if any(t == "ACTIVE_COMPARATOR" for t in types):
@@ -253,16 +258,18 @@ def tag2_placebo(design_module: dict, arm_groups: list) -> dict:
             "label": "All participants receive an active treatment (you may "
                      "receive the standard treatment rather than the new one)",
             "gap": False,
+            "has_placebo": False,
         }
 
     if not arm_groups:
-        return {"label": "Not stated", "gap": False}
+        return {"label": "Not stated", "gap": False, "has_placebo": None}
 
     # Falls through all four named branches - most commonly multiple
     # EXPERIMENTAL arms with no comparator arm, or arm groups present but
     # missing `type` entirely. Not covered by TAGGING_SPEC_v0.5.md sec. 3
     # TAG 2 - flagged, not guessed at (CLAUDE.md working agreement).
-    return {"gap": True, "arm_types_raw": types, "reason": "arm-type combination not covered by TAG 2"}
+    return {"gap": True, "arm_types_raw": types, "reason": "arm-type combination not covered by TAG 2",
+            "has_placebo": None}
 
 
 # --- TAG 3: Intervention type and burden ----------------------------------
@@ -600,6 +607,76 @@ def summary_snippet(text, max_len=200):
     return text[:cut].rstrip(",;:") + "…"
 
 
+# Keyword-match concept flags for the intake panel's "common exclusion
+# concerns" checkboxes (Milestone 9, raised directly by the product owner).
+# NOT Tier B/C per TAGGING_SPEC_v0.5.md sec. 6 - this skips the
+# qualifier/threshold structuring step Stage 3 does (that needs an LLM,
+# not available in this sandbox). A keyword hit here only means the
+# concept is MENTIONED somewhere in the trial's exclusion criteria, not
+# that it's a confirmed exclusion for any given patient - "active
+# malignancy within 5 years" and "history of any cancer, including
+# resolved" are both a "cancer" keyword hit, but exclude completely
+# different people. Per spec sec. 5.2 ("text-derived exclusions downrank,
+# never hide" - P1, false exclusion costs more than false inclusion),
+# this can only ever justify a visible, non-hiding note - never remove a
+# trial from view. Patterns checked against the real corpus
+# (reports/milestone_9_status.md) for the same false-positive class of bug
+# already found twice this project (TAG3's "ultrasound", TAG6's "fee") -
+# "heart", "depression", and "lactat" as bare substrings were specifically
+# checked and found clean on this corpus, not assumed safe.
+EXCLUSION_CONCEPTS = {
+    "pregnancy": ("Pregnancy", re.compile(r"pregnan", re.IGNORECASE)),
+    "diabetes": ("Diabetes", re.compile(r"diabet", re.IGNORECASE)),
+    "cancer": ("Cancer or other malignancy", re.compile(r"cancer|malignan", re.IGNORECASE)),
+    "prior_surgery": ("Prior surgery", re.compile(r"surg", re.IGNORECASE)),
+    "kidney": ("Kidney disease", re.compile(r"renal|kidney", re.IGNORECASE)),
+    "allergy": ("Allergy or hypersensitivity", re.compile(r"allerg|hypersensitiv", re.IGNORECASE)),
+    "liver": ("Liver disease", re.compile(r"hepatic|liver", re.IGNORECASE)),
+    "breastfeeding": ("Breastfeeding", re.compile(r"breast.?feed|lactat", re.IGNORECASE)),
+    "bleeding_disorder": ("Bleeding disorder or blood thinner use",
+                          re.compile(r"anticoagul|bleeding disorder|coagulopathy", re.IGNORECASE)),
+    "heart": ("Heart disease", re.compile(r"cardiac|heart", re.IGNORECASE)),
+    "psychiatric": ("Psychiatric or mental health condition",
+                     re.compile(r"psychiatric|mental (illness|health)|depression|schizophreni", re.IGNORECASE)),
+}
+
+
+def exclusion_keyword_flags(criteria_text):
+    """Returns {concept_key: verbatim_criterion} for the first atomic
+    exclusion criterion matching each concept - empty dict if the Stage 1
+    split fails (logged elsewhere in parse_eligibility.py's own run, not
+    re-logged here) or nothing matches. First match only, not every match,
+    to keep the per-card note short - P4 (verbatim source text) still
+    applies: the stored text is the real criterion, never paraphrased."""
+    split = stage1_split(criteria_text)
+    if split is None:
+        return {}
+    _, exclusion_text = split
+    criteria = stage2_atomize(exclusion_text)
+    flags = {}
+    for criterion in criteria:
+        for key, (_, pattern) in EXCLUSION_CONCEPTS.items():
+            if key not in flags and pattern.search(criterion):
+                flags[key] = criterion
+    return flags
+
+
+def resolve_contact(contacts_locations_module: dict):
+    """R10: centralContacts[] first, then locations[].contacts[] - the
+    first entry that actually has an email (a PRINCIPAL_INVESTIGATOR or
+    SUB_INVESTIGATOR entry commonly has only a name, no way to reach
+    them). None if nothing resolvable - the caller shows the R10 fallback
+    ("say so, point to the registry page") rather than a broken contact."""
+    for c in (contacts_locations_module.get("centralContacts") or []):
+        if c.get("email"):
+            return {"name": c.get("name"), "email": c.get("email")}
+    for loc in (contacts_locations_module.get("locations") or []):
+        for c in (loc.get("contacts") or []):
+            if c.get("email"):
+                return {"name": c.get("name"), "email": c.get("email")}
+    return None
+
+
 def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
     protocol = study.get("protocolSection", {})
     identification_module = protocol.get("identificationModule", {}) or {}
@@ -609,6 +686,7 @@ def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
     status_module = protocol.get("statusModule", {}) or {}
     arms_module = protocol.get("armsInterventionsModule", {}) or {}
     eligibility_module = protocol.get("eligibilityModule", {}) or {}
+    contacts_locations_module = protocol.get("contactsLocationsModule", {}) or {}
     has_results = study.get("hasResults")
     study_type = design_module.get("studyType")
     arm_groups = arms_module.get("armGroups") or []
@@ -633,7 +711,28 @@ def tag_study(study: dict, as_of: datetime.date, patient: dict) -> dict:
         "tag3_intervention": tag3_intervention(study_type, interventions),
         "tag4_status": tag4_status(status_module, has_results, as_of),
         "tag5_oversight": tag5_oversight(protocol, tag6_result),
+        # Baked against the one example patient from this run's --patient-*
+        # args (default: Milestone 1's test persona) - a reasonable default
+        # view for a visitor who hasn't entered their own profile yet. Not
+        # the only source of truth: "eligibility_raw" below carries the
+        # same structured fields unevaluated, so a real UI can recompute
+        # Tier A live against whatever profile an actual visitor enters,
+        # per PRD R1/R1b - see web/index.html's intake panel (Milestone 8).
         "tier_a_exclusion": tier_a_exclusion(eligibility_module, patient),
+        "eligibility_raw": {
+            "minimum_age": eligibility_module.get("minimumAge"),
+            "maximum_age": eligibility_module.get("maximumAge"),
+            "sex": eligibility_module.get("sex"),
+            "healthy_volunteers": eligibility_module.get("healthyVolunteers"),
+        },
+        # R10 contact templates: centralContacts[] first, then
+        # locations[].contacts[], per PRD R10 - first entry with an email
+        # (PRINCIPAL_INVESTIGATOR/SUB_INVESTIGATOR entries often have no
+        # email, only a name, so skipping straight to "first contact"
+        # would silently pick an unreachable one on real records - checked
+        # against this corpus, see reports/milestone_8_status.md).
+        "contact": resolve_contact(contacts_locations_module),
+        "exclusion_keyword_flags": exclusion_keyword_flags(eligibility_module.get("eligibilityCriteria")),
         "tag6_cost": tag6_result,
     }
 

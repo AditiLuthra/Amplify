@@ -1,6 +1,6 @@
 # PRD — Clinical Trial Finder
 
-**Version:** 0.9
+**Version:** 0.14
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — pre-validation
 **Related:** `TAGGING_SPEC_v0.5.md` (implementation detail)
@@ -247,6 +247,15 @@ High-level only. Implementation detail in `TAGGING_SPEC_v0.5.md`.
 **R1. Structured intake.** Let the user describe disease and current condition
 in enough detail to sort results — progressive questions in a side panel,
 ordered by how much each narrows the set. Directly addresses Problem §1.1.
+**Partially built:** the Tier A fields (age, sex, healthy-volunteer status)
+have a real intake panel as of `UI_DECISIONS.md` D6. Condition selection is
+also partially built (D8): a fixed picker between pre-tagged conditions
+(uterine fibroids, endometriosis), each really fetched and tagged, not
+free-text search — that still needs a server (Phase 2) to fetch and tag a
+condition on demand. The Tier B/C free-text fields (prior surgery,
+fertility intent, anemia severity) remain unbuilt; they have nothing to
+feed yet (Tiers B/C aren't wired into the UI — Milestone 7's Stage 3
+structuring only covers 10/501 records).
 
 **R1b. Local patient profile (optional).** Let a user who wants to save
 themselves re-answering save their intake answers as a profile. **Local-only**
@@ -257,7 +266,10 @@ architecture decision is needed for data that never leaves the browser. Feeds
 straight back into R1's intake and the Tier A/B/C exclusion evaluation so
 repeat visits and new searches don't start from zero. Tell the user plainly
 that clearing browser data or switching devices loses it — no silent
-assumption of durability it doesn't have.
+assumption of durability it doesn't have. **Built** (`UI_DECISIONS.md` D6):
+`localStorage`-only, Tier A fields only, live-reevaluated client-side
+against `tag_trials.py`'s new `eligibility_raw` field rather than a
+pipeline-baked result.
 
 **R2. Plain-language tag display.** Phase, placebo exposure, intervention
 category with explanation, cost status, freshness. Phase and placebo render
@@ -267,7 +279,11 @@ adjacent. Every tag written for a reader without clinical training.
 readable items with qualifiers preserved. Addresses Problem §1.2.
 
 **R4. Sorting and filtering** on burden, placebo probability, cost, oversight,
-and recency. Addresses Problem §1.3.
+and recency. Addresses Problem §1.3. **Built**, minus cost
+(`UI_DECISIONS.md` D10): burden/evidence as sort toggles (Milestone 6),
+placebo/oversight/recency as filter checkboxes. No cost filter yet —
+`tag6_cost.status` is "not_stated" on every record in both corpora, so a
+cost filter would be a control that can never do anything.
 
 **R5. Oversight rubric.** Seven published criteria; label at ≥4 with the
 specific criteria met.
@@ -283,11 +299,18 @@ a condition and how far along it is, independent of whether the user is
 currently seeking a trial. Serves G6.
 
 **R9. Shortlist and export.** Save trials; export a physician-ready file. Serves
-G1 and G2.
+G1 and G2. **Built** (`UI_DECISIONS.md` D7): `localStorage`-only save list,
+export as a standalone static HTML file (no app logic embedded) so it's a
+real document to hand a clinician, not an export of our interface.
 
 **R10. Contact templates.** Serves G3. Two templates, generated per trial and
 prefilled with the trial's identifiers and contact address from
 `contactsLocationsModule` (`centralContacts[]`, then `locations[].contacts[]`).
+**Built** (`UI_DECISIONS.md` D9): a `mailto:` link plus a copy-to-clipboard
+button, both opening/populating an email the visitor sends themselves —
+never sent by this product. Both triggers for Template B implemented and
+verified against real records, including the case where both templates
+show together.
 
 *Template A — Am I a fit?* For recruiting trials. Asks whether the study is
 enrolling, what the main eligibility requirements are, where and how often
@@ -497,6 +520,13 @@ trial. Where did it break down?"* Not *"would you use this?"*
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.16 | 2026-10-23 | Completed-with-results trials no longer mixed into the main recruiting list - split into their own collapsed-by-default drawer ("Completed trials"), opened via the drawer itself or the existing strip stat (now a button). Main list, sorting, and the "Hide:" filters all operate on the recruiting-shaped set only. No TAG4 classification change - this was a rendering fix, not a tagging one. See `UI_DECISIONS.md` D13. |
+| 0.15 | 2026-10-23 | Intake panel extended with 11 exclusion-concern checkboxes (pregnancy, diabetes, cancer, prior surgery, kidney/liver/heart disease, allergy, breastfeeding, bleeding disorder, psychiatric condition), chosen from real frequency data in Milestone 7's atomized eligibility corpus rather than guessed. New `exclusion_keyword_flags` field (reusing `parse_eligibility`'s split/atomize, not full Tier B/C structuring) surfaces a "Worth asking about" note directly on the collapsed card when a saved concern matches a trial's exclusion text - never hides the trial, per `TAGGING_SPEC_v0.5.md` §5.2. Intro paragraph removed from the UI (redundant with the existing disclaimer). See `UI_DECISIONS.md` D12. |
+| 0.14 | 2026-10-23 | R4 built, minus cost: filter checkboxes for placebo risk, oversight flag, and record staleness (2+ years). No cost filter - `tag6_cost.status` is "not_stated" on every record in both corpora, so it would be a non-functional control. Real finding surfaced while building it: 73.7% of the uterine fibroids corpus (369/501) is `record_out_of_date`. See `UI_DECISIONS.md` D10. |
+| 0.13 | 2026-10-23 | R10 built: contact templates (Template A "Am I a fit?", Template B "Keep me posted", both triggers) as a `mailto:` link plus copy-to-clipboard - never sent by this product. `tag_trials.py` resolves a real contact per trial (143/501 uterine fibroids records), with the spec's own fallback when none exists. See `UI_DECISIONS.md` D9. |
+| 0.12 | 2026-10-23 | R1 partially built: a fixed condition picker (uterine fibroids, endometriosis) replaces the single hardcoded page - each condition really fetched and tagged, not free-text search (that needs Phase 2). R9's shortlist/export changed to store full trial snapshots instead of bare NCT IDs so a save survives switching conditions. See `UI_DECISIONS.md` D8. Also surfaced a real finding worth tracking: endometriosis's TAG 5 flagged rate (50.4%) is nearly double uterine fibroids' (27.5%) - the Milestone 4 baseline may not generalize across conditions. |
+| 0.11 | 2026-10-23 | R9 built: shortlist (save/unsave per trial) and export (standalone HTML file, no app logic) - `localStorage`-only, same storage model as R1b. Also resolved `oversight_flag_brief.md`'s last open question (the confirm step before saving a flagged trial), which had been explicitly blocked on R9 not existing. See `UI_DECISIONS.md` D7. |
+| 0.10 | 2026-10-23 | R1/R1b partially built: a real intake panel (age, sex, healthy-volunteer status) replaces the hardcoded example patient for Tier A exclusion, stored `localStorage`-only and re-evaluated live in the browser. See `UI_DECISIONS.md` D6. Condition search and the Tier B/C free-text intake fields remain unbuilt. |
 | 0.9 | 2026-10-20 | Added R11: "common signs of a predatory trial" tips content, linked from the oversight panel (`UI_DECISIONS.md` D5) rather than a standalone page. Raised after confirming the FDA has no usable structured/searchable warning-letter data to join against trial sponsors (Open question 10.10's investigation) — this covers the same gap (a legitimate-looking trial testing an unvalidated therapy) with static, citable patient guidance instead. |
 | 0.8 | 2026-10-20 | Added Open question §10.10: community-sourced sponsor/trial flagging, raised after Milestone 7's TAG 6 found zero real cost-language hits on the corpus (undisclosed cost may only ever surface via patient report). Parked, not scoped — needs the same anti-gaming/liability, Phase-2-shared-state, and condition-sensitivity review as G8/G9 before any design work. |
 | 0.7 | 2026-10-20 | Reaffirmed Non-goal §4.2 ("we do not rank trials by likelihood of benefit") after it was requested directly during Milestone 6 UI work — declined for the reasons already in §5.3 and the spec's results-framing rule; built an evidence-level sort (phase progression + results-posted status) instead. See `UI_DECISIONS.md` D4. |
