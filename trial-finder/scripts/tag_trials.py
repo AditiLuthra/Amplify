@@ -230,7 +230,7 @@ def tag2_placebo(design_module: dict, arm_groups: list) -> dict:
     types = [a.get("type") for a in arm_groups]
 
     if intervention_model == "SINGLE_GROUP" or len(arm_groups) == 1:
-        return {"label": "Everyone receives the treatment", "gap": False}
+        return {"label": "Everyone receives the treatment", "gap": False, "has_placebo": False}
 
     if any(t in PLACEBO_SHAM for t in types):
         if allocation == "RANDOMIZED":
@@ -241,11 +241,13 @@ def tag2_placebo(design_module: dict, arm_groups: list) -> dict:
                 "label": f"You may receive a placebo (about {chance:.0%})",
                 "placebo_chance": chance,
                 "gap": False,
+                "has_placebo": True,
             }
         return {
             "label": "This study includes a placebo group. Assignment is not "
                      "random — ask the site how groups are chosen.",
             "gap": False,
+            "has_placebo": True,
         }
 
     if any(t == "ACTIVE_COMPARATOR" for t in types):
@@ -253,16 +255,18 @@ def tag2_placebo(design_module: dict, arm_groups: list) -> dict:
             "label": "All participants receive an active treatment (you may "
                      "receive the standard treatment rather than the new one)",
             "gap": False,
+            "has_placebo": False,
         }
 
     if not arm_groups:
-        return {"label": "Not stated", "gap": False}
+        return {"label": "Not stated", "gap": False, "has_placebo": None}
 
     # Falls through all four named branches - most commonly multiple
     # EXPERIMENTAL arms with no comparator arm, or arm groups present but
     # missing `type` entirely. Not covered by TAGGING_SPEC_v0.5.md sec. 3
     # TAG 2 - flagged, not guessed at (CLAUDE.md working agreement).
-    return {"gap": True, "arm_types_raw": types, "reason": "arm-type combination not covered by TAG 2"}
+    return {"gap": True, "arm_types_raw": types, "reason": "arm-type combination not covered by TAG 2",
+            "has_placebo": None}
 
 
 # --- TAG 3: Intervention type and burden ----------------------------------

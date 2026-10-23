@@ -365,3 +365,43 @@ implementation:** never "I qualify," never prefilled with intake-panel
 (R1b) answers, one trial at a time (no bulk-contact UI exists to misuse).
 
 ---
+
+## D10 — Filtering (R4's remaining dimension), and why cost isn't one
+
+**Question:** R4 names five filter/sort dimensions: burden, placebo
+probability, cost, oversight, recency. Burden and evidence (a proxy for
+recency of research stage, not record freshness) already have sort
+toggles. The other three had neither sort nor filter.
+
+**Decision:** Added filter checkboxes (not sort — these are binary
+hide/show, not orderings) for oversight ("Flagged trials"), placebo
+("Trials with placebo risk"), and recency ("Records not updated in 2+
+years" — `tag4_status.record_out_of_date`). **Deliberately no cost
+filter**: `tag6_cost.status` is `"not_stated"` on every single record in
+both corpora (Milestone 7's real finding, unchanged since). A filter
+checkbox that can never remove a single trial is the same non-functional-
+control problem D6 and D8 already named and avoided — building it now
+would imply a capability that doesn't exist. Revisit once some corpus
+actually resolves a cost status.
+
+**`tag2_placebo` gained a `has_placebo` boolean** (`tag_trials.py`) rather
+than the UI string-matching the existing label text — a label is
+copy, not data, and matching against it would break the moment the
+copy changes for an unrelated reason.
+
+**Real finding from checking the distribution before building the UI:**
+73.7% of the uterine fibroids corpus (369/501) is `record_out_of_date`
+(no update in 2+ years) — a strikingly high share. Not a bug (verified
+the field's own logic in Milestone 2/4), but worth the product owner
+knowing: a staleness filter this aggressive-sounding will remove nearly
+three-quarters of the corpus if used alone.
+
+**Composability and scope:** filters apply on top of (never instead of)
+the existing Tier A/TAG4 structured exclusion — a trial hidden by a
+filter is a completely different thing from a trial in the "not shown
+above" drawer (R6), and filters never add to that drawer. Filter state is
+session-only (not `localStorage`) — unlike the patient profile (R1b) and
+shortlist (R9), there's no "losing something real" cost to resetting on
+reload, and persisting it would be unrequested scope.
+
+---

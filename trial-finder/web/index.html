@@ -83,6 +83,16 @@ h1, h2 { font-family: "Literata", Georgia, serif; font-weight: 700; margin: 0; t
   padding: 7px 14px; cursor: pointer;
 }
 .sort-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.filter-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-bottom: 4px; }
+.filter-chip {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 0.86rem; font-weight: 700;
+  color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+  padding: 7px 14px 7px 10px; cursor: pointer;
+}
+.filter-chip input { margin: 0; accent-color: var(--accent); }
+.filter-note { font-size: 0.83rem; color: var(--muted); margin: 6px 0 16px; }
+.filter-note[hidden] { display: none; }
 .group-note {
   font-size: 0.85rem; color: var(--muted); margin: 22px 0 10px; padding: 0 2px;
 }
@@ -284,6 +294,14 @@ details.intake[open] > summary::before { content: "▾ "; }
     <button type="button" class="sort-btn" id="sort-burden" aria-pressed="true">Lowest burden first</button>
     <button type="button" class="sort-btn" id="sort-evidence" aria-pressed="false">Most evidence first</button>
   </div>
+
+  <div class="filter-row">
+    <span class="lbl">Hide:</span>
+    <label class="filter-chip"><input type="checkbox" id="filter-flagged"> Flagged trials</label>
+    <label class="filter-chip"><input type="checkbox" id="filter-placebo"> Trials with placebo risk</label>
+    <label class="filter-chip"><input type="checkbox" id="filter-outdated"> Records not updated in 2+ years</label>
+  </div>
+  <p class="filter-note" id="filter-note" hidden></p>
 
   <div class="shortlist-bar" id="shortlist-bar" hidden>
     <span id="shortlist-count"></span>
@@ -854,11 +872,51 @@ details.intake[open] > summary::before { content: "▾ "; }
 
   var allData = [];
 
+  // R4's remaining filter dimensions (burden/evidence already have sort
+  // toggles). Cost is deliberately not a filter here - tag6_cost.status is
+  // "not_stated" on every record in both corpora (Milestone 7), so a cost
+  // filter would be a control that never does anything, the same
+  // non-functional-control problem D6/D8 already avoided for other
+  // features. Revisit once a corpus actually resolves a cost status.
+  var activeFilters = { flagged: false, placebo: false, outdated: false };
+
+  function applyFilters(visible) {
+    return visible.filter(function (t) {
+      if (activeFilters.flagged && t.tag5_oversight.status === "flagged") return false;
+      if (activeFilters.placebo && t.tag2_placebo.has_placebo === true) return false;
+      if (activeFilters.outdated && t.tag4_status.record_out_of_date) return false;
+      return true;
+    });
+  }
+
+  function initFilterRow() {
+    var flaggedCb = document.getElementById("filter-flagged");
+    var placeboCb = document.getElementById("filter-placebo");
+    var outdatedCb = document.getElementById("filter-outdated");
+    function onChange() {
+      activeFilters.flagged = flaggedCb.checked;
+      activeFilters.placebo = placeboCb.checked;
+      activeFilters.outdated = outdatedCb.checked;
+      if (allData.length) renderAll();
+    }
+    flaggedCb.addEventListener("change", onChange);
+    placeboCb.addEventListener("change", onChange);
+    outdatedCb.addEventListener("change", onChange);
+  }
+
   function renderAll() {
     var data = allData;
     var visible = data.filter(function (t) { return !isHidden(t); });
     var hidden = data.filter(isHidden);
-    currentVisible = visible;
+    var filtered = applyFilters(visible);
+    currentVisible = filtered;
+
+    var filterNote = document.getElementById("filter-note");
+    var hiddenByFilters = visible.length - filtered.length;
+    filterNote.hidden = hiddenByFilters === 0;
+    if (hiddenByFilters > 0) {
+      filterNote.textContent = hiddenByFilters + " trial" + (hiddenByFilters === 1 ? "" : "s") + " hidden by your filters.";
+    }
 
     var recruiting = data.filter(function (t) {
       return ["RECRUITING", "NOT_YET_RECRUITING", "ACTIVE_NOT_RECRUITING", "ENROLLING_BY_INVITATION"].indexOf(t.tag4_status.overall_status) !== -1;
@@ -878,7 +936,7 @@ details.intake[open] > summary::before { content: "▾ "; }
       strip.appendChild(el("span", {}, [text(s)]));
     });
 
-    renderResults(visible);
+    renderResults(filtered);
 
     var label = document.getElementById("excluded-label");
     var drawer = document.getElementById("excluded-drawer");
@@ -1006,6 +1064,7 @@ details.intake[open] > summary::before { content: "▾ "; }
   initIntakePanel();
   initShortlistExport();
   initSortButtons();
+  initFilterRow();
   loadCondition(initConditionPicker());
 })();
 </script>
