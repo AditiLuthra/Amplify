@@ -285,3 +285,48 @@ for any future element that combines the native `hidden` attribute with
 its own `display` override.
 
 ---
+
+## D8 — Multi-condition support: a fixed picker, not free-text search
+
+**Question:** The page was hardcoded to one condition (uterine fibroids).
+R1's "describe disease and current condition" implies real search. What's
+actually buildable in Phase 1?
+
+**Options considered:**
+- A — Free-text condition search, fetching + tagging on demand
+- B — A picker among a small, fixed set of conditions, each pre-fetched
+  and pre-tagged ahead of time by actually running
+  `fetch_trials.py`/`tag_trials.py`
+
+**Decision: B.**
+
+**Why:** A needs a live backend - fetching from ClinicalTrials.gov and
+running the full tagging pipeline (TAG 1-6, Tier A) takes real time and
+can't happen client-side in response to a keystroke, which is exactly the
+Phase 1 "nothing leaves the device, no server" boundary again (same
+reasoning as D6). B stays genuinely client-side: each condition's data is
+a real, already-tagged static JSON file, same as the original uterine
+fibroids one. Added a second condition, endometriosis (959 records,
+fetched and tagged for real, not fixture data) to prove the picker
+actually swaps datasets rather than just relabeling the same one.
+
+**Real finding from adding it:** endometriosis's TAG 5 flagged rate is
+50.4% (483/959), nearly double uterine fibroids' 27.5% (Milestone 4).
+Not investigated further here (out of scope for a UI change) but worth
+the spec/product owner knowing before assuming the 27.5% baseline
+generalizes across conditions.
+
+**Shortlist/export, revised to make this safe:** R9 (D7) originally stored
+bare NCT IDs and re-joined against whichever condition's data happened to
+be loaded - correct only when exactly one condition ever loads. Changed to
+store full trial snapshots at save time, so a trial saved under one
+condition survives switching to another and still exports correctly. A
+test proved the gap this fixes: saving under uterine fibroids, switching
+to endometriosis, saving again, and exporting now correctly includes both,
+verified by content-matching the export file.
+
+**Scope boundary:** still no free-text search, no "add your own condition,"
+and the patient profile (R1b) and shortlist (R9) are both intentionally
+condition-independent - they're about the person, not the search.
+
+---

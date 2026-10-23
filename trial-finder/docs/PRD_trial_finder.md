@@ -1,6 +1,6 @@
 # PRD — Clinical Trial Finder
 
-**Version:** 0.11
+**Version:** 0.12
 **Owner:** Aditi Luthra (Product)
 **Status:** Draft — pre-validation
 **Related:** `TAGGING_SPEC_v0.5.md` (implementation detail)
@@ -248,11 +248,14 @@ High-level only. Implementation detail in `TAGGING_SPEC_v0.5.md`.
 in enough detail to sort results — progressive questions in a side panel,
 ordered by how much each narrows the set. Directly addresses Problem §1.1.
 **Partially built:** the Tier A fields (age, sex, healthy-volunteer status)
-have a real intake panel as of `UI_DECISIONS.md` D6 — condition search
-and the Tier B/C free-text fields (prior surgery, fertility intent, anemia
-severity) are not; the latter has nothing to feed yet (Tiers B/C aren't
-wired into the UI — Milestone 7's Stage 3 structuring only covers
-10/501 records).
+have a real intake panel as of `UI_DECISIONS.md` D6. Condition selection is
+also partially built (D8): a fixed picker between pre-tagged conditions
+(uterine fibroids, endometriosis), each really fetched and tagged, not
+free-text search — that still needs a server (Phase 2) to fetch and tag a
+condition on demand. The Tier B/C free-text fields (prior surgery,
+fertility intent, anemia severity) remain unbuilt; they have nothing to
+feed yet (Tiers B/C aren't wired into the UI — Milestone 7's Stage 3
+structuring only covers 10/501 records).
 
 **R1b. Local patient profile (optional).** Let a user who wants to save
 themselves re-answering save their intake answers as a profile. **Local-only**
@@ -508,6 +511,7 @@ trial. Where did it break down?"* Not *"would you use this?"*
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-08-26 | Initial draft |
+| 0.12 | 2026-10-23 | R1 partially built: a fixed condition picker (uterine fibroids, endometriosis) replaces the single hardcoded page - each condition really fetched and tagged, not free-text search (that needs Phase 2). R9's shortlist/export changed to store full trial snapshots instead of bare NCT IDs so a save survives switching conditions. See `UI_DECISIONS.md` D8. Also surfaced a real finding worth tracking: endometriosis's TAG 5 flagged rate (50.4%) is nearly double uterine fibroids' (27.5%) - the Milestone 4 baseline may not generalize across conditions. |
 | 0.11 | 2026-10-23 | R9 built: shortlist (save/unsave per trial) and export (standalone HTML file, no app logic) - `localStorage`-only, same storage model as R1b. Also resolved `oversight_flag_brief.md`'s last open question (the confirm step before saving a flagged trial), which had been explicitly blocked on R9 not existing. See `UI_DECISIONS.md` D7. |
 | 0.10 | 2026-10-23 | R1/R1b partially built: a real intake panel (age, sex, healthy-volunteer status) replaces the hardcoded example patient for Tier A exclusion, stored `localStorage`-only and re-evaluated live in the browser. See `UI_DECISIONS.md` D6. Condition search and the Tier B/C free-text intake fields remain unbuilt. |
 | 0.9 | 2026-10-20 | Added R11: "common signs of a predatory trial" tips content, linked from the oversight panel (`UI_DECISIONS.md` D5) rather than a standalone page. Raised after confirming the FDA has no usable structured/searchable warning-letter data to join against trial sponsors (Open question 10.10's investigation) — this covers the same gap (a legitimate-looking trial testing an unvalidated therapy) with static, citable patient guidance instead. |

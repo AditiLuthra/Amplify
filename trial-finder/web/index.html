@@ -59,6 +59,12 @@ h1, h2 { font-family: "Literata", Georgia, serif; font-weight: 700; margin: 0; t
 .intro { margin-bottom: 18px; }
 .intro h1 { font-size: 1.55rem; line-height: 1.25; }
 .intro p { color: var(--muted); margin: 8px 0 0; font-size: 0.97rem; }
+.condition-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.condition-row label { font-size: 0.86rem; font-weight: 700; color: var(--muted); }
+.condition-row select {
+  font: inherit; font-size: 0.9rem; font-weight: 700; padding: 6px 10px; border: 1px solid var(--line);
+  border-radius: 8px; background: var(--surface); color: var(--ink);
+}
 
 .strip {
   background: var(--accent); color: #fff; border-radius: var(--radius);
@@ -209,7 +215,14 @@ details.intake[open] > summary::before { content: "▾ "; }
 <div class="wrap">
 
   <div class="intro">
-    <h1>Clinical trials for uterine fibroids</h1>
+    <h1>Clinical trials for <span id="condition-label">uterine fibroids</span></h1>
+    <div class="condition-row">
+      <label for="condition-select">Condition:</label>
+      <select id="condition-select">
+        <option value="uterine_fibroids">Uterine fibroids</option>
+        <option value="endometriosis">Endometriosis</option>
+      </select>
+    </div>
     <p>Everything below is written in plain language and comes straight from each trial's public record. We don't tell you whether you qualify — always check with the trial team before deciding anything.</p>
   </div>
 
@@ -317,9 +330,9 @@ details.intake[open] > summary::before { content: "▾ "; }
   </details>
 
   <p class="disclaimer">
-    This page shows one condition (uterine fibroids) from a single, fixed example — searching other
-    conditions and saving a shortlist aren't built yet. This isn't medical advice, and it can't tell you
-    whether you're eligible for a trial; only the trial team can do that.
+    Pick from the conditions listed above — typing in any condition isn't built yet, only choosing
+    from this fixed list. This isn't medical advice, and it can't tell you whether you're eligible for
+    a trial; only the trial team can do that.
   </p>
 </div>
 
@@ -404,8 +417,12 @@ details.intake[open] > summary::before { content: "▾ "; }
 
   var patientProfile = loadProfile();
 
-  // R9: shortlist + export. localStorage array of nct_ids, same storage
-  // model as the patient profile (R1b) - nothing leaves the browser.
+  // R9: shortlist + export. localStorage array of full trial snapshots
+  // (not just nct_ids) - same storage model as the patient profile (R1b),
+  // nothing leaves the browser. Snapshots, not IDs, so a saved trial
+  // survives switching to a different condition's dataset (Milestone 8:
+  // multi-condition support) without needing all conditions loaded at
+  // once just to re-resolve a save.
   var SHORTLIST_KEY = "tf_shortlist_v1";
   function loadShortlist() {
     try {
@@ -418,12 +435,14 @@ details.intake[open] > summary::before { content: "▾ "; }
     try { localStorage.setItem(SHORTLIST_KEY, JSON.stringify(list)); } catch (e) {}
   }
   var shortlist = loadShortlist();
-  function isShortlisted(nctId) { return shortlist.indexOf(nctId) !== -1; }
-  function addToShortlist(nctId) {
-    if (!isShortlisted(nctId)) { shortlist.push(nctId); saveShortlistToStorage(shortlist); updateShortlistBar(); }
+  function isShortlisted(nctId) {
+    return shortlist.some(function (t) { return t.nct_id === nctId; });
+  }
+  function addToShortlist(trial) {
+    if (!isShortlisted(trial.nct_id)) { shortlist.push(trial); saveShortlistToStorage(shortlist); updateShortlistBar(); }
   }
   function removeFromShortlist(nctId) {
-    var i = shortlist.indexOf(nctId);
+    var i = shortlist.findIndex(function (t) { return t.nct_id === nctId; });
     if (i !== -1) { shortlist.splice(i, 1); saveShortlistToStorage(shortlist); updateShortlistBar(); }
   }
   function updateShortlistBar() {
@@ -482,8 +501,7 @@ details.intake[open] > summary::before { content: "▾ "; }
   function initShortlistExport() {
     var btn = document.getElementById("shortlist-export");
     btn.addEventListener("click", function () {
-      var saved = allData.filter(function (t) { return isShortlisted(t.nct_id); });
-      var html = buildShortlistExportHtml(saved);
+      var html = buildShortlistExportHtml(shortlist);
       var blob = new Blob([html], { type: "text/html" });
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a");
@@ -567,7 +585,7 @@ details.intake[open] > summary::before { content: "▾ "; }
         );
         if (!ok) return;
       }
-      addToShortlist(t.nct_id);
+      addToShortlist(t);
       saveBtn.setAttribute("aria-pressed", "true");
       saveBtn.textContent = "✓ Saved";
     });
@@ -760,20 +778,51 @@ details.intake[open] > summary::before { content: "▾ "; }
 
   function boot(data) {
     allData = data;
-    initSortButtons();
     renderAll();
   }
+
+  // Milestone 8: a fixed, pre-tagged set of conditions - not free-text
+  // search. Each condition's own fetch_trials.py + tag_trials.py run is
+  // real Milestone-1-scale work (live API fetch, full tagging pass), not
+  // something this product can do on demand without a server (Phase 1's
+  // "nothing leaves the device" boundary, same reasoning as D6/D8). Add
+  // an entry here only after actually running both scripts for it.
+  var CONDITIONS = {
+    uterine_fibroids: { label: "uterine fibroids", file: "uterine_fibroids.json" },
+    endometriosis: { label: "endometriosis", file: "endometriosis.json" }
+  };
 
   // Repo layout serves this file from web/, one level above data/tagged/.
   // A preview context (e.g. an Artifact) may publish the data alongside
   // the page instead - try the repo-relative path first, then a flat one.
-  function loadData() {
-    return fetch("../data/tagged/uterine_fibroids.json").then(function (r) {
+  function loadConditionData(file) {
+    return fetch("../data/tagged/" + file).then(function (r) {
       if (!r.ok) throw new Error("not found at repo path");
       return r.json();
     }).catch(function () {
-      return fetch("data/tagged/uterine_fibroids.json").then(function (r) { return r.json(); });
+      return fetch("data/tagged/" + file).then(function (r) { return r.json(); });
     });
+  }
+
+  function loadCondition(slug) {
+    var cond = CONDITIONS[slug];
+    if (!cond) return;
+    document.getElementById("results").innerHTML = "<div class=\"empty\">Loading…</div>";
+    loadConditionData(cond.file)
+      .then(function (data) {
+        document.getElementById("condition-label").textContent = cond.label;
+        boot(data);
+      })
+      .catch(function (err) {
+        document.getElementById("results").innerHTML =
+          "<div class=\"empty\">Couldn't load trial data: " + err + "</div>";
+      });
+  }
+
+  function initConditionPicker() {
+    var select = document.getElementById("condition-select");
+    select.addEventListener("change", function () { loadCondition(select.value); });
+    return select.value;
   }
 
   function initTipsLinks() {
@@ -828,12 +877,8 @@ details.intake[open] > summary::before { content: "▾ "; }
   initTipsLinks();
   initIntakePanel();
   initShortlistExport();
-  loadData()
-    .then(boot)
-    .catch(function (err) {
-      document.getElementById("results").innerHTML =
-        "<div class=\"empty\">Couldn't load trial data: " + err + "</div>";
-    });
+  initSortButtons();
+  loadCondition(initConditionPicker());
 })();
 </script>
 </body>
